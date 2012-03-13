@@ -299,8 +299,8 @@ if !has("gui_running")
    nmap OD h
 endif
 
-" --- Command-T
-let g:CommandTMaxHeight = 15
+" --- taglist
+map <leader>t :TlistToggle<CR>
 
 " --- SuperTab
 let g:SuperTabDefaultCompletionType = "context"
