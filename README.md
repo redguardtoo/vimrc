@@ -1,8 +1,9 @@
-vgod's vimrc
+redguardtoo's vimrc
 ============
-Author: Tsung-Hsiang (Sean) Chang <vgod@vgod.tw>
+* Author: Chen Bin
+* Github: git://github.com/redguardtoo/vimrc.git
+* Forked from  [vgod](https://github.com/vgod/vimrc).
 
-Fork me on GITHUB  https://github.com/vgod/vimrc.
 
 ONE-STEP INSTALL
 ----------------
@@ -29,12 +30,6 @@ MANUALLY INSTALL
 
         ./install-vimrc.sh
 
-3. (Optional, if you want Command-T) Compile the Command-T plugin
-
-        cd .vim/bundle/command-t/ruby/command-t
-        ruby extconf.rb
-        make
-
 MANUALLY INSTALL ON WINDOWS
 ---------------------------
 
@@ -55,9 +50,9 @@ INSTALL & UPGRADE PLUGIN BUNDLES
 --------------------------------
 
 All plugins (except vim-latex) were checked out as git submodules, 
-which can be upgraded with `git pull`. For example, to upgrade Command-T 
+which can be upgraded with `git pull`. For example, to upgrade `surround`
 
-     cd ~/.vim/bundle/command-t
+     cd ~/.vim/bundle/surround
      git pull
 
 To install a new plugin as a git submoudle, type the following commands.
@@ -89,8 +84,6 @@ PLUGINS
 
 * [xmledit](http://www.vim.org/scripts/script.php?script_id=301): XML/HTML tags will be completed automatically.
 
-* [Command-T](https://github.com/wincent/Command-T): open and navigate between files with `cmd-t`.
-  
 * [SuperTab](http://www.vim.org/scripts/script.php?script_id=1643): Do all your insert-mode completion with Tab.
 
 * [snipMate](http://www.vim.org/scripts/script.php?script_id=2540): TextMate-style snippets for Vim
