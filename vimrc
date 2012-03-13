@@ -1,9 +1,6 @@
-" vgod's vimrc
-" Tsung-Hsiang (Sean) Chang <vgod@vgod.tw>
-" Fork me on GITHUB  https://github.com/vgod/vimrc
-
-" read https://github.com/vgod/vimrc/blob/master/README.md for more info
-
+" Chen Bin's vimrc
+" shameless copied from Tsung-Hsiang (Sean) Chang <vgod@vgod.tw>
+" Fork me on GITHUB git://github.com/redguardtoo/vimrc.git
 
 " For pathogen.vim: auto load all plugins in .vim/bundle
 
@@ -14,6 +11,24 @@ endif
 
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
+
+" detect OS
+function! MySys()
+  if has("win32")
+    return "win32"
+  elseif has("unix")
+    let uname = system('uname')
+     if uname =~? "CYGWIN"
+       return "cygwin"
+     else
+       return "unix"
+     endif
+  elseif has("win32unix")
+    return "cygwin"
+  else
+    return "mac"
+  endif
+endfunction
 
 " General Settings
 
@@ -43,6 +58,20 @@ if has("gui_running")	" GUI color and font settings
   set cursorline        " highlight current line
   colors moria
   highlight CursorLine          guibg=#003853 ctermbg=24  gui=none cterm=none
+  " NO menu,toolbar ...
+  set guioptions-=m
+  set guioptions-=T
+  set guioptions-=l
+  set guioptions-=L
+  set guioptions-=r
+  set guioptions-=R
+
+  if MySys()=="win32"
+    "start gvim maximized
+    if has("autocmd")
+      au GUIEnter * simalt ~x
+    endif
+  endif
 else
 " terminal color settings
   colors vgod
@@ -153,6 +182,14 @@ endfun
 "---------------------------------------------------------------------------
 " USEFUL SHORTCUTS
 "---------------------------------------------------------------------------
+"work with clipbord in vim-console
+if MySys() == "unix"
+  " two clipboards in X
+  vmap <C-c> y:call system("xclip -i -selection clipboard", getreg("\""))<CR>:call system("xclip -i", getreg("\""))<CR>
+elseif MySys() ==("cygwin")
+  vmap <C-c> y:call system("putclip", getreg("\""))<CR>
+endif
+
 " set leader to ,
 let mapleader=","
 let g:mapleader=","
@@ -174,6 +211,9 @@ map <leader>s? z=
 
 "Remove the Windows ^M
 noremap <leader>m :%s/\r//g<CR>
+
+"Switch to current dir
+map <leader>cd :cd %:p:h<cr>
 
 "Remove indenting on empty line
 map <F2> :%s/s*$//g<cr>:noh<cr>''
