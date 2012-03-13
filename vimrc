@@ -38,7 +38,7 @@ set hlsearch		" search highlighting
 
 if has("gui_running")	" GUI color and font settings
   set guifont=Osaka-Mono:h20
-  set background=dark 
+  set background=dark
   set t_Co=256          " 256 color mode
   set cursorline        " highlight current line
   colors moria
@@ -73,17 +73,17 @@ set tm=500
 
 " TAB setting{
    set expandtab        "replace <TAB> with spaces
-   set softtabstop=3 
-   set shiftwidth=3 
+   set softtabstop=3
+   set shiftwidth=3
 
    au FileType Makefile set noexpandtab
 "}      							
 
 " status line {
 set laststatus=2
-set statusline=\ %{HasPaste()}%<%-15.25(%f%)%m%r%h\ %w\ \ 
-set statusline+=\ \ \ [%{&ff}/%Y] 
-set statusline+=\ \ \ %<%20.30(%{hostname()}:%{CurDir()}%)\ 
+set statusline=\ %{HasPaste()}%<%-15.25(%f%)%m%r%h\ %w\ \
+set statusline+=\ \ \ [%{&ff}/%Y]
+set statusline+=\ \ \ %<%20.30(%{hostname()}:%{CurDir()}%)\
 set statusline+=%=%-10.(%l,%c%V%)\ %p%%/%L
 
 function! CurDir()
@@ -109,19 +109,19 @@ autocmd FileType c,cpp,cc  set cindent comments=sr:/*,mb:*,el:*/,:// cino=>s,e0,
 set viminfo='10,\"100,:20,%,n~/.viminfo
 au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
 
-"--------------------------------------------------------------------------- 
-" Tip #382: Search for <cword> and replace with input() in all open buffers 
-"--------------------------------------------------------------------------- 
-fun! Replace() 
-    let s:word = input("Replace " . expand('<cword>') . " with:") 
-    :exe 'bufdo! %s/\<' . expand('<cword>') . '\>/' . s:word . '/ge' 
-    :unlet! s:word 
-endfun 
+"---------------------------------------------------------------------------
+" Tip #382: Search for <cword> and replace with input() in all open buffers
+"---------------------------------------------------------------------------
+fun! Replace()
+    let s:word = input("Replace " . expand('<cword>') . " with:")
+    :exe 'bufdo! %s/\<' . expand('<cword>') . '\>/' . s:word . '/ge'
+    :unlet! s:word
+endfun
 
 
-"--------------------------------------------------------------------------- 
+"---------------------------------------------------------------------------
 " USEFUL SHORTCUTS
-"--------------------------------------------------------------------------- 
+"---------------------------------------------------------------------------
 " set leader to ,
 let mapleader=","
 let g:mapleader=","
@@ -130,28 +130,28 @@ let g:mapleader=","
 map <leader>r :call Replace()<CR>
 
 " open the error console
-map <leader>cc :botright cope<CR> 
+map <leader>cc :botright cope<CR>
 " move to next error
 map <leader>] :cn<CR>
 " move to the prev error
 map <leader>[ :cp<CR>
 
 " --- move around splits {
-" move to and maximize the below split 
+" move to and maximize the below split
 map <C-J> <C-W>j<C-W>_
-" move to and maximize the above split 
+" move to and maximize the above split
 map <C-K> <C-W>k<C-W>_
-" move to and maximize the left split 
+" move to and maximize the left split
 nmap <c-h> <c-w>h<c-w><bar>
-" move to and maximize the right split  
+" move to and maximize the right split
 nmap <c-l> <c-w>l<c-w><bar>
-set wmw=0                     " set the min width of a window to 0 so we can maximize others 
+set wmw=0                     " set the min width of a window to 0 so we can maximize others
 set wmh=0                     " set the min height of a window to 0 so we can maximize others
 " }
 
 " move around tabs. conflict with the original screen top/bottom
 " comment them out if you want the original H/L
-" go to prev tab 
+" go to prev tab
 map <S-H> gT
 " go to next tab
 map <S-L> gt
@@ -159,7 +159,7 @@ map <S-L> gt
 " new tab
 map <C-t><C-t> :tabnew<CR>
 " close tab
-map <C-t><C-w> :tabclose<CR> 
+map <C-t><C-w> :tabclose<CR>
 
 " ,/ turn off search highlighting
 nmap <leader>/ :nohl<CR>
@@ -197,9 +197,9 @@ cmap cd. lcd %:p:h
    inoremap <C-u>5 <esc>yypVr^A
 "}
 
-"--------------------------------------------------------------------------- 
+"---------------------------------------------------------------------------
 " PROGRAMMING SHORTCUTS
-"--------------------------------------------------------------------------- 
+"---------------------------------------------------------------------------
 
 " Ctrl-[ jump out of the tag stack (undo Ctrl-])
 map <C-[> <ESC>:po<CR>
@@ -239,21 +239,21 @@ set cot-=preview "disable doc preview in omnicomplete
 autocmd BufNewFile,BufRead *.scss             set ft=scss.css
 autocmd BufNewFile,BufRead *.sass             set ft=sass.css
 
-"--------------------------------------------------------------------------- 
+"---------------------------------------------------------------------------
 " ENCODING SETTINGS
-"--------------------------------------------------------------------------- 
-set encoding=utf-8                                  
+"---------------------------------------------------------------------------
+set encoding=utf-8
 set termencoding=utf-8
 set fileencoding=utf-8
 set fileencodings=ucs-bom,utf-8,big5,gb2312,latin1
 
 fun! ViewUTF8()
-	set encoding=utf-8                                  
+	set encoding=utf-8
 	set termencoding=big5
 endfun
 
 fun! UTF8()
-	set encoding=utf-8                                  
+	set encoding=utf-8
 	set termencoding=big5
 	set fileencoding=utf-8
 	set fileencodings=ucs-bom,big5,utf-8,latin1
@@ -265,9 +265,9 @@ fun! Big5()
 endfun
 
 
-"--------------------------------------------------------------------------- 
+"---------------------------------------------------------------------------
 " PLUGIN SETTINGS
-"--------------------------------------------------------------------------- 
+"---------------------------------------------------------------------------
 
 
 " ------- vim-latex - many latex shortcuts and snippets {
@@ -284,9 +284,9 @@ let g:tex_flavor='latex'
 "}
 
 
-" --- AutoClose - Inserts matching bracket, paren, brace or quote 
+" --- AutoClose - Inserts matching bracket, paren, brace or quote
 " fixed the arrow key problems caused by AutoClose
-if !has("gui_running")	
+if !has("gui_running")
    set term=linux
    imap OA <ESC>ki
    imap OB <ESC>ji
@@ -298,8 +298,6 @@ if !has("gui_running")
    nmap OC l
    nmap OD h
 endif
-
-
 
 " --- Command-T
 let g:CommandTMaxHeight = 15
@@ -315,7 +313,7 @@ hi link EasyMotionShade  Comment
 
 " --- TagBar
 " toggle TagBar with F7
-nnoremap <silent> <F7> :TagbarToggle<CR> 
+nnoremap <silent> <F7> :TagbarToggle<CR>
 " set focus to TagBar when opening it
 let g:tagbar_autofocus = 1
 
