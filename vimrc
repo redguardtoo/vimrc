@@ -299,6 +299,15 @@ if !has("gui_running")
    nmap OD h
 endif
 
+" --- grep alias
+" " Do :help cope if you are unsure what cope is. It's super useful!
+map <leader>o :botright copen<cr>
+"<leader>cc is reserved for nerd comment
+map <leader>l :cclose<cr>
+map <leader>n :cn<cr>
+map <leader>p :cp<cr>
+map <leader>a :w!<CR>:!aspell check %<CR>:e! %<CR>
+
 " --- taglist
 map <leader>t :TlistToggle<CR>
 
