@@ -166,6 +166,24 @@ map <leader>n :cn<cr>
 map <leader>p :cp<cr>
 map <leader>a :w!<CR>:!aspell check %<CR>:e! %<CR>
 
+" Spell checking
+map <leader>sn ]
+map <leader>sp [
+map <leader>sa zg
+map <leader>s? z=
+
+"Remove the Windows ^M
+noremap <leader>m :%s/\r//g<CR>
+
+"Remove indenting on empty line
+map <F2> :%s/s*$//g<cr>:noh<cr>''
+
+"Smart way to move btw. window
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
 "replace the current word in all opened buffers
 map <leader>r :call Replace()<CR>
 
