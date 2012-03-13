@@ -77,7 +77,7 @@ set tm=500
    set shiftwidth=3
 
    au FileType Makefile set noexpandtab
-"}      							
+"}
 
 " status line {
 set laststatus=2
@@ -213,8 +213,6 @@ fun! IncludeGuard()
    call append(1, "#define " . guard)
    call append( line("$"), "#endif // for #ifndef " . guard)
 endfun
-
-
 
 " Enable omni completion. (Ctrl-X Ctrl-O)
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
