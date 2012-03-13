@@ -183,11 +183,12 @@ endfun
 " USEFUL SHORTCUTS
 "---------------------------------------------------------------------------
 "work with clipbord in vim-console
+" C-c is same as ESC which is good if you switch CAP and Ctrl key
 if MySys() == "unix"
   " two clipboards in X
-  vmap <C-c> y:call system("xclip -i -selection clipboard", getreg("\""))<CR>:call system("xclip -i", getreg("\""))<CR>
-elseif MySys() ==("cygwin")
-  vmap <C-c> y:call system("putclip", getreg("\""))<CR>
+  vmap <C-y> y:call system("xclip -i -selection clipboard", getreg("\""))<CR>:call system("xclip -i", getreg("\""))<CR>
+elseif MySys() == "cygwin"
+  vmap <C-y> y:call system("putclip", getreg("\""))<CR>
 endif
 
 " set leader to ,
@@ -218,34 +219,32 @@ map <leader>cd :cd %:p:h<cr>
 "Remove indenting on empty line
 map <F2> :%s/s*$//g<cr>:noh<cr>''
 
-"Smart way to move btw. window
+" --- Smart way to move window {
+"  TIPS:
+"  C-W +/- increase/descrease window height
+"  C-W _ maxmize window height
+"  C-W = restore window size
+"  C-W | maxmize window width
 map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
+set wmw=0                     " set the min width of a window to 0 so we can maximize others
+set wmh=0                     " set the min height of a window to 0 so we can maximize others
+"}
+
+" --- Faster window resize {
+"  TIPS:
+"  C-W </ > resize window width
+if bufwinnr(1)
+   " recommend using scroll pad 
+   map + <C-W>+
+   map - <C-W>-
+endif
+"  }
 
 "replace the current word in all opened buffers
 map <leader>r :call Replace()<CR>
-
-" open the error console
-map <leader>cc :botright cope<CR>
-" move to next error
-map <leader>] :cn<CR>
-" move to the prev error
-map <leader>[ :cp<CR>
-
-" --- move around splits {
-" move to and maximize the below split
-map <C-J> <C-W>j<C-W>_
-" move to and maximize the above split
-map <C-K> <C-W>k<C-W>_
-" move to and maximize the left split
-nmap <c-h> <c-w>h<c-w><bar>
-" move to and maximize the right split
-nmap <c-l> <c-w>l<c-w><bar>
-set wmw=0                     " set the min width of a window to 0 so we can maximize others
-set wmh=0                     " set the min height of a window to 0 so we can maximize others
-" }
 
 " move around tabs. conflict with the original screen top/bottom
 " comment them out if you want the original H/L
