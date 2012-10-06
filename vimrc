@@ -37,7 +37,8 @@ set bs=2		" allow backspacing over everything in insert mode
 set history=50		" keep 50 lines of command line history
 set ruler		" show the cursor position all the time
 set autoread		" auto read when file is changed from outside
-
+set number              " show line numbers
+set ignorecase          " ignore case when searching
 
 filetype on           " Enable filetype detection
 filetype indent on    " Enable filetype-specific indenting
@@ -105,15 +106,17 @@ set tm=500
 
 " status line {
 set laststatus=2
-set statusline=\ %{HasPaste()}%<%-15.25(%f%)%m%r%h\ %w\ \
-set statusline+=\ \ \ [%{&ff}/%Y]
-set statusline+=\ \ \ %<%20.30(%{hostname()}:%{CurDir()}%)\
-set statusline+=%=%-10.(%l,%c%V%)\ %p%%/%L
-
-function! CurDir()
-    let curdir = substitute(getcwd(), $HOME, "~", "")
-    return curdir
-endfunction
+set statusline=%t       "tail of the filename
+set statusline+=[%{strlen(&fenc)?&fenc:'none'}, "file encoding
+set statusline+=%{&ff}] "file format
+set statusline+=%h      "help file flag
+set statusline+=%m      "modified flag
+set statusline+=%r      "read only flag
+set statusline+=%y      "filetype
+set statusline+=%=      "left/right separator
+set statusline+=%c,     "cursor column
+set statusline+=%l/%L   "cursor line/total lines
+set statusline+=\ %P    "percent through file
 
 function! HasPaste()
     if &paste
@@ -122,7 +125,6 @@ function! HasPaste()
         return ''
     endif
 endfunction
-
 "}
 
 
@@ -275,9 +277,6 @@ if has("autocmd")
  " allow multiple indentation/deindentation in visual mode
  vnoremap < <gv
  vnoremap > >gv
-
- " :cd. change working directory to that of the current file
- cmap cd. lcd %:p:h
 
  " Writing Restructured Text (Sphinx Documentation) {
  " Ctrl-u 1:    underline Parts w/ #'s
