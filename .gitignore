@@ -1,1 +1,4 @@
 *.pyc
+# copies of xml.vim
+bundle/xmledit/ftpplugin/html.vim
+bundle/xmledit/ftpplugin/xhtml.vim
