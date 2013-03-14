@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 cd ..
 # hack to make gvim work on win32
 if [ `uname -s` == *CYGWIN* ]; then
