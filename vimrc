@@ -48,7 +48,6 @@ syntax on		" syntax highlight
 set hlsearch		" search highlighting
 
 if has("gui_running")	" GUI color and font settings
-  set guifont=Osaka-Mono:h20
   set background=dark
   set t_Co=256          " 256 color mode
   set cursorline        " highlight current line
