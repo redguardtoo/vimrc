@@ -381,13 +381,6 @@ let g:SuperTabDefaultCompletionType = "context"
 hi link EasyMotionTarget ErrorMsg
 hi link EasyMotionShade  Comment
 
-
-" --- TagBar
-" toggle TagBar with F7
-nnoremap <silent> <F7> :TagbarToggle<CR>
-" set focus to TagBar when opening it
-let g:tagbar_autofocus = 1
-
 " --- PowerLine
 " let g:Powerline_symbols = 'fancy' " require fontpatcher
 
