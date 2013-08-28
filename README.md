@@ -92,10 +92,6 @@ PLUGINS
 
 * [SuperTab](http://www.vim.org/scripts/script.php?script_id=1643): Do all your insert-mode completion with Tab.
 
-* [snipMate](http://www.vim.org/scripts/script.php?script_id=2540): TextMate-style snippets for Vim
-
-  `:help snipMate` to see more info.
-
 * [YankRing](http://www.vim.org/scripts/script.php?script_id=1234): Maintains a history of previous yanks, changes and deletes 
   
   `:help yankring` to see more info.
