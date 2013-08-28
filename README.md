@@ -1,5 +1,5 @@
-redguardtoo's vimrc
-============
+Chen Bin (redguardtoo)'s vimrc
+===================
 * Author: Chen Bin
 * Github: git://github.com/redguardtoo/vimrc.git
 * gvim on WIN32 works if you set the $HOME environment variable
@@ -7,66 +7,29 @@ redguardtoo's vimrc
 * This vimrc is light weight because I'm [Emacs user now](https://github.com/redguardtoo/emacs.d)
 * I don't use "git submodule"
 
-ONE-STEP INSTALL
-----------------
+INSTALL ON LINUX
+--------------------
 
-Use curl (for Mac OS X):
+git clone https://github.com/redguardtoo/vimrc.git ~/.vim;cd ~/vim;./install-vimrc.sh
 
-     curl -o - https://raw.github.com/vgod/vimrc/master/auto-install.sh | sh
-
-or wget (for most UNIX platforms):
-
-     wget -O - https://raw.github.com/vgod/vimrc/master/auto-install.sh | sh
-
-
-MANUALLY INSTALL
-----------------
-
-1. Check out from github
-
-        git clone git://github.com/vgod/vimrc.git ~/.vim
-        cd ~/.vim
-        git submodule update --init
-
-2. Install ~/.vimrc and ~/.gvimrc
-
-        ./install-vimrc.sh
-
-MANUALLY INSTALL ON WINDOWS IN EASY WAY (RECOMMENDED)
+INSTALL ON WINDOWS IN EASY WAY (RECOMMENDED)
 -----------------------------------------------------
 1. Install CYGWIN
 2. In CYGWIN bash shell, do as previous section "MANUALLY INSTALL" said
 3. Set the value of environment variable "HOME" to the full path of parent directory of .vim
 
-MANUALLY INSTALL ON WINDOWS
+INSTALL ON WINDOWS
 ---------------------------
 
 1. Check out from github
 
-        cd C:\Program Files\Vim   (or your installed path to Vim)
-        rmdir /s vimfiles         (This deletes your old vim configurations. If you want to keep it, use move instead of rmdir.)
-        git clone git://github.com/vgod/vimrc.git vimfiles
-        git submodule update --init
+cd C:\Program Files\Vim   (or your installed path to Vim)
+rmdir /s vimfiles         (This deletes your old vim configurations. If you want to keep it, use move instead of rmdir.)
+git clone https://github.com/redguardtoo/vimrc.git vimfiles
 
 2. Install vimrc. Add the following line at the end of C:\Program Files\Vim\vimrc.
 
-        source $VIM/vimfiles/vimrc
-
-
-  
-INSTALL & UPGRADE PLUGIN BUNDLES
---------------------------------
-
-All plugins were checked out as git submodules, 
-which can be upgraded with `git pull`. For example, to upgrade `surround`
-
-     cd ~/.vim/bundle/surround
-     git pull
-
-To install a new plugin as a git submoudle, type the following commands.
-
-     cd ~/.vim
-     git submodule add [GIT-REPOSITORY-URL] bundle/[PLUGIN-NAME]
+source $VIM/vimfiles/vimrc
 
 HOW TO USE
 ----------
@@ -80,9 +43,11 @@ PLUGINS
 
 * [Nerd Tree](http://www.vim.org/scripts/script.php?script_id=1658): A tree explorer plugin for navigating the filesystem.
 
-  Useful commands:   
-    `:Bookmark [name]` - bookmark any directory as name   
-    `:NERDTree [name]` - open the bookmark [name] in Nerd Tree   
+  Useful commands:
+    `:Bookmark [name]` - bookmark any directory as name
+    `:NERDTree [name]` - open the bookmark [name] in Nerd Tree
+
+* [NERD commenter](http://www.vim.org/scripts/script.php?script_id=1218): Press ",ci" or ",cc" to comment/uncomment lines
 
 * [AutoClose](http://www.vim.org/scripts/script.php?script_id=1849):  Inserts matching bracket, paren, brace or quote.
 
@@ -93,13 +58,6 @@ PLUGINS
 * [YankRing](http://www.vim.org/scripts/script.php?script_id=1234): Maintains a history of previous yanks, changes and deletes 
   
   `:help yankring` to see more info.
-
-Language specific supports
---------------------------
-
-* Restructured Text: `ctrl-u 1~5` inserts Part/Chapter/Section headers
-* HTML, Javascript, Python, CSS, C, C++, Java: use `TAB` to do omni-completion.
-* HTML/XML: End tags are automatically completed after typing a begin tag. (Typing > twice pushes the end tag to a new line.)
 
 Other good references
 ---------------------

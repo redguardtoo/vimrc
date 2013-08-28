@@ -29,7 +29,6 @@ set hlsearch		" search highlighting
 if has("gui_running")	" GUI color and font settings
   set background=dark
   set t_Co=256          " 256 color mode
-  set cursorline        " highlight current line
   " NO menu,toolbar ...
   set guioptions-=m
   set guioptions-=T
@@ -324,7 +323,11 @@ endif
 map <leader>tt :TlistToggle<CR>
 
 " leader hotkeys
+map <leader>xs :write<CR>
 map <leader>ww :write<CR>
+map <leader>s2 :sp<CR>
+map <leader>s3 :vs<CR>
+map <leader>s0 :close<CR>
 
 " Local Variables:
 " coding: utf-8
