@@ -204,7 +204,7 @@ map <leader>sa zg
 map <leader>s? z=
 
 "Remove the Windows ^M
-noremap <leader>m :%s/\r//g<CR>
+noremap <leader>rm :%s/\r//g<CR>
 
 "Switch to current dir
 map <leader>cd :cd %:p:h<cr>
@@ -218,10 +218,6 @@ map <F2> :%s/s*$//g<cr>:noh<cr>''
 "  C-W _ maxmize window height
 "  C-W = restore window size
 "  C-W | maxmize window width
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
 set wmw=0                     " set the min width of a window to 0 so we can maximize others
 set wmh=0                     " set the min height of a window to 0 so we can maximize others
 "}
@@ -261,28 +257,6 @@ cnoremap <C-K>      <C-U>
 
 " ,p toggles paste mode
 nmap <leader>p :set paste!<BAR>set paste?<CR>
-
-" allow multiple indentation/deindentation in visual mode
-vnoremap < <gv
-vnoremap > >gv
-
-" Writing Restructured Text (Sphinx Documentation) {
-" Ctrl-u 1:    underline Parts w/ #'s
-noremap  <C-u>1 yyPVr#yyjp
-inoremap <C-u>1 <esc>yyPVr#yyjpA
-" Ctrl-u 2:    underline Chapters w/ *'s
-noremap  <C-u>2 yyPVr*yyjp
-inoremap <C-u>2 <esc>yyPVr*yyjpA
-" Ctrl-u 3:    underline Section Level 1 w/ ='s
-noremap  <C-u>3 yypVr=
-inoremap <C-u>3 <esc>yypVr=A
-" Ctrl-u 4:    underline Section Level 2 w/ -'s
-noremap  <C-u>4 yypVr-
-inoremap <C-u>4 <esc>yypVr-A
-" Ctrl-u 5:    underline Section Level 3 w/ ^'s
-noremap  <C-u>5 yypVr^
-inoremap <C-u>5 <esc>yypVr^A
-"}
 
 "---------------------------------------------------------------------------
 " PROGRAMMING SHORTCUTS
@@ -368,7 +342,7 @@ if !has("gui_running")
 endif
 
 " --- taglist
-map <leader>t :TlistToggle<CR>
+map <leader>tt :TlistToggle<CR>
 
 " Local Variables:
 " coding: utf-8
