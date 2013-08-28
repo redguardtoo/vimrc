@@ -94,8 +94,6 @@ PLUGINS
   
   `:help yankring` to see more info.
 
-* [VisIncr](http://www.vim.org/scripts/script.php?script_id=670): Produce increasing/decreasing columns of numbers, dates, or daynames.
-  
 Language specific supports
 --------------------------
 
