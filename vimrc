@@ -327,6 +327,7 @@ map <leader>xs :write<CR>
 map <leader>ww :write<CR>
 map <leader>s2 :sp<CR>
 map <leader>s3 :vs<CR>
+map <leader>s1 <C-W>o
 map <leader>s0 :close<CR>
 " go to SCM conflict marker
 map <leader>nm ]n
@@ -336,6 +337,7 @@ map <leader>pi d[n
 map <leader>nc ]c
 map <leader>pc [c
 map <leader>tr :%s/ \+$//g<CR>
+map <leader>cg :CtrlPRoot<CR>
 
 " Local Variables:
 " coding: utf-8
