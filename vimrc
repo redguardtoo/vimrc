@@ -90,8 +90,7 @@ set statusline+=%m      "modified flag
 set statusline+=%r      "read only flag
 set statusline+=%y      "filetype
 set statusline+=%=      "left/right separator
-set statusline+=%c,     "cursor column
-set statusline+=%l/%L   "cursor line/total lines
+set statusline+=%c      "cursor column
 set statusline+=\ %P    "percent through file
 
 function! HasPaste()
@@ -120,15 +119,6 @@ endif
 
 "Restore cursor to file position in previous editing session
 set viminfo='10,\"100,:20,%,n~/.viminfo
-
-"---------------------------------------------------------------------------
-" Tip #382: Search for <cword> and replace with input() in all open buffers
-"---------------------------------------------------------------------------
-fun! Replace()
-  let s:word = input("Replace " . expand('<cword>') . " with:")
-  :exe 'bufdo! %s/\<' . expand('<cword>') . '\>/' . s:word . '/ge'
-  :unlet! s:word
-endfun
 
 if has("autocmd")
   au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
@@ -190,12 +180,11 @@ map <silent> <leader>4 :diffget 4<CR> :diffupdate<CR>
 
 " grep result window operation alias
 " " Do :help cope if you are unsure what cope is. It's super useful!
-map <leader>o :botright copen<cr>
+map <leader>co :botright copen<cr>
 "<leader>cc is reserved for nerd comment
-map <leader>l :cclose<cr>
-map <leader>n :cn<cr>
-map <leader>p :cp<cr>
-map <leader>a :w!<CR>:!aspell check %<CR>:e! %<CR>
+map <leader>nn :cn<cr>
+map <leader>pp :cp<cr>
+map <leader>as :w!<CR>:!aspell check %<CR>:e! %<CR>
 
 " Spell checking
 map <leader>sn ]
@@ -210,7 +199,7 @@ noremap <leader>rm :%s/\r//g<CR>
 map <leader>cd :cd %:p:h<cr>
 
 "Remove indenting on empty line
-map <F2> :%s/s*$//g<cr>:noh<cr>''
+map <leader>el :%s/s*$//g<cr>:noh<cr>''
 
 " --- Smart way to move window {
 "  TIPS:
@@ -232,23 +221,13 @@ if bufwinnr(1)
 endif
 "  }
 
-"replace the current word in all opened buffers
-map <leader>r :call Replace()<CR>
-
-" move around tabs. conflict with the original screen top/bottom
-" comment them out if you want the original H/L
-" go to prev tab
-map <S-H> gT
-" go to next tab
-map <S-L> gt
-
 " new tab
-map <C-t><C-t> :tabnew<CR>
+map <leader>tn :tabnew<CR>
 " close tab
-map <C-t><C-w> :tabclose<CR>
+map <leader>tc :tabclose<CR>
 
 " ,/ turn off search highlighting
-nmap <leader>/ :nohl<CR>
+nmap <leader>nh :nohl<CR>
 
 " Bash like keys for the command line
 cnoremap <C-A>      <Home>
@@ -256,7 +235,7 @@ cnoremap <C-E>      <End>
 cnoremap <C-K>      <C-U>
 
 " ,p toggles paste mode
-nmap <leader>p :set paste!<BAR>set paste?<CR>
+nmap <leader>pp :set paste!<BAR>set paste?<CR>
 
 "---------------------------------------------------------------------------
 " PROGRAMMING SHORTCUTS
@@ -266,7 +245,7 @@ nmap <leader>p :set paste!<BAR>set paste?<CR>
 map <C-[> <ESC>:po<CR>
 
 " ,g generates the header guard
-map <leader>g :call IncludeGuard()<CR>
+map <leader>gg :call IncludeGuard()<CR>
 fun! IncludeGuard()
   let basename = substitute(bufname(""), '.*/', '', '')
   let guard = '_' . substitute(toupper(basename), '\.', '_', "H")
@@ -343,6 +322,9 @@ endif
 
 " --- taglist
 map <leader>tt :TlistToggle<CR>
+
+" leader hotkeys
+map <leader>ww :write<CR>
 
 " Local Variables:
 " coding: utf-8
