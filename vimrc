@@ -5,9 +5,6 @@
 " For pathogen.vim: auto load all plugins in .vim/bundle
 
 let g:pathogen_disabled = []
-if !has('gui_running')
-  call add(g:pathogen_disabled, 'powerline')
-endif
 
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
@@ -380,9 +377,6 @@ let g:SuperTabDefaultCompletionType = "context"
 "let g:EasyMotion_leader_key = '<Leader>m' " default is <Leader>w
 hi link EasyMotionTarget ErrorMsg
 hi link EasyMotionShade  Comment
-
-" --- PowerLine
-" let g:Powerline_symbols = 'fancy' " require fontpatcher
 
 " Local Variables:
 " coding: utf-8
