@@ -3,9 +3,9 @@ Chen Bin (redguardtoo)'s vimrc
 * Author: Chen Bin
 * Github: git://github.com/redguardtoo/vimrc.git
 * gvim on WIN32 works if you set the $HOME environment variable
-* NO Ruby dependency
+* NO Ruby/Python/Perl dependency. The only programming language except native vim script I can accept is C
 * This vimrc is light weight because I'm [Emacs user now](https://github.com/redguardtoo/emacs.d)
-* I don't use "git submodule"
+* I don not use "git submodule".
 
 INSTALL ON LINUX
 --------------------
