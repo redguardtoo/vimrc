@@ -12,24 +12,6 @@ endif
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 
-" detect OS
-function! MySys()
-  if has("win32")
-    return "win32"
-  elseif has("unix")
-    let uname = system('uname')
-    if uname =~? "CYGWIN"
-      return "cygwin"
-    else
-      return "unix"
-    endif
-  elseif has("win32unix")
-    return "cygwin"
-  else
-    return "mac"
-  endif
-endfunction
-
 " General Settings
 
 set nocompatible	" not compatible with the old-fashion vi mode
@@ -51,8 +33,6 @@ if has("gui_running")	" GUI color and font settings
   set background=dark
   set t_Co=256          " 256 color mode
   set cursorline        " highlight current line
-  colors moria
-  highlight CursorLine          guibg=#003853 ctermbg=24  gui=none cterm=none
   " NO menu,toolbar ...
   set guioptions-=m
   set guioptions-=T
@@ -61,7 +41,7 @@ if has("gui_running")	" GUI color and font settings
   set guioptions-=r
   set guioptions-=R
 
-  if MySys()=="win32"
+  if has("win32")
     "start gvim maximized
     if has("autocmd")
       au GUIEnter * simalt ~x
@@ -69,7 +49,7 @@ if has("gui_running")	" GUI color and font settings
   endif
 else
   " terminal color settings
-  colors vgod
+  colorscheme vgod
 endif
 
 set clipboard=unnamed	" yank to the system register (*) by default
@@ -194,10 +174,10 @@ endif
 "---------------------------------------------------------------------------
 "work with clipbord in vim-console
 " C-c is same as ESC which is good if you switch CAP and Ctrl key
-if MySys() == "unix"
+if has("unix")
   " two clipboards in X
   vmap <C-y> y:call system("xclip -i -selection clipboard", getreg("\""))<CR>:call system("xclip -i", getreg("\""))<CR>
-elseif MySys() == "cygwin"
+elseif has("win32unix")
   vmap <C-y> y:call system("putclip", getreg("\""))<CR>
 endif
 
