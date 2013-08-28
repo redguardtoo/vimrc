@@ -370,9 +370,6 @@ endif
 " --- taglist
 map <leader>t :TlistToggle<CR>
 
-" --- SuperTab
-let g:SuperTabDefaultCompletionType = "context"
-
 " --- EasyMotion
 "let g:EasyMotion_leader_key = '<Leader>m' " default is <Leader>w
 hi link EasyMotionTarget ErrorMsg
