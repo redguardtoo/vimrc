@@ -96,17 +96,6 @@ PLUGINS
 
 * [VisIncr](http://www.vim.org/scripts/script.php?script_id=670): Produce increasing/decreasing columns of numbers, dates, or daynames.
   
-* [Cute Error Marker](http://www.vim.org/scripts/script.php?script_id=2653): showing error and warning icons on line.
-  
-   MacVim users need to enable "Use experimental renderer" to see
-   graphical icons.
-
-* [EasyMotion](https://github.com/Lokaltog/vim-easymotion): An easy way to jump to a word.
-
-  Useful commands:   
-    `,,w` forward EasyMotion   
-    `,,b` backward EasyMotion   
-
 Language specific supports
 --------------------------
 

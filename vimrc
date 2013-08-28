@@ -370,11 +370,6 @@ endif
 " --- taglist
 map <leader>t :TlistToggle<CR>
 
-" --- EasyMotion
-"let g:EasyMotion_leader_key = '<Leader>m' " default is <Leader>w
-hi link EasyMotionTarget ErrorMsg
-hi link EasyMotionShade  Comment
-
 " Local Variables:
 " coding: utf-8
 " indent-tabs-mode: nil
