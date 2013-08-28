@@ -308,7 +308,6 @@ if has("autocmd") && exists("+omnifunc")
   " Enable omni completion. (Ctrl-X Ctrl-O)
   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
   autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
   autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
   autocmd FileType css set omnifunc=csscomplete#CompleteCSS
   autocmd FileType c set omnifunc=ccomplete#Complete
