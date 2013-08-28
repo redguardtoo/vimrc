@@ -103,8 +103,6 @@ PLUGINS
    MacVim users need to enable "Use experimental renderer" to see
    graphical icons.
 
-* [OmniCppComplete](http://www.vim.org/scripts/script.php?script_id=1520): C/C++ omni-completion with ctags database.
-
 * [EasyMotion](https://github.com/Lokaltog/vim-easymotion): An easy way to jump to a word.
 
   Useful commands:   

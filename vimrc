@@ -309,7 +309,6 @@ if has("autocmd") && exists("+omnifunc")
   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
   autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
   autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-  autocmd FileType c set omnifunc=ccomplete#Complete
 
   " use syntax complete if nothing else available
   autocmd Filetype *
