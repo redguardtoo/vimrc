@@ -1,4 +1,26 @@
 *.pyc
-# copies of xml.vim
-bundle/xmledit/ftpplugin/html.vim
-bundle/xmledit/ftpplugin/xhtml.vim
+tags
+TAGS
+### /Users/cb/.gitignore-boilerplates/Global/Vim.gitignore
+
+.*.sw[a-z]
+*.un~
+Session.vim
+.netrwhist
+
+### /Users/cb/.gitignore-boilerplates/Global/Emacs.gitignore
+
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+.elc
+auto-save-list
+tramp
+.\#*
+
+# Org-mode
+.org-id-locations
+*_archive
+
+
