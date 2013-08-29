@@ -45,7 +45,7 @@ if has("gui_running")	" GUI color and font settings
   endif
 else
   " terminal color settings
-  colorscheme vgod
+  colorscheme evening
 endif
 
 set clipboard=unnamed	" yank to the system register (*) by default
