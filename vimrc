@@ -106,7 +106,7 @@ if has("autocmd")
   autocmd BufNewFile,BufRead *.{ps1,psm1,psd1} set ft=ps1
   autocmd BufNewFile,BufRead *.{md,markdown} set ft=markdown
   autocmd BufNewFile,BufRead *.json set ft=javascript
-  autocmd BufNewFile,BufRead *.cshtml set ft=html
+  autocmd BufNewFile,BufRead *.{ftl,jsp} set ft=html
 
   autocmd BufNewFile,BufRead *.build set ft=xml
   " C/C++ specific settings
