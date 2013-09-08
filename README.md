@@ -5,17 +5,17 @@ Chen Bin (redguardtoo)'s vimrc
 * gvim on WIN32 works if you set the $HOME environment variable
 * NO Ruby/Python/Perl dependency. The only programming language except native vim script I can accept is C
 * This vimrc is light weight because I'm [Emacs user now](https://github.com/redguardtoo/emacs.d)
-* I don not use "git submodule".
+* I do not use "git submodule".
 
 INSTALL ON LINUX
 --------------------
 
-git clone https://github.com/redguardtoo/vimrc.git ~/.vim;cd ~/vim;./install-vimrc.sh
+git clone https://github.com/redguardtoo/vimrc.git ~/.vim;cd ~/.vim;./install-vimrc.sh
 
 INSTALL ON WINDOWS IN EASY WAY (RECOMMENDED)
 -----------------------------------------------------
 1. Install CYGWIN
-2. In CYGWIN bash shell, do as previous section "MANUALLY INSTALL" said
+2. In CYGWIN bash shell, run exact command as "INSTALL ON LINUX" section.
 3. Set the value of environment variable "HOME" to the full path of parent directory of .vim
 
 INSTALL ON WINDOWS
@@ -31,10 +31,6 @@ git clone https://github.com/redguardtoo/vimrc.git vimfiles
 
 source $VIM/vimfiles/vimrc
 
-HOW TO USE
-----------
-
-see the "USEFUL SHORTCUTS" section in vimrc to learn my shortcuts.
 
 PLUGINS
 -------
