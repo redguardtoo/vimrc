@@ -23,7 +23,6 @@ filetype on           " Enable filetype detection
 filetype indent on    " Enable filetype-specific indenting
 filetype plugin on    " Enable filetype-specific plugins
 
-syntax on		" syntax highlight
 set hlsearch		" search highlighting
 
 if has("gui_running")	" GUI color and font settings
@@ -338,6 +337,8 @@ map <leader>nc ]c
 map <leader>pc [c
 map <leader>tr :%s/ \+$//g<CR>
 map <leader>cg :CtrlPRoot<CR>
+
+syntax on		" syntax highlight
 
 " Local Variables:
 " coding: utf-8
