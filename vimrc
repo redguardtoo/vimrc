@@ -343,6 +343,10 @@ map <leader>s2 :sp<CR>
 map <leader>s3 :vs<CR>
 map <leader>xc :quitall<CR>
 
+if !hasmapto("<Plug>ZoomWin")
+ nmap <unique> <leader>ff  <Plug>ZoomWin
+endif
+
 syntax on		" syntax highlight
 
 " Local Variables:
