@@ -337,6 +337,8 @@ map <leader>nc ]c
 map <leader>pc [c
 map <leader>tr :%s/ \+$//g<CR>
 map <leader>cg :CtrlPRoot<CR>
+map <leader>xz :suspend<CR>
+map <leader>xc :quit<CR>
 
 syntax on		" syntax highlight
 
