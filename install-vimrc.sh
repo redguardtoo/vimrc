@@ -5,7 +5,7 @@ if [ $(uname -s | grep -c CYGWIN) -eq 1 ]; then
    cp -r ~/.vim/ ~/vimfiles
    cp ~/.vim/vimrc ~/.vimrc
    cp ~/.vim/gvimrc ~/.gvimrc
-   cp ~/vimr/vimrc ~/_vimrc
+   cp ~/.vim/vimrc ~/_vimrc
 else
    ln -fs ~/.vim/vimrc ~/.vimrc
    ln -fs ~/.vim/gvimrc ~/.gvimrc
