@@ -45,7 +45,7 @@ if has("gui_running")	" GUI color and font settings
 endif
 
 " terminal color settings
-colorscheme evening
+colorscheme molokai
 
 set clipboard=unnamed	" yank to the system register (*) by default
 set showmatch		" Cursor shows matching ) and }
