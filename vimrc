@@ -331,6 +331,8 @@ map <leader>s3 :vs<CR>
 map <leader>s1 <C-W>o
 map <leader>s0 :close<CR>
 " go to SCM conflict marker
+map ]] ]n
+map [[ [n
 map <leader>nm ]n
 map <leader>pm [n
 map <leader>ni d]n
