@@ -42,10 +42,10 @@ if has("gui_running")	" GUI color and font settings
       au GUIEnter * simalt ~x
     endif
   endif
-else
-  " terminal color settings
-  colorscheme evening
 endif
+
+" terminal color settings
+colorscheme evening
 
 set clipboard=unnamed	" yank to the system register (*) by default
 set showmatch		" Cursor shows matching ) and }
