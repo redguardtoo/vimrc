@@ -335,6 +335,10 @@ map <leader>s0 :close<CR>
 " go to SCM conflict marker
 map ]] ]n
 map [[ [n
+map <leader>xf :CtrlP<CR>
+map <leader>xb :CtrlPBuffer<CR>
+map <leader>hr :CtrlPMRU<CR>
+map <leader>gt :CtrlPTag<CR>
 map <leader>nm ]n
 map <leader>pm [n
 map <leader>ni d]n
