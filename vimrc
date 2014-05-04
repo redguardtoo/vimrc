@@ -398,18 +398,6 @@ endfunction
 exec "set listchars=tab:\uBB\uBB,trail:\uB7,nbsp:~"
 set list
 
-"====[ dragvisuals ]======
-
-runtime plugin/dragvisuals.vim
-vmap  <expr>  h        DVB_Drag('left')
-vmap  <expr>  l        DVB_Drag('right')
-vmap  <expr>  j        DVB_Drag('down')
-vmap  <expr>  k        DVB_Drag('up')
-"vmap  <expr>  D        DVB_Duplicate()
-
-" Remove any introduced trailing whitespace after moving...
-let g:DVB_TrimWS = 1
-
 " Local Variables:
 " coding: utf-8
 " indent-tabs-mode: nil
