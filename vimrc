@@ -359,6 +359,57 @@ endif
 
 syntax on		" syntax highlight
 
+"====[ Make the 81st column stand out ]====================
+"    " EITHER the entire 81st column, full-screen...
+"    highlight ColorColumn ctermbg=magenta
+"    set colorcolumn=81
+
+" OR ELSE just the 81st column of wide lines...
+highlight ColorColumn ctermbg=magenta
+call matchadd('ColorColumn', '\%81v', 100)
+
+"=====[ Highlight matches when jumping to next ]=============
+
+" This rewires n and N to do the highlighing...
+nnoremap <silent> n   n:call HLNext(0.4)<cr>
+nnoremap <silent> N   N:call HLNext(0.4)<cr>
+
+" OR ELSE ring the match in red...
+function! HLNext (blinktime)
+    highlight RedOnRed ctermfg=red ctermbg=red
+    let [bufnum, lnum, col, off] = getpos('.')
+    let matchlen = strlen(matchstr(strpart(getline('.'),col-1),@/))
+    echo matchlen
+    let ring_pat = (lnum > 1 ? '\%'.(lnum-1).'l\%>'.max([col-4,1]) .'v\%<'.(col+matchlen+3).'v.\|' : '')
+    \ . '\%'.lnum.'l\%>'.max([col-4,1]) .'v\%<'.col.'v.'
+    \ . '\|'
+    \ . '\%'.lnum.'l\%>'.max([col+matchlen-1,1]) .'v\%<'.(col+matchlen+3).'v.'
+    \ . '\|'
+    \ . '\%'.(lnum+1).'l\%>'.max([col-4,1]) .'v\%<'.(col+matchlen+3).'v.'
+    let ring = matchadd('RedOnRed', ring_pat, 101)
+    redraw
+    exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
+    call matchdelete(ring)
+    redraw
+endfunction
+
+"====[ Make tabs, trailing whitespace, and non-breaking spaces visible ]======
+
+exec "set listchars=tab:\uBB\uBB,trail:\uB7,nbsp:~"
+set list
+
+"====[ dragvisuals ]======
+
+runtime plugin/dragvisuals.vim
+vmap  <expr>  h        DVB_Drag('left')
+vmap  <expr>  l        DVB_Drag('right')
+vmap  <expr>  j        DVB_Drag('down')
+vmap  <expr>  k        DVB_Drag('up')
+"vmap  <expr>  D        DVB_Duplicate()
+
+" Remove any introduced trailing whitespace after moving...
+let g:DVB_TrimWS = 1
+
 " Local Variables:
 " coding: utf-8
 " indent-tabs-mode: nil
