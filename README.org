@@ -1,0 +1,68 @@
+* Chen Bin (redguardtoo)'s vimrc
+- Github: git://github.com/redguardtoo/vimrc.git
+- WIN32 is fine
+- NO Ruby/Python/Perl dependency. The only language except vim script I can accept is C
+- This vimrc is light weight because I'm [[https://github.com/redguardtoo/emacs.d][Emacs user now]]
+- No "git submodule"
+
+* Install
+
+** Linux
+
+#+BEGIN_SRC sh
+git clone https://github.com/redguardtoo/vimrc.git ~/.vim;cd ~/.vim;./install-vimrc.sh
+#+END_SRC
+
+** Windows (easy way)
+
+- Install CYGWIN
+- In CYGWIN bash shell, run exact command as "INSTALL ON LINUX" section.
+- Set the value of environment variable "HOME" to the full path of parent directory of .vim
+
+** Windows (hard way)
+
+- Check out from github
+#+BEGIN_SRC sh
+cd "C:\Program Files\Vim""
+rmdir /s vimfiles # This deletes your old configurations. If you want to keep it, use move instead of rmdir
+git clone https://github.com/redguardtoo/vimrc.git vimfiles
+#+END_SRC
+
+- Install vimrc. Add the following line at the end of C:\Program Files\Vim\vimrc.
+#+BEGIN_SRC sh
+source $VIM/vimfiles/vimrc
+#+END_SRC
+
+* Plugins
+
+** [[http://www.vim.org/scripts/script.php?script_id=2332][Pathogen]] 
+Pathogen let us install a plugin as a bundle in ~/.vim/bundle seprately.
+
+** [[http://www.vim.org/scripts/script.php?script_id=1658][Nerd Tree]]
+A tree explorer plugin for navigating the filesystem.
+
+Useful commands:
+- `:Bookmark [name]` - bookmark any directory as name
+- `:NERDTree [name]` - open the bookmark [name] in Nerd Tree
+
+** [[http://www.vim.org/scripts/script.php?script_id=1218][NERD commenter]]
+Press ",ci" or ",cc" to comment/uncomment lines.
+
+** [[http://www.vim.org/scripts/script.php?script_id=1849][AutoClose]] 
+Inserts matching bracket, paren, brace or quote.
+
+** [[https://github.com/tpope/vim-surround/blob/master/doc/surround.txt][vim-surround]] 
+deal with pairs of surroundings.
+
+** [[http://www.vim.org/scripts/script.php?script_id=39][matchit]] 
+extended % matching for HTML, LaTeX, and many other languages. 
+
+** [[http://www.vim.org/scripts/script.php?script_id=1234][YankRing]] 
+Maintains a history of previous yanks, changes and deletes.
+
+`:help yankring` to see more info.
+
+* Other good references
+
+- [[http://amix.dk/vim/vimrc.html]]
+- [[http://spf13.com/post/perfect-vimrc-vim-config-file]]
