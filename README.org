@@ -16,8 +16,8 @@ git clone https://github.com/redguardtoo/vimrc.git ~/.vim;cd ~/.vim;./install-vi
 ** Windows (easy way)
 
 - Install CYGWIN
-- In CYGWIN bash shell, run exact command as "INSTALL ON LINUX" section.
-- Set the value of environment variable "HOME" to the full path of parent directory of .vim
+- In CYGWIN bash shell, run exact the same command as in previous *Linux* section.
+- Set the value of environment variable *HOME* to the full path of parent directory of .vim
 
 ** Windows (hard way)
 
