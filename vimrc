@@ -357,10 +357,15 @@ if !hasmapto("<Plug>ZoomWin")
  nmap <unique> <leader>ff  <Plug>ZoomWin
 endif
 
-syntax on		" syntax highlight
+if executable("ag")
+  set grepprg=ag\ --nogroup\ --nocolor
+  "use ag in ctrlp for listing files. lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+endif
+
+syntax on " syntax highlight
 
 "====[ Make tabs, trailing whitespace, and non-breaking spaces visible ]======
-
 exec "set listchars=tab:\uBB\uBB,trail:\uB7,nbsp:~"
 set list
 
