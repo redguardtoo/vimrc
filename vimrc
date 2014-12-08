@@ -11,11 +11,11 @@ call pathogen#helptags()
 
 " General Settings
 
-set nocompatible	" not compatible with the old-fashion vi mode
-set bs=2		" allow backspacing over everything in insert mode
-set history=50		" keep 50 lines of command line history
-set ruler		" show the cursor position all the time
-set autoread		" auto read when file is changed from outside
+set nocompatible " not compatible with the old-fashion vi mode
+set bs=2  " allow backspacing over everything in insert mode
+set history=50  " keep 50 lines of command line history
+set ruler  " show the cursor position all the time
+set autoread  " auto read when file is changed from outside
 set number              " show line numbers
 set ignorecase          " ignore case when searching
 
@@ -23,9 +23,10 @@ filetype on           " Enable filetype detection
 filetype indent on    " Enable filetype-specific indenting
 filetype plugin on    " Enable filetype-specific plugins
 
-set hlsearch		" search highlighting
+set hlsearch  " search highlighting
+set tags=./tags;$HOME
 
-if has("gui_running")	" GUI color and font settings
+if has("gui_running") " GUI color and font settings
   set background=dark
   set t_Co=256          " 256 color mode
   " NO menu,toolbar ...
@@ -49,22 +50,22 @@ else
 endif
 
 
-set clipboard=unnamed	" yank to the system register (*) by default
-set showmatch		" Cursor shows matching ) and }
-set showmode		" Show current mode
-set wildchar=<TAB>	" start wild expansion in the command line using <TAB>
+set clipboard=unnamed " yank to the system register (*) by default
+set showmatch  " Cursor shows matching ) and }
+set showmode  " Show current mode
+set wildchar=<TAB> " start wild expansion in the command line using <TAB>
 set wildmenu            " wild char completion menu
 
 " ignore these files while expanding wild chars
 set wildignore=*.o,*.class,*.pyc
 
-set autoindent		" auto indentation
-set incsearch		" incremental search
-set nobackup		" no *~ backup files
-set copyindent		" copy the previous indentation on autoindenting
-set ignorecase		" ignore case when searching
-set smartcase		" ignore case if search pattern is all lowercase,case-sensitive otherwise
-set smarttab		" insert tabs on the start of a line according to context
+set autoindent  " auto indentation
+set incsearch  " incremental search
+set nobackup  " no *~ backup files
+set copyindent  " copy the previous indentation on autoindenting
+set ignorecase  " ignore case when searching
+set smartcase  " ignore case if search pattern is all lowercase,case-sensitive otherwise
+set smarttab  " insert tabs on the start of a line according to context
 
 " disable sound on errors
 set noerrorbells
@@ -264,9 +265,9 @@ if has("autocmd") && exists("+omnifunc")
 
   " use syntax complete if nothing else available
   autocmd Filetype *
-        \	if &omnifunc == "" |
-        \		setlocal omnifunc=syntaxcomplete#Complete |
-        \	endif
+        \ if &omnifunc == "" |
+        \  setlocal omnifunc=syntaxcomplete#Complete |
+        \ endif
 endif
 
 set cot-=preview "disable doc preview in omnicomplete
@@ -364,6 +365,15 @@ if executable("ag")
 endif
 
 syntax on " syntax highlight
+
+"====[ Make the 81st column stand out ]====================
+"    " EITHER the entire 81st column, full-screen...
+"    highlight ColorColumn ctermbg=magenta
+"    set colorcolumn=81
+
+" OR ELSE just the 81st column of wide lines...
+highlight ColorColumn ctermbg=magenta
+call matchadd('ColorColumn', '\%81v', 100)
 
 "====[ Make tabs, trailing whitespace, and non-breaking spaces visible ]======
 exec "set listchars=tab:\uBB\uBB,trail:\uB7,nbsp:~"
