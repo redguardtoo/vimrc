@@ -323,8 +323,11 @@ if !has("gui_running")
   nmap OD h
 endif
 
-" --- taglist
-map <leader>tt :TlistToggle<CR>
+" taglist
+map <leader>im :TlistToggle<CR>
+
+" NERDTree
+map <leader>nt :NERDTreeToggle<CR>
 
 " leader hotkeys
 map <leader>xs :write<CR>
@@ -349,9 +352,6 @@ map <leader>pc [c
 map <leader>tr :%s/ \+$//g<CR>
 map <leader>cg :CtrlPRoot<CR>
 map <leader>xz :suspend<CR>
-map <leader>s0 :quit<CR>
-map <leader>s2 :sp<CR>
-map <leader>s3 :vs<CR>
 map <leader>xc :quitall<CR>
 
 if !hasmapto("<Plug>ZoomWin")
