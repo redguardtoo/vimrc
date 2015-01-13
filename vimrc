@@ -379,6 +379,22 @@ call matchadd('ColorColumn', '\%81v', 100)
 exec "set listchars=tab:\uBB\uBB,trail:\uB7,nbsp:~"
 set list
 
+" Copy/Paste, can only handle lines
+let s:uname = system("echo -n \"$(uname)\"")
+if s:uname == "Linux"
+  " Linux
+  vmap <leader>cx ::w !xsel -ib<CR>
+  map <leader>px :r!xsel -ob<CR>
+elseif s:uname == "Darwin"
+  " OS X
+  vmap <leader>cx ::w !pbcopy<CR>
+  map <leader>px :r!pbpaste<CR>
+else
+  " windows (cygwin)
+  vmap <leader>cx ::w !putclip<CR>
+  map <leader>px :r!getclip<CR>
+endif
+
 " Local Variables:
 " coding: utf-8
 " indent-tabs-mode: nil
