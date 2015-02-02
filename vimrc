@@ -49,6 +49,18 @@ else
   colorscheme evening
 endif
 
+" vim-easymotion
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+" Bi-directional find motion
+" Jump to anywhere you want with minimal keystrokes, with just one key binding.
+" `s{char}{label}`
+nmap <Space> <Plug>(easymotion-s)
+" Use uppercase target labels and type as a lower case
+let g:EasyMotion_use_upper = 1
+" type `l` and match `l`&`L`
+let g:EasyMotion_smartcase = 1
+" Smartsign (type `3` and match `3`&`#`)
+let g:EasyMotion_use_smartsign_us = 1
 
 set clipboard=unnamed " yank to the system register (*) by default
 set showmatch  " Cursor shows matching ) and }
