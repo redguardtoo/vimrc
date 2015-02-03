@@ -381,6 +381,9 @@ else
   map <leader>px :r!getclip<CR>
 endif
 
+" should be placed at last
+syntax on " syntax highlight
+
 " Local Variables:
 " coding: utf-8
 " indent-tabs-mode: nil
