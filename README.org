@@ -61,29 +61,32 @@ Maintains a history of previous yanks, changes and deletes.
 
 `:help yankring` to see more info.
 
-** Cmake
+** cmake
 Syntax highlight CmakeLists.txt
 
 ** Ctrlp
 Search files
 
-** Syntax checker for all languages
+** syntax checker for all languages
 syntastic/
 
-** Taglist
+** taglist
 List the structure of the source code
 
-** Easymotion
+** easymotion
 Press <Space> to jump to the beginning of words
 
-** Fugitive
+** fugitive
 For git!
 
 ** vim-gitgutter
 Display git gutter in current file
 
-** Zoomwin
+** zoomwin
 Zoom in/out window. Press ",ff"
+
+** vim-abolish
+`:%Subvert/facilit{y,ies}/building{,s}/g` replace "facility" to "building" and "Facilities" to "Buildings".
 
 * Other good references
 - [[http://amix.dk/vim/vimrc.html]]
