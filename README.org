@@ -4,6 +4,7 @@
 - NO Ruby/Python/Perl dependency. The only language except vim script I can accept is C
 - This vimrc is light weight because I'm [[https://github.com/redguardtoo/emacs.d][Emacs user now]]
 - No "git submodule"
+- Vim 7+ requried
 
 * Install
 
@@ -97,6 +98,9 @@ Zoom in/out window. Press ",ff"
 ",mt" => ":MarkologyToggle" Useful when using with vim-gutter.
 
 Check its [[https://github.com/jeetsukumaran/vim-markology/blob/master/doc/markology.txt][manual]].
+
+** undotree
+Undo and redo in tree
 
 * Other good references
 - [[http://amix.dk/vim/vimrc.html]]

@@ -63,6 +63,7 @@ let g:EasyMotion_smartcase = 1
 " Smartsign (type `3` and match `3`&`#`)
 let g:EasyMotion_use_smartsign_us = 1
 
+
 " syntastic
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -200,15 +201,12 @@ map <silent> <leader>1 :diffget 1<CR> :diffupdate<CR>
 map <silent> <leader>2 :diffget 2<CR> :diffupdate<CR>
 map <silent> <leader>3 :diffget 3<CR> :diffupdate<CR>
 map <silent> <leader>4 :diffget 4<CR> :diffupdate<CR>
-
 map <silent> <leader>xvp :Gblame<CR>
 
 " grep result window operation alias
 " " Do :help cope if you are unsure what cope is. It's super useful!
 map <leader>co :botright copen<cr>
 "<leader>cc is reserved for nerd comment
-map <leader>nn :cn<cr>
-map <leader>pp :cp<cr>
 map <leader>as :w!<CR>:!aspell check %<CR>:e! %<CR>
 
 " Spell checking
