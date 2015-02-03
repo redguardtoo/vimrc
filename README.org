@@ -34,7 +34,6 @@ source $VIM/vimfiles/vimrc
 #+END_SRC
 
 * Plugins
-
 ** [[http://www.vim.org/scripts/script.php?script_id=2332][Pathogen]] 
 Pathogen let us install a plugin as a bundle in ~/.vim/bundle seprately.
 
@@ -62,7 +61,30 @@ Maintains a history of previous yanks, changes and deletes.
 
 `:help yankring` to see more info.
 
-* Other good references
+** Cmake
+Syntax highlight CmakeLists.txt
 
+** Ctrlp
+Search files
+
+** Syntax checker for all languages
+syntastic/
+
+** Taglist
+List the structure of the source code
+
+** Easymotion
+Press <Space> to jump to the beginning of words
+
+** Fugitive
+For git!
+
+** vim-gitgutter
+Display git gutter in current file
+
+** Zoomwin
+Zoom in/out window. Press ",ff"
+
+* Other good references
 - [[http://amix.dk/vim/vimrc.html]]
 - [[http://spf13.com/post/perfect-vimrc-vim-config-file]]
