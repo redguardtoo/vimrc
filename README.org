@@ -88,6 +88,16 @@ Zoom in/out window. Press ",ff"
 ** vim-abolish
 `:%Subvert/facilit{y,ies}/building{,s}/g` replace "facility" to "building" and "Facilities" to "Buildings".
 
+** vim-markology
+"m+"  => add mark
+"m=>" => delete mark
+"m,"  => toggle mark
+"m?"  => list marks
+"m~"  => quick fix window
+",mt" => ":MarkologyToggle" Useful when using with vim-gutter.
+
+Check its [[https://github.com/jeetsukumaran/vim-markology/blob/master/doc/markology.txt][manual]].
+
 * Other good references
 - [[http://amix.dk/vim/vimrc.html]]
 - [[http://spf13.com/post/perfect-vimrc-vim-config-file]]

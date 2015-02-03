@@ -9,6 +9,7 @@ let g:pathogen_disabled = []
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 
+
 " General Settings
 
 set nocompatible " not compatible with the old-fashion vi mode
