@@ -218,6 +218,9 @@ noremap <leader>rm :%s/\r//g<CR>
 "Switch to current dir
 map <leader>cd :cd %:p:h<cr>
 
+" vcscommand.vim : CVS/SVN/SVK/git/hg/bzr integration plugin
+map <leader>xvg :VCSAnnotate<cr>
+
 "Remove indenting on empty line
 map <leader>el :%s/s*$//g<cr>:noh<cr>''
 
@@ -328,6 +331,10 @@ map <leader>s2 :sp<CR>
 map <leader>s3 :vs<CR>
 map <leader>s1 <C-W>o
 map <leader>s0 :close<CR>
+map <leader>x2 :sp<CR>
+map <leader>x3 :vs<CR>
+map <leader>x1 <C-W>o
+map <leader>x0 :close<CR>
 map <leader>xf :CtrlP<CR>
 map <leader>xb :CtrlPBuffer<CR>
 map <leader>hr :CtrlPMRU<CR>
