@@ -218,7 +218,7 @@ noremap <leader>rm :%s/\r//g<CR>
 map <leader>cd :cd %:p:h<cr>
 
 " vcscommand.vim : CVS/SVN/SVK/git/hg/bzr integration plugin
-map <leader>xvg :VCSAnnotate<cr>
+map <leader>xvb :VCSAnnotate<cr>
 
 "Remove indenting on empty line
 map <leader>el :%s/s*$//g<cr>:noh<cr>''
@@ -254,7 +254,7 @@ cnoremap <C-E>      <End>
 cnoremap <C-K>      <C-U>
 
 " ,pp toggles paste mode
-nmap <leader>pp :set paste!<BAR>set paste?<CR>
+nmap <leader>tpp :set paste!<BAR>set paste?<CR>
 
 "---------------------------------------------------------------------------
 " PROGRAMMING SHORTCUTS
@@ -338,8 +338,8 @@ map <leader>xf :CtrlP<CR>
 map <leader>xb :CtrlPBuffer<CR>
 map <leader>hr :CtrlPMRU<CR>
 map <leader>gt :CtrlPTag<CR>
-map <leader>nm ]n
-map <leader>pm [n
+map <leader>nn ]n
+map <leader>pp [n
 map <leader>dg1 ]nd]n[ndd[ndd
 map <leader>dg2 d]ndd]ndd
 map <leader>nc ]c
