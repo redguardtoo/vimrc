@@ -337,11 +337,11 @@ map <leader>x0 :close<CR>
 map <leader>xf :CtrlP<CR>
 map <leader>xb :CtrlPBuffer<CR>
 map <leader>hr :CtrlPMRU<CR>
-"map <leader>gt :CtrlPTag<CR>
+map <leader>gt :CtrlPTag<CR>
 map <leader>nm ]n
 map <leader>pm [n
-map <leader>ni d]n
-map <leader>pi d[n
+map <leader>dg1 ]nd]n[ndd[ndd
+map <leader>dg2 d]ndd]ndd
 map <leader>nc ]c
 map <leader>pc [c
 map <leader>tr :%s/ \+$//g<CR>
