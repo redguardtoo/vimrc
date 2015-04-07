@@ -368,7 +368,7 @@ call matchadd('ColorColumn', '\%81v', 100)
 " }}
 
 "====[ Make tabs, trailing whitespace, and non-breaking spaces visible ]======
-exec "set listchars=tab:\uBB\uBB,trail:\uB7,nbsp:~"
+exec "set listchars=trail:\uB7,nbsp:~"
 set list
 
 " Copy/Paste, can only handle lines
