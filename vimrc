@@ -347,7 +347,7 @@ map <leader>pc [c
 map <leader>tr :%s/ \+$//g<CR>
 map <leader>cg :CtrlPRoot<CR>
 map <leader>xz :suspend<CR>
-map <leader>qq :quitall<CR>
+map <leader>xc :quitall<CR>
 map <leader>ut :UndotreeToggle<CR>
 
 if !hasmapto("<Plug>ZoomWin")
