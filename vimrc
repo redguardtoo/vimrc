@@ -347,7 +347,7 @@ map <leader>pc [c
 map <leader>tr :%s/ \+$//g<CR>
 map <leader>cg :CtrlPRoot<CR>
 map <leader>xz :suspend<CR>
-map <leader>xc :quitall<CR>
+map <leader>qq :quitall<CR>
 map <leader>ut :UndotreeToggle<CR>
 
 if !hasmapto("<Plug>ZoomWin")
@@ -370,21 +370,21 @@ exec "set listchars=trail:\uB7,nbsp:~"
 set list
 
 " Copy/Paste, can only handle lines
-" ',cx' => copy
-" ',px' = paste
+" ',aa' => copy
+" ',zz' = paste
 let s:uname = system("echo -n \"$(uname)\"")
 if s:uname == "Linux"
   " Linux
-  vmap <leader>cx ::w !xsel -ib<CR>
-  map <leader>px :r!xsel -ob<CR>
+  vmap <leader>aa ::w !xsel -ib<CR>
+  map <leader>zz :r!xsel -ob<CR>
 elseif s:uname == "Darwin"
   " OS X
-  vmap <leader>cx ::w !pbcopy<CR>
-  map <leader>px :r!pbpaste<CR>
+  vmap <leader>aa ::w !pbcopy<CR>
+  map <leader>zz :r!pbpaste<CR>
 else
   " windows (cygwin)
-  vmap <leader>cx ::w !putclip<CR>
-  map <leader>px :r!getclip<CR>
+  vmap <leader>aa ::w !putclip<CR>
+  map <leader>zz :r!getclip<CR>
 endif
 
 " should be placed at last
