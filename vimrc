@@ -372,18 +372,20 @@ set list
 " Copy/Paste, can only handle lines
 " ',aa' => copy
 " ',zz' = paste
+" Vim always copy lines!
+" Stackoverflow doesn't help.
 let s:uname = system("echo -n \"$(uname)\"")
 if s:uname == "Linux"
   " Linux
-  vmap <leader>aa ::w !xsel -ib<CR>
+  vmap <leader>aa :'<,'>:w !xsel -ib<CR><CR>
   map <leader>zz :r!xsel -ob<CR>
 elseif s:uname == "Darwin"
   " OS X
-  vmap <leader>aa ::w !pbcopy<CR>
+  vmap <leader>aa :'<,'>:w !pbcopy<CR><CR>
   map <leader>zz :r!pbpaste<CR>
 else
   " windows (cygwin)
-  vmap <leader>aa ::w !putclip<CR>
+  vmap <leader>aa :'<,'>:w !putclip<CR><CR>
   map <leader>zz :r!getclip<CR>
 endif
 
