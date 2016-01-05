@@ -95,7 +95,6 @@ set wildmenu            " wild char completion menu
 set expandtab        "replace <TAB> with spaces
 set softtabstop=4
 set shiftwidth=4
-au FileType Makefile set noexpandtab
 " }}
 
 " status line {
@@ -128,6 +127,10 @@ if has("autocmd")
   autocmd BufNewFile,BufRead *.json set ft=javascript
   autocmd BufNewFile,BufRead *.{ftl,jsp} set ft=html
   autocmd BufNewFile,BufRead *.build set ft=xml
+  " Support Format-Flowed in email (mutt).
+  autocmd FileType mail setlocal fo+=aw tw=72
+  " Use TAB only in makefile
+  autocmd FileType Makefile set noexpandtab
   " C/C++ specific settings
   autocmd FileType c,cpp,cc  set cindent comments=sr:/*,mb:*,el:*/,:// cino=>s,e0,n0,f0,{0,}0,^-1s,:0,=s,g0,h1s,p2,t0,+2,(2,)20,*30
   " auto reload vimrc when editing it
@@ -280,7 +283,7 @@ if has("autocmd") && exists("+omnifunc")
   autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 
   " use syntax complete if nothing else available
-  autocmd Filetype *
+  autocmd FileType *
         \ if &omnifunc == "" |
         \  setlocal omnifunc=syntaxcomplete#Complete |
         \ endif
