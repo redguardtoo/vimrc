@@ -196,10 +196,10 @@ let mapleader=","
 let g:mapleader=","
 
 " {{ for merge tool
-map <silent> <leader>1 :diffget 1<CR> :diffupdate<CR>
-map <silent> <leader>2 :diffget 2<CR> :diffupdate<CR>
-map <silent> <leader>3 :diffget 3<CR> :diffupdate<CR>
-map <silent> <leader>4 :diffget 4<CR> :diffupdate<CR>
+map <silent> <leader>1 :diffget 1<CR>
+map <silent> <leader>2 :diffget 2<CR>
+map <silent> <leader>3 :diffget 3<CR>
+map <silent> <leader>4 :diffget 4<CR>
 " }}
 
 " grep result window operation alias
