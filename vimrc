@@ -378,18 +378,27 @@ set list
 " Vim always copy lines!
 " Stackoverflow doesn't help.
 let s:uname = system("echo -n \"$(uname)\"")
-if s:uname == "Linux"
+if executable('xsel')
   " Linux
-  vmap <leader>aa :'<,'>:w !xsel -ib<CR><CR>
-  map <leader>zz :r!xsel -ob<CR>
+  vnoremap <leader>aa :w !xsel -ib<CR><CR>
+        \:echo 'Selection => clipboard'<CR>
+  nnoremap <leader>aa V:w !xsel -ib<CR><CR>
+        \:echo '1 line => clipboard'<cr>
+  nnoremap <leader>zz :silent :r!xsel -ob<CR>
 elseif s:uname == "Darwin"
   " OS X
-  vmap <leader>aa :'<,'>:w !pbcopy<CR><CR>
-  map <leader>zz :r!pbpaste<CR>
+  vnoremap <leader>aa :w !pbcopy<CR><CR>
+        \:echo 'Selection => clipboard'<CR>
+  nnoremap <leader>aa V:w !pbcopy<CR><CR>
+        \:echo '1 line => clipboard'<cr>
+  nnoremap <leader>zz :silent :r!pbpaste<CR>
 else
   " windows (cygwin)
-  vmap <leader>aa :'<,'>:w !putclip<CR><CR>
-  map <leader>zz :r!getclip<CR>
+  vnoremap <leader>aa :w !putclip<CR><CR>
+        \:echo 'Selection => clipboard'<CR>
+  nnoremap <leader>aa V:w !putclip<CR><CR>
+        \:echo '1 line => clipboard'<cr>
+  nnoremap <leader>zz :silent :r!getclip<CR>
 endif
 
 " should be placed at last
