@@ -181,16 +181,6 @@ if has("autocmd")
   augroup END
 endif
 
-" == USEFUL SHORTCUTS ==
-"work with clipbord in vim-console
-" C-c is same as ESC which is good if you switch CAP and Ctrl key
-if has("unix")
-  " two clipboards in X
-  vmap <C-y> y:call system("xclip -i -selection clipboard", getreg("\""))<CR>:call system("xclip -i", getreg("\""))<CR>
-elseif has("win32unix")
-  vmap <C-y> y:call system("putclip", getreg("\""))<CR>
-endif
-
 " {{ go to SCM conflict marker
 map ]] ]n
 map [[ [n
@@ -382,27 +372,33 @@ set list
 " ',zz' = paste
 " Vim always copy lines!
 " Stackoverflow doesn't help.
-let s:uname = system("echo -n \"$(uname)\"")
-if executable('xsel')
+" let s:uname = system("echo -n \"$(uname)\"")
+if has('clipboard')
+    vnoremap <leader>aa "+y
+                \:echo 'Selection => clipboard'<cr>
+    nnoremap <leader>aa "+yy
+                \:echo 'Line(s) => clipboard'<cr>
+    nnoremap <leader>zz "+p
+elseif executable('xsel')
   " Linux
   vnoremap <leader>aa :w !xsel -ib<CR><CR>
         \:echo 'Selection => clipboard'<CR>
   nnoremap <leader>aa V:w !xsel -ib<CR><CR>
-        \:echo '1 line => clipboard'<cr>
+        \:echo 'Line(s) => clipboard'<cr>
   nnoremap <leader>zz :silent :r!xsel -ob<CR>
-elseif s:uname == "Darwin"
+elseif executable('pbcopy')
   " OS X
   vnoremap <leader>aa :w !pbcopy<CR><CR>
         \:echo 'Selection => clipboard'<CR>
   nnoremap <leader>aa V:w !pbcopy<CR><CR>
-        \:echo '1 line => clipboard'<cr>
+        \:echo 'Line(s) => clipboard'<cr>
   nnoremap <leader>zz :silent :r!pbpaste<CR>
 else
   " windows (cygwin)
   vnoremap <leader>aa :w !putclip<CR><CR>
         \:echo 'Selection => clipboard'<CR>
   nnoremap <leader>aa V:w !putclip<CR><CR>
-        \:echo '1 line => clipboard'<cr>
+        \:echo 'Line(s) => clipboard'<cr>
   nnoremap <leader>zz :silent :r!getclip<CR>
 endif
 
