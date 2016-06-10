@@ -323,7 +323,6 @@ map <leader>nt :NERDTreeToggle<CR>
 
 " leader hotkeys
 map <leader>xs :write<CR>
-map <leader>ww :write<CR>
 map <leader>s2 :sp<CR>
 map <leader>s3 :vs<CR>
 map <leader>s1 <C-W>o
