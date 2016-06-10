@@ -60,6 +60,11 @@ else
   colorscheme evening
 endif
 
+" {{ vim-expand-region
+map K <Plug>(expand_region_expand)
+map J <Plug>(expand_region_shrink)
+" }}
+
 " {{ vim-easymotion
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
 " Bi-directional find motion
