@@ -316,7 +316,7 @@ endif
 " }}
 
 " taglist
-map <leader>im :TlistToggle<CR>
+map <leader>ii :TlistToggle<CR>
 
 " NERDTree
 map <leader>nt :NERDTreeToggle<CR>
