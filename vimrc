@@ -357,6 +357,14 @@ if executable("ag")
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 endif
 
+" {{ vim-textobj-user
+call textobj#user#plugin('file', {
+      \ 'file': {
+      \ 'pattern': '\f\+', 'select': ['af', 'if']
+      \ }
+      \ })
+" }}
+
 " {{ set the 81st column of wide lines...
 highlight ColorColumn ctermbg=magenta
 call matchadd('ColorColumn', '\%81v', 100)
