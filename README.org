@@ -80,9 +80,6 @@ Press <Space> to jump to the beginning of words
 ** fugitive
 For git!
 
-** vim-gitgutter
-Display git gutter in current file
-
 ** zoomwin
 Zoom in/out window. Press ",ff"
 
@@ -95,7 +92,6 @@ Zoom in/out window. Press ",ff"
 "m,"  => toggle mark
 "m?"  => list marks
 "m~"  => quick fix window
-",mt" => ":MarkologyToggle" Useful when using with vim-gutter.
 
 Check its [[https://github.com/jeetsukumaran/vim-markology/blob/master/doc/markology.txt][manual]].
 
