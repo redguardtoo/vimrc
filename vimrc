@@ -80,15 +80,8 @@ let g:EasyMotion_use_smartsign_us = 1
 " }}
 
 
-" {{ syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-" }}
+" syntastic has some performance impact.
+" I don't use it because vi should be light weight
 
 set clipboard=unnamed " yank to the system register (*) by default
 set showmatch  " Cursor shows matching ) and }
@@ -115,14 +108,6 @@ set statusline+=%y      "filetype
 set statusline+=%=      "left/right separator
 set statusline+=%c      "cursor column
 set statusline+=\ %P    "percent through file
-
-function! HasPaste()
-  if &paste
-    return '[PASTE]'
-  else
-    return ''
-  endif
-endfunction
 "}
 
 if has("autocmd")
