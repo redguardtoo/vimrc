@@ -61,8 +61,8 @@ else
 endif
 
 " {{ vim-expand-region
-map K <Plug>(expand_region_expand)
-map J <Plug>(expand_region_shrink)
+nmap N <Plug>(expand_region_expand)
+nmap M <Plug>(expand_region_shrink)
 " }}
 
 " {{ vim-easymotion
