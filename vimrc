@@ -336,6 +336,11 @@ if !hasmapto("<Plug>ZoomWin")
  nmap <unique> <leader>ff  <Plug>ZoomWin
 endif
 
+" For MRU plugin.
+let MRU_Max_Entries = 1024
+let MRU_Exclude_Files = '^/tmp/.*\|^/var/tmp/.*'
+map <leader>rr :MRU<CR>
+
 if executable("ag")
   set grepprg=ag\ --nogroup\ --nocolor
   "use ag in ctrlp for listing files. lightning fast and respects .gitignore
