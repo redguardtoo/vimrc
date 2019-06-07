@@ -18,7 +18,7 @@ set autoread  " auto read when file is changed from outside
 set number " show line numbers
 set ignorecase " ignore case when searching
 " ignore these files while expanding wild chars
-set wildignore=*.o,*.class,*.pyc
+set wildignore=*.o,*.class,*.pyc,*.elc,*.a,*.lib
 set autoindent  " auto indentation
 set incsearch  " incremental search
 set nobackup  " no *~ backup files
