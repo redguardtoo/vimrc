@@ -376,13 +376,13 @@ if has('clipboard')
     nnoremap <leader>aa "+yy
                 \:echo 'Line(s) => clipboard'<cr>
     nnoremap <leader>zz "+p
-elseif executable('xsel')
+elseif executable('xclip')
   " Linux
-  vnoremap <leader>aa :w !xsel -ib<CR><CR>
+  vnoremap <leader>aa :w !xclip -selection clipboard -in<CR><CR>
         \:echo 'Selection => clipboard'<CR>
-  nnoremap <leader>aa V:w !xsel -ib<CR><CR>
+  nnoremap <leader>aa V:w !xclip -selection clipboard -in<CR><CR>
         \:echo 'Line(s) => clipboard'<cr>
-  nnoremap <leader>zz :silent :r!xsel -ob<CR>
+  nnoremap <leader>zz :silent :r!xclip -selection clipboard -out<CR>
 elseif executable('pbcopy')
   " OS X
   vnoremap <leader>aa :w !pbcopy<CR><CR>
