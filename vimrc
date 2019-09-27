@@ -326,6 +326,12 @@ map <leader>dg1 ]nd]n[ndd[ndd
 map <leader>dg2 d]ndd]ndd
 map <leader>nc ]c
 map <leader>pc [c
+" {{
+noremap <leader>wh <C-W>h
+noremap <leader>wj <C-W>j
+noremap <leader>wk <C-W>k
+noremap <leader>wl <C-W>l
+" }}"
 map <leader>tr :%s/ \+$//g<CR>
 map <leader>cg :CtrlPRoot<CR>
 map <leader>xz :suspend<CR>
