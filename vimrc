@@ -405,6 +405,7 @@ else
   nnoremap <leader>zz :silent :r!getclip<CR>
 endif
 
+let g:DiffModeSync = 1
 " should be placed at last
 syntax on " syntax highlight
 
