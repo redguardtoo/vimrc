@@ -306,35 +306,36 @@ map ,ii :TlistToggle<CR>
 map ,nt :NERDTreeToggle<CR>
 
 " leader hotkeys
-map ,xs :write<CR>
-map ,s2 :sp<CR>
-map ,s3 :vs<CR>
-map ,s1 <C-W>o
-map ,s0 :close<CR>
-map ,x2 :sp<CR>
-map ,x3 :vs<CR>
-map ,x1 <C-W>o
-map ,x0 :close<CR>
-map ,xf :CtrlP<CR>
-map ,xb :CtrlPBuffer<CR>
-map ,hr :CtrlPMRU<CR>
-map ,gt :CtrlPTag<CR>
-map <leader>n ]n
-map <leader>p [n
-map ,dg1 ]nd]n[ndd[ndd
-map ,dg2 d]ndd]ndd
-map <leader>nc ]c
-map <leader>pc [c
+nmap ,xs :write<CR>
+nmap ,s2 :sp<CR>
+nmap ,s3 :vs<CR>
+nmap ,s1 <C-W>o
+nmap ,s0 :close<CR>
+nmap ,x2 :sp<CR>
+nmap ,x3 :vs<CR>
+nmap ,x1 <C-W>o
+nmap ,x0 :close<CR>
+nmap ,xf :CtrlP<CR>
+nmap ,kk :CtrlP<CR>
+nmap ,xb :CtrlPBuffer<CR>
+nmap ,hr :CtrlPMRU<CR>
+nmap ,gt :CtrlPTag<CR>
+nmap <leader>n ]n
+nmap <leader>p [n
+nmap ,dg1 ]nd]n[ndd[ndd
+nmap ,dg2 d]ndd]ndd
+nmap <leader>nc ]c
+nmap <leader>pc [c
 " {{
 noremap ,wh <C-W>h
 noremap ,wj <C-W>j
 noremap ,wk <C-W>k
 noremap ,wl <C-W>l
 " }}"
-map ,tr :%s/ \+$//g<CR>
-map ,cg :CtrlPRoot<CR>
-map ,xc :suspend<CR>
-map ,ut :UndotreeToggle<CR>
+nmap ,tr :%s/ \+$//g<CR>
+nmap ,cg :CtrlPRoot<CR>
+nmap ,xc :suspend<CR>
+nmap ,ut :UndotreeToggle<CR>
 
 if !hasmapto("<Plug>ZoomWin")
  nmap <unique> ,ff  <Plug>ZoomWin
