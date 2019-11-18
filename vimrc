@@ -12,7 +12,7 @@ call pathogen#helptags()
 " == General Settings ==
 set nocompatible " not compatible with the old-fashion vi mode
 set bs=2  " allow backspacing over everything in insert mode
-set history=50  " keep 50 lines of command line history
+set history=1024  " command line history
 set ruler  " show the cursor position all the time
 set autoread  " auto read when file is changed from outside
 set number " show line numbers
@@ -25,16 +25,19 @@ set nobackup  " no *~ backup files
 set copyindent  " copy the previous indentation on autoindenting
 set smartcase  " ignore case if search pattern is all lowercase,case-sensitive otherwise
 set smarttab  " insert tabs on the start of a line according to context
+
 " disable sound on errors
 set noerrorbells
 set novisualbell
-set t_vb=
+set t_vb= " never flash the screen
 set tm=500
+
 filetype on           " Enable filetype detection
 filetype indent on    " Enable filetype-specific indenting
 filetype plugin on    " Enable filetype-specific plugins
+
 set hlsearch  " search highlighting
-set tags=./tags;$HOME
+set tags=./tags;
 
 if has("gui_running") " GUI color and font settings
   set background=dark
