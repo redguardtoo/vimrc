@@ -30,7 +30,6 @@ set noerrorbells
 set novisualbell
 set t_vb=
 set tm=500
-syntax on " syntax highlight
 filetype on           " Enable filetype detection
 filetype indent on    " Enable filetype-specific indenting
 filetype plugin on    " Enable filetype-specific plugins
@@ -172,39 +171,38 @@ map [[ [n
 " }}
 "
 " set leader to ,
-let mapleader=","
-let g:mapleader=","
+
+let mapleader=" "
 
 " {{ for merge tool
 map <silent> <leader>1 :diffget 1<CR>
 map <silent> <leader>2 :diffget 2<CR>
 map <silent> <leader>3 :diffget 3<CR>
-map <silent> <leader>4 :diffget 4<CR>
 " }}
 
 " grep result window operation alias
 " " Do :help cope if you are unsure what cope is. It's super useful!
-map <leader>co :botright copen<cr>
-"<leader>cc is reserved for nerd comment
-map <leader>as :w!<CR>:!aspell check %<CR>:e! %<CR>
+map ,co :botright copen<cr>
+",cc is reserved for nerd comment
+map ,as :w!<CR>:!aspell check %<CR>:e! %<CR>
 
 " Spell checking
-map <leader>sn ]
-map <leader>sp [
-map <leader>sa zg
-map <leader>s? z=
+map ,sn ]
+map ,sp [
+map ,sa zg
+map ,s? z=
 
 "Remove the Windows ^M
-noremap <leader>rm :%s/\r//g<CR>
+noremap ,rm :%s/\r//g<CR>
 
 "Switch to current dir
-map <leader>cd :cd %:p:h<cr>
+map ,cd :cd %:p:h<cr>
 
 " vcscommand.vim : CVS/SVN/SVK/git/hg/bzr integration plugin
-map <leader>xvb :VCSAnnotate<cr>
+map ,xvb :VCSAnnotate<cr>
 
 "Remove indenting on empty line
-map <leader>el :%s/s*$//g<cr>:noh<cr>''
+map ,el :%s/s*$//g<cr>:noh<cr>''
 
 " {{ --- Smart way to move window
 "  TIPS:
@@ -227,9 +225,9 @@ endif
 "  }
 
 " new tab
-map <leader>tn :tabnew<CR>
+map ,tn :tabnew<CR>
 " close tab
-map <leader>tc :tabclose<CR>
+map ,tc :tabclose<CR>
 
 " Bash like keys for the command line
 cnoremap <C-A>      <Home>
@@ -237,7 +235,7 @@ cnoremap <C-E>      <End>
 cnoremap <C-K>      <C-U>
 
 " ,pp toggles paste mode
-nmap <leader>tpp :set paste!<BAR>set paste?<CR>
+nmap ,tpp :set paste!<BAR>set paste?<CR>
 
 "---------------------------------------------------------------------------
 " PROGRAMMING SHORTCUTS
@@ -247,7 +245,7 @@ nmap <leader>tpp :set paste!<BAR>set paste?<CR>
 map <C-[> <ESC>:po<CR>
 
 " ,gg generates the header guard
-map <leader>gg :call IncludeGuard()<CR>
+map ,gg :call IncludeGuard()<CR>
 fun! IncludeGuard()
   let basename = substitute(bufname(""), '.*/', '', '')
   let guard = '_' . substitute(toupper(basename), '\.', '_', "H")
@@ -301,51 +299,50 @@ endif
 " }}
 
 " taglist
-map <leader>ii :TlistToggle<CR>
+map ,ii :TlistToggle<CR>
 
 " NERDTree
-map <leader>nt :NERDTreeToggle<CR>
+map ,nt :NERDTreeToggle<CR>
 
 " leader hotkeys
-map <leader>xs :write<CR>
-map <leader>s2 :sp<CR>
-map <leader>s3 :vs<CR>
-map <leader>s1 <C-W>o
-map <leader>s0 :close<CR>
-map <leader>x2 :sp<CR>
-map <leader>x3 :vs<CR>
-map <leader>x1 <C-W>o
-map <leader>x0 :close<CR>
-map <leader>xf :CtrlP<CR>
-map <leader>xb :CtrlPBuffer<CR>
-map <leader>hr :CtrlPMRU<CR>
-map <leader>gt :CtrlPTag<CR>
-map <leader>nn ]n
-map <leader>pp [n
-map <leader>dg1 ]nd]n[ndd[ndd
-map <leader>dg2 d]ndd]ndd
-map <leader>nc ]c
-map <leader>pc [c
+map ,xs :write<CR>
+map ,s2 :sp<CR>
+map ,s3 :vs<CR>
+map ,s1 <C-W>o
+map ,s0 :close<CR>
+map ,x2 :sp<CR>
+map ,x3 :vs<CR>
+map ,x1 <C-W>o
+map ,x0 :close<CR>
+map ,xf :CtrlP<CR>
+map ,xb :CtrlPBuffer<CR>
+map ,hr :CtrlPMRU<CR>
+map ,gt :CtrlPTag<CR>
+map <leader>n ]n
+map <leader>p [n
+map ,dg1 ]nd]n[ndd[ndd
+map ,dg2 d]ndd]ndd
+map ,nc ]c
+map ,pc [c
 " {{
-noremap <leader>wh <C-W>h
-noremap <leader>wj <C-W>j
-noremap <leader>wk <C-W>k
-noremap <leader>wl <C-W>l
+noremap ,wh <C-W>h
+noremap ,wj <C-W>j
+noremap ,wk <C-W>k
+noremap ,wl <C-W>l
 " }}"
-map <leader>tr :%s/ \+$//g<CR>
-map <leader>cg :CtrlPRoot<CR>
-map <leader>xz :suspend<CR>
-map <leader>xc :quitall<CR>
-map <leader>ut :UndotreeToggle<CR>
+map ,tr :%s/ \+$//g<CR>
+map ,cg :CtrlPRoot<CR>
+map ,xc :suspend<CR>
+map ,ut :UndotreeToggle<CR>
 
 if !hasmapto("<Plug>ZoomWin")
- nmap <unique> <leader>ff  <Plug>ZoomWin
+ nmap <unique> ,ff  <Plug>ZoomWin
 endif
 
 " For MRU plugin.
 let MRU_Max_Entries = 1024
 let MRU_Exclude_Files = '^/tmp/.*\|^/var/tmp/.*'
-map <leader>rr :MRU<CR>
+map ,rr :MRU<CR>
 
 if executable("ag")
   set grepprg=ag\ --nogroup\ --nocolor
@@ -377,32 +374,32 @@ set list
 " Stackoverflow doesn't help.
 " let s:uname = system("echo -n \"$(uname)\"")
 if has('clipboard')
-    vnoremap <leader>aa "+y
+    vnoremap ,aa "+y
                 \:echo 'Selection => clipboard'<cr>
-    nnoremap <leader>aa "+yy
+    nnoremap ,aa "+yy
                 \:echo 'Line(s) => clipboard'<cr>
-    nnoremap <leader>zz "+p
+    nnoremap ,pp "+p
 elseif executable('xclip')
   " Linux
-  vnoremap <leader>aa :w !xclip -selection clipboard -in<CR><CR>
+  vnoremap ,aa :w !xclip -selection clipboard -in<CR><CR>
         \:echo 'Selection => clipboard'<CR>
-  nnoremap <leader>aa V:w !xclip -selection clipboard -in<CR><CR>
+  nnoremap ,aa V:w !xclip -selection clipboard -in<CR><CR>
         \:echo 'Line(s) => clipboard'<cr>
-  nnoremap <leader>zz :silent :r!xclip -selection clipboard -out<CR>
+  nnoremap ,zz :silent :r!xclip -selection clipboard -out<CR>
 elseif executable('pbcopy')
   " OS X
-  vnoremap <leader>aa :w !pbcopy<CR><CR>
+  vnoremap ,aa :w !pbcopy<CR><CR>
         \:echo 'Selection => clipboard'<CR>
-  nnoremap <leader>aa V:w !pbcopy<CR><CR>
+  nnoremap ,aa V:w !pbcopy<CR><CR>
         \:echo 'Line(s) => clipboard'<cr>
-  nnoremap <leader>zz :silent :r!pbpaste<CR>
+  nnoremap ,zz :silent :r!pbpaste<CR>
 else
   " windows (cygwin)
-  vnoremap <leader>aa :w !putclip<CR><CR>
+  vnoremap ,aa :w !putclip<CR><CR>
         \:echo 'Selection => clipboard'<CR>
-  nnoremap <leader>aa V:w !putclip<CR><CR>
+  nnoremap ,aa V:w !putclip<CR><CR>
         \:echo 'Line(s) => clipboard'<cr>
-  nnoremap <leader>zz :silent :r!getclip<CR>
+  nnoremap ,zz :silent :r!getclip<CR>
 endif
 
 let g:DiffModeSync = 1
