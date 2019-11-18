@@ -62,11 +62,6 @@ else
   colorscheme evening
 endif
 
-" {{ vim-expand-region
-nmap N <Plug>(expand_region_expand)
-nmap M <Plug>(expand_region_shrink)
-" }}
-
 " {{ vim-easymotion
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
 " Bi-directional find motion
@@ -325,8 +320,8 @@ map <leader>n ]n
 map <leader>p [n
 map ,dg1 ]nd]n[ndd[ndd
 map ,dg2 d]ndd]ndd
-map ,nc ]c
-map ,pc [c
+map <leader>nc ]c
+map <leader>pc [c
 " {{
 noremap ,wh <C-W>h
 noremap ,wj <C-W>j
