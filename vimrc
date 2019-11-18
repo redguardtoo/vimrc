@@ -188,13 +188,10 @@ nmap ,co :botright copen<cr>
 nmap ,fb :w!<CR>:!aspell check %<CR>:e! %<CR>
 
 "Switch to current dir
-map ,cd :cd %:p:h<cr>
-
+nmap ,cd :cd %:p:h<cr>
 " vcscommand.vim : CVS/SVN/SVK/git/hg/bzr integration plugin
-map ,xvb :VCSAnnotate<cr>
-
-"Remove indenting on empty line
-map ,el :%s/s*$//g<cr>:noh<cr>''
+nmap ,vv :VCSAnnotate<cr>
+nmap ,va :VCSAdd<cr>
 
 " {{ --- Smart way to move window
 "  TIPS:
