@@ -169,8 +169,11 @@ map [[ [n
 " }}
 "
 " set leader to ,
-
-let mapleader=" "
+let mapleader = " " " Leader is the space key
+let g:mapleader = " "
+let maplocalleader = "`"
+let g:maplocalleader = "`"
+nnoremap <SPACE> <Nop>
 
 " {{ for merge tool
 map <silent> <leader>1 :diffget 1<CR>
