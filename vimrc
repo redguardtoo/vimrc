@@ -183,18 +183,9 @@ map <silent> <leader>3 :diffget 3<CR>
 
 " grep result window operation alias
 " " Do :help cope if you are unsure what cope is. It's super useful!
-map ,co :botright copen<cr>
-",cc is reserved for nerd comment
-map ,as :w!<CR>:!aspell check %<CR>:e! %<CR>
-
-" Spell checking
-map ,sn ]
-map ,sp [
-map ,sa zg
-map ,s? z=
-
-"Remove the Windows ^M
-noremap ,rm :%s/\r//g<CR>
+nmap ,co :botright copen<cr>
+" spell check with aspell
+nmap ,fb :w!<CR>:!aspell check %<CR>:e! %<CR>
 
 "Switch to current dir
 map ,cd :cd %:p:h<cr>
