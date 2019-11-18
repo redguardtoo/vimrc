@@ -67,7 +67,7 @@ let g:EasyMotion_do_mapping = 0 " Disable default mappings
 " Bi-directional find motion
 " Jump to anywhere you want with minimal keystrokes, with just one key binding.
 " `s{char}{label}`
-nmap <Space> <Plug>(easymotion-s)
+nmap ;; <Plug>(easymotion-s2)
 " Use uppercase target labels and type as a lower case
 let g:EasyMotion_use_upper = 1
 " type `l` and match `l`&`L`
@@ -211,8 +211,8 @@ map ,el :%s/s*$//g<cr>:noh<cr>''
 "  C-W _ maxmize window height
 "  C-W = restore window size
 "  C-W | maxmize window width
-set wmw=0                     " set the min width of a window to 0 so we can maximize others
-set wmh=0                     " set the min height of a window to 0 so we can maximize others
+set wmw=0 " set the min width of a window to 0 so we can maximize others
+set wmh=0 " set the min height of a window to 0 so we can maximize others
 " }}
 
 " --- Faster window resize {

@@ -1,5 +1,5 @@
 easymotion
-651a023
+882de6964d10595e839ccbcc0fb20b7ff14e43cb
 
 Over.Commandline.Base
 Over.Commandline.Modules.Cancel
@@ -17,3 +17,4 @@ Over.Commandline.Modules.Exit
 Over.Commandline.Modules.DrawCommandline
 Over.Commandline.Modules.ExceptionMessage
 Over.Commandline.Modules.ExceptionExit
+HitAHint.Motion
