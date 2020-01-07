@@ -396,6 +396,13 @@ let g:DiffModeSync = 1
 " should be placed at last
 syntax on " syntax highlight
 
+" better diff algorithm from xdiff
+" code checked into vim repo in c93262b2e
+" @see https://vimways.org/2018/the-power-of-diff/
+if v:version > 800
+  set diffopt+=indent-heuristic
+endif
+
 " Local Variables:
 " coding: utf-8
 " indent-tabs-mode: nil
