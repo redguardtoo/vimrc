@@ -62,6 +62,12 @@ else
   colorscheme evening
 endif
 
+" {{ vim-expand-region
+map ,xx <Plug>(expand_region_expand)
+map N <Plug>(expand_region_expand)
+map M <Plug>(expand_region_shrink)
+" }}
+
 " {{ vim-easymotion
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
 " Bi-directional find motion
@@ -407,6 +413,10 @@ if has("patch-8.1.360") || has("nvim-0.3.5")
   set diffopt+=indent-heuristic
 endif
 
+" {{ vim-expand-region
+vmap v <Plug>(expand_region_expand)
+" }}
+"
 " Local Variables:
 " coding: utf-8
 " indent-tabs-mode: nil
