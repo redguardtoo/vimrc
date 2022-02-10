@@ -408,7 +408,7 @@ set diffopt+=vertical
 " code checked into vim repo in c93262b2e
 " @see https://vimways.org/2018/the-power-of-diff/
 " @see https://raw.githubusercontent.com/ashfinal/vimrc-config/master/.vimrc
-if has("patch-8.1.360") || has("nvim-0.3.5")
+if has("nvim-0.3.5")
   set diffopt+=algorithm:histogram
   set diffopt+=indent-heuristic
 endif
