@@ -301,10 +301,12 @@ nmap <leader>x2 :sp<CR>
 nmap <leader>x3 :vs<CR>
 nmap <leader>x1 <C-W>o
 nmap <leader>x0 :close<CR>
+" search files
 nmap <leader>xf :CtrlP<CR>
-nmap <leader>kk :CtrlP<CR>
+" search file from project root
+nmap <leader>kk :CtrlPRoot<CR>
+" switch buffer
 nmap <leader>xb :CtrlPBuffer<CR>
-nmap <leader>hr :CtrlPMRU<CR>
 nmap <leader>gt :CtrlPTag<CR>
 nmap <leader>n ]n
 nmap <leader>p [n
@@ -328,8 +330,6 @@ let g:yankring_replace_n_nkey = ''
 " remove trailing spaces
 nmap <leader>tr :%s/ \+$//g<CR>
 
-" search file from project root
-nmap <leader>cg :CtrlPRoot<CR>
 
 " suspend
 nmap <leader>xc :suspend<CR>

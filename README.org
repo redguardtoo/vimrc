@@ -62,9 +62,9 @@ match-up is a plugin that lets you highlight, navigate, and operate on sets of m
 ** [[http://www.vim.org/scripts/script.php?script_id=1234][YankRing]] 
 Maintains a history of previous yanks, changes and deletes.
 
-`:help yankring` to see more info.
+Run `:help yankring` to see more info.
 
-** Ctrlp
+** [[https://github.com/ctrlpvim/ctrlp.vim][ctrlp.vim]]
 Search files
 
 ** taglist
