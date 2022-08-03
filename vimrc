@@ -285,8 +285,10 @@ if !has("gui_running")
 endif
 " }}
 
-" taglist
-map <leader>ii :TlistToggle<CR>
+" {{ tagbar
+map <leader>ii :TagbarToggle<CR>
+let g:tagbar_position = 'left'
+" }}
 
 " NERDTree
 map <leader>nt :NERDTreeToggle<CR>

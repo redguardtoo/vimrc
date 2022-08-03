@@ -67,8 +67,8 @@ Run `:help yankring` to see more info.
 ** [[https://github.com/ctrlpvim/ctrlp.vim][ctrlp.vim]]
 Search files
 
-** taglist
-List the structure of the source code
+** [[https://github.com/preservim/tagbar][tagbar]]
+List symbols in current file
 
 ** easymotion
 Press <Space> to jump to the beginning of words
