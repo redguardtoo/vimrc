@@ -35,7 +35,7 @@ source $VIM/vimfiles/vimrc
 #+END_SRC
 
 * Plugins
-** [[http://www.vim.org/scripts/script.php?script_id=2332][Pathogen]] 
+** [[https://github.com/tpope/vim-pathogen][Pathogen]]
 Pathogen let us install a plugin as a bundle in ~/.vim/bundle seprately.
 
 ** [[http://www.vim.org/scripts/script.php?script_id=1658][Nerd Tree]]

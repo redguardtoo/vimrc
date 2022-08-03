@@ -3,10 +3,7 @@
 " Fork me on GITHUB git://github.com/redguardtoo/vimrc.git
 
 " {{ For pathogen.vim: auto load all plugins in .vim/bundle
-let g:pathogen_disabled = []
-
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
+execute pathogen#infect()
 " }}
 
 " == General Settings ==
@@ -32,9 +29,7 @@ set novisualbell
 set t_vb= " never flash the screen
 set tm=500
 
-filetype on           " Enable filetype detection
-filetype indent on    " Enable filetype-specific indenting
-filetype plugin on    " Enable filetype-specific plugins
+filetype plugin indent on
 
 set hlsearch  " search highlighting
 set tags=./tags;
