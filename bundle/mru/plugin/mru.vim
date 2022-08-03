@@ -1,8 +1,8 @@
 " File: mru.vim
 " Author: Yegappan Lakshmanan (yegappan AT yahoo DOT com)
-" Version: 3.9
-" Last Modified: Feb 3, 2015
-" Copyright: Copyright (C) 2003-2015 Yegappan Lakshmanan
+" Version: 3.10
+" Last Modified: Feb 2, 2021
+" Copyright: Copyright (C) 2003-2021 Yegappan Lakshmanan
 " License:   Permission is hereby granted to use and distribute this code,
 "            with or without modifications, provided that this copyright
 "            notice is copied with it. Like anything else that's free,
@@ -10,213 +10,6 @@
 "            kind, either expressed or implied. In no event will the copyright
 "            holder be liable for any damages resulting from the use of this
 "            software.
-"
-" Overview
-" --------
-" The Most Recently Used (MRU) plugin provides an easy access to a list of
-" recently opened/edited files in Vim. This plugin automatically stores the
-" file names as you open/edit them in Vim.
-"
-" This plugin will work on all the platforms where Vim is supported. This
-" plugin will work in both console and GUI Vim. This version of the MRU
-" plugin needs Vim 7.0 and above. If you are using an earlier version of
-" Vim, then you should use an older version of the MRU plugin.
-"
-" The recently used filenames are stored in a file specified by the Vim
-" MRU_File variable.
-"
-" The Github repository for the MRU plugin is available at:
-"
-"	http://github.com/yegappan/mru
-"
-" Installation
-" ------------
-" 1. Copy the mru.vim file to one of the following directories:
-"       $HOME/.vim/plugin     - Unix like systems
-"       $HOME/vimfiles/plugin - MS-Windows
-"       $VIM:vimfiles:plugin  - Macintosh
-"       $VIM/vimfiles/plugin  - All
-" 2. Restart Vim.
-" 3. You can use the ":MRU" command to list and edit the recently used files.
-"    In GUI Vim, you can use the 'File->Recent Files' menu to access the
-"    recently used files.
-"
-" To uninstall this plugin, remove this file (mru.vim) from the
-" $HOME/.vim/plugin or $HOME/vimfiles/plugin or the $VIM/vimfile/plugin
-" directory.
-"
-" Usage
-" -----
-" To list and edit files from the MRU list, you can use the ":MRU" command.
-" The ":MRU" command displays the MRU file list in a temporary Vim window.  If
-" the MRU window is already opened, then the MRU list displayed in the window
-" is refreshed.
-"
-" If you are using GUI Vim, then the names of the recently edited files are
-" added to the "File->Recent Files" menu. You can select the name of a file
-" from this sub-menu to edit the file.
-"
-" You can use the normal Vim commands to move around in the MRU window. You
-" cannot make changes in the MRU window.
-"
-" You can select a file name to edit by pressing the <Enter> key or by double
-" clicking the left mouse button on a file name.  The selected file will be
-" opened. If the file is already opened in a window, the cursor will be moved
-" to that window. Otherwise, the file is opened in the previous window. If the
-" previous window has a modified buffer or is the preview window or is used by
-" some other plugin, then the file is opened in a new window.
-"
-" You can press the 'o' key to open the file name under the cursor in the
-" MRU window in a new window. You can also press <Shift-Enter> instead of 'o'
-" to open the file in a new window.
-"
-" To open a file from the MRU window in read-only mode (view), press the 'v'
-" key.
-"
-" To open a file from the MRU window in a new tab, press the 't' key.  If the
-" file is already opened in a window in the current or in another tab, then
-" the cursor is moved to that tab. Otherwise, a new tab is opened.
-"
-" You can open multiple files from the MRU window by specifying a count before
-" pressing '<Enter>' or 'v' or 'o' or 't'. You can also visually (using
-" linewise visual mode) select multiple filenames and invoke the commands to
-" open the files. Each selected file will be opened in a separate window or
-" tab.
-"
-" You can press the 'u' key in the MRU window to update the file list. This is
-" useful if you keep the MRU window open always.
-"
-" You can close the MRU window by pressing the 'q' key or the <Esc> key or
-" using one of the Vim window commands.
-"
-" To display only files matching a pattern from the MRU list in the MRU
-" window, you can specify a pattern to the ":MRU" command. For example, to
-" display only file names matching "vim" in them, you can use the following
-" command ":MRU vim".  When you specify a partial file name and only one
-" matching filename is found, then the ":MRU" command will edit that file.
-"
-" The ":MRU" command supports command-line completion of file names from
-" the MRU list. You can enter a partial file name and then press <Tab>
-" or <Ctrl-D> to complete or list all the matching file names. Note that
-" after typing the ":MRU" command, you have to enter a space before completing
-" the file names with <Tab>.
-"
-" When a file supplied to the ":MRU" command is not present in the MRU list,
-" but it is a readable file, then the file will be opened (even though it is
-" not present in the MRU list). This is useful if you want to open a file
-" present in the same directory as a file in the MRU list. You can use the
-" command-line completion of the ":MRU" command to complete the full path of a
-" file and then modify the path to open another file present in the same path.
-"
-" Whenever the MRU list changes, the MRU file is updated with the latest MRU
-" list. When you have multiple instances of Vim running at the same time, the
-" latest MRU list will show up in all the instances of Vim.
-"
-" The MRUFilename syntax group is used to highlight the file names in the MRU
-" window. By default, this syntax group is linked to the Identifier highlight
-" group. You can change the highlight group by adding the following line in
-" your .vimrc:
-"
-"    highlight link MRUFileName LineNr
-"
-" The MRU buffer uses the 'mru file type. You can use this file type to add
-" custom auto commands, syntax highlighting, etc.
-"
-" Configuration
-" -------------
-" By changing the following variables you can configure the behavior of this
-" plugin. Set the following variables in your .vimrc file using the 'let'
-" command.
-"
-" The list of recently edited file names is stored in the file specified by the
-" MRU_File variable.  The default setting for this variable is
-" $HOME/.vim_mru_files for Unix-like systems and $USERPROFILE/_vim_mru_files
-" for MS-Windows systems. You can change this variable to point to a file by
-" adding the following line to the .vimrc file:
-"
-"       let MRU_File = 'd:\myhome\_vim_mru_files'
-"
-" By default, the plugin will remember the names of the last 100 used files.
-" As you edit more files, old file names will be removed from the MRU list.
-" You can set the 'MRU_Max_Entries' variable to remember more file names. For
-" example, to remember 1000 most recently used file names, you can use
-"
-"       let MRU_Max_Entries = 1000
-"
-" By default, all the edited file names will be added to the MRU list. If you
-" want to exclude file names matching a list of patterns, you can set the
-" MRU_Exclude_Files variable to a list of Vim regular expressions. By default,
-" this variable is set to an empty string. For example, to not include files
-" in the temporary (/tmp, /var/tmp and d:\temp) directories, you can set the
-" MRU_Exclude_Files variable to
-"
-"       let MRU_Exclude_Files = '^/tmp/.*\|^/var/tmp/.*'  " For Unix
-"       let MRU_Exclude_Files = '^c:\\temp\\.*'           " For MS-Windows
-" 
-" The specified pattern should be a Vim regular expression pattern.
-"
-" If you want to add only file names matching a set of patterns to the MRU
-" list, then you can set the MRU_Include_Files variable. This variable should
-" be set to a Vim regular expression pattern. For example, to add only .c and
-" .h files to the MRU list, you can set this variable as below:
-"
-"       let MRU_Include_Files = '\.c$\|\.h$'
-"
-" By default, MRU_Include_Files is set to an empty string and all the edited
-" filenames are added to the MRU list.
-"
-" The default height of the MRU window is 8. You can set the MRU_Window_Height
-" variable to change the window height.
-"
-"       let MRU_Window_Height = 15
-"
-" By default, when the :MRU command is invoked, the MRU list will be displayed
-" in a new window. Instead, if you want the MRU plugin to reuse the current
-" window, then you can set the 'MRU_Use_Current_Window' variable to one.
-"
-"       let MRU_Use_Current_Window = 1
-"
-" The MRU plugin will reuse the current window. When a file name is selected,
-" the file is also opened in the current window.
-"
-" When you select a file from the MRU window, the MRU window will be
-" automatically closed and the selected file will be opened in the previous
-" window. You can set the 'MRU_Auto_Close' variable to zero to keep the MRU
-" window open.
-"
-"       let MRU_Auto_Close = 0
-"
-" If you don't use the "File->Recent Files" menu and want to disable it,
-" then you can set the 'MRU_Add_Menu' variable to zero. By default, the
-" menu is enabled.
-"
-"       let MRU_Add_Menu = 0
-"
-" If too many file names are present in the MRU list, then updating the MRU
-" menu to list all the file names makes Vim slow. To avoid this, the
-" MRU_Max_Menu_Entries variable controls the number of file names to show in
-" the MRU menu. By default, this is set to 10. You can change this to show
-" more entries in the menu.
-"
-"       let MRU_Max_Menu_Entries = 20
-"
-" If many file names are present in the MRU list, then the MRU menu is split
-" into sub-menus. Each sub-menu contains MRU_Max_Submenu_Entries file names.
-" The default setting for this is 10. You can change this to increase the
-" number of file names displayed in a single sub-menu:
-"
-"       let MRU_Max_Submenu_Entries = 15
-"
-" In the MRU window, the filenames are displayed in two parts. The first part
-" contains the file name without the path and the second part contains the
-" full path to the file in parenthesis. This format is controlled by the
-" MRU_Filename_Format variable. If you prefer to change this to some other
-" format, then you can modify the MRU_Filename_Format variable. For example,
-" to display the full path without splitting it, you can set this variable
-" as shown below:
-"
-"       let MRU_Filename_Format =
-"       \   {'formatter':'v:val', 'parser':'.*', 'syntax': '[^/\\]\+$'}
 "
 " ****************** Do not modify after this line ************************
 if exists('loaded_mru')
@@ -274,6 +67,8 @@ if !exists('MRU_File')
             endif
         endif
     endif
+else
+    let MRU_File=expand(MRU_File)
 endif
 
 " Option for enabling or disabling the MRU menu
@@ -311,6 +106,17 @@ if !exists('MRU_Open_File_Use_Tabs')
     let MRU_Open_File_Use_Tabs = 0
 endif
 
+" Controls whether fuzzy matching is used for matching a user supplied pattern
+" against the file names in the MRU list.
+if !exists('MRU_FuzzyMatch')
+    if exists('*matchfuzzy')
+      " Fuzzy matching is supported only when matchfuzzy() function is present
+      let MRU_FuzzyMatch = 1
+    else
+      let MRU_FuzzyMatch = 0
+    endif
+endif
+
 " Format of the file names displayed in the MRU window.
 " The default is to display the filename followed by the complete path to the
 " file in parenthesis. This variable controls the expressions used to format
@@ -326,13 +132,15 @@ if !exists('MRU_Filename_Format')
         \}
 endif
 
+let s:MRU_buf_name = '-RecentFiles-'
+
 " Control to temporarily lock the MRU list. Used to prevent files from
 " getting added to the MRU list when the ':vimgrep' command is executed.
 let s:mru_list_locked = 0
 
 " MRU_LoadList                          {{{1
 " Loads the latest list of file names from the MRU file
-function! s:MRU_LoadList()
+func! s:MRU_LoadList() abort
     " If the MRU file is present, then load the list of filenames. Otherwise
     " start with an empty list.
     if filereadable(g:MRU_File)
@@ -354,21 +162,21 @@ function! s:MRU_LoadList()
 
     " Refresh the MRU menu with the latest list of filenames
     call s:MRU_Refresh_Menu()
-endfunction
+endfunc
 
 " MRU_SaveList                          {{{1
 " Saves the MRU file names to the MRU file
-function! s:MRU_SaveList()
+func! s:MRU_SaveList() abort
     let l = []
     call add(l, '# Most recently edited files in Vim (version 3.0)')
     call extend(l, s:MRU_files)
     call writefile(l, g:MRU_File)
-endfunction
+endfunc
 
 " MRU_AddFile                           {{{1
 " Adds a file to the MRU file list
 "   acmd_bufnr - Buffer number of the file to add
-function! s:MRU_AddFile(acmd_bufnr)
+func! s:MRU_AddFile(acmd_bufnr) abort
     if s:mru_list_locked
         " MRU list is currently locked
         return
@@ -433,35 +241,36 @@ function! s:MRU_AddFile(acmd_bufnr)
     call s:MRU_Refresh_Menu()
 
     " If the MRU window is open, update the displayed MRU list
-    let bname = '__MRU_Files__'
+    let bname = s:MRU_buf_name
     let winnum = bufwinnr(bname)
     if winnum != -1
         let cur_winnr = winnr()
-        call s:MRU_Open_Window()
+        call s:MRU_Open_Window('', '', 0)
         if winnr() != cur_winnr
             exe cur_winnr . 'wincmd w'
         endif
     endif
-endfunction
+endfunc
 
 " MRU_escape_filename                   {{{1
 " Escape special characters in a filename. Special characters in file names
 " that should be escaped (for security reasons)
 let s:esc_filename_chars = ' *?[{`$%#"|!<>();&' . "'\t\n"
-function! s:MRU_escape_filename(fname)
+func! s:MRU_escape_filename(fname) abort
     if exists("*fnameescape")
         return fnameescape(a:fname)
     else
         return escape(a:fname, s:esc_filename_chars)
     endif
-endfunction
+endfunc
 
 " MRU_Edit_File                         {{{1
 " Edit the specified file
 "   filename - Name of the file to edit
 "   sanitized - Specifies whether the filename is already escaped for special
 "   characters or not.
-function! s:MRU_Edit_File(filename, sanitized)
+" Used by the :MRU command and the "Recent Files" menu item
+func! s:MRU_Edit_File(filename, sanitized) abort
     if !a:sanitized
 	let esc_fname = s:MRU_escape_filename(a:filename)
     else
@@ -487,20 +296,28 @@ function! s:MRU_Edit_File(filename, sanitized)
             " Current buffer has unsaved changes or is a special buffer or is
             " the preview window.  The 'hidden' option is also not set.
             " So open the file in a new window.
-            exe 'split ' . esc_fname
+	    if bufexists(esc_fname)
+              exe 'sbuffer ' . esc_fname
+	    else
+              exe 'split ' . esc_fname
+	    endif
         else
             " The current file can be replaced with the selected file.
-            exe 'edit ' . esc_fname
+	    if bufexists(esc_fname)
+              exe 'buffer ' . esc_fname
+	    else
+              exe 'edit ' . esc_fname
+	    endif
         endif
     endif
-endfunction
+endfunc
 
 " MRU_Open_File_In_Tab
 " Open a file in a tab. If the file is already opened in a tab, jump to the
 " tab. Otherwise, create a new tab and open the file.
 "   fname     : Name of the file to open
 "   esc_fname : File name with special characters escaped
-function! s:MRU_Open_File_In_Tab(fname, esc_fname)
+func! s:MRU_Open_File_In_Tab(fname, esc_fname) abort
     " If the selected file is already open in the current tab or in
     " another tab, jump to it. Otherwise open it in a new tab
     if bufwinnr('^' . a:fname . '$') == -1
@@ -516,11 +333,33 @@ function! s:MRU_Open_File_In_Tab(fname, esc_fname)
 	endwhile
 
 	if tabnum != -1
-	    " Goto the tab containing the file
-	    exe 'tabnext ' . i
+	  " Goto the tab containing the file
+	  exe 'tabnext ' . i
 	else
+	  if (winnr("$") == 1) && (@% == '') && !&modified
+	    " Reuse the current tab if it contains a single new unmodified
+	    " file.
+	    if bufexists(a:esc_fname)
+	      exe 'buffer ' . a:esc_fname
+	    else
+	      exe 'edit ' . a:esc_fname
+	    endif
+	  else
 	    " Open a new tab as the last tab page
-	    exe '$tabnew ' . a:esc_fname
+	    if v:version >= 800
+	      if bufexists(a:esc_fname)
+	        exe '$tab sbuffer ' . a:esc_fname
+	      else
+	        exe '$tabnew ' . a:esc_fname
+	      endif
+	    else
+	      if bufexists(a:esc_fname)
+	        exe '99999tab sbuffer ' . a:esc_fname
+	      else
+	        exe '99999tabnew ' . a:esc_fname
+	      endif
+	    endif
+	  endif
 	endif
     endif
 
@@ -529,7 +368,7 @@ function! s:MRU_Open_File_In_Tab(fname, esc_fname)
     if winnum != winnr()
 	exe winnum . 'wincmd w'
     endif
-endfunction
+endfunc
 
 " MRU_Window_Edit_File                  {{{1
 "   fname     : Name of the file to edit. May specify single or multiple
@@ -548,19 +387,27 @@ endfunction
 "               newtab  - Open the file in a new tab. If the file is already
 "                         opened in a tab, then jump to that tab.
 "               preview - Open the file in the preview window
-function! s:MRU_Window_Edit_File(fname, multi, edit_type, open_type)
+func! s:MRU_Window_Edit_File(fname, multi, edit_type, open_type) abort
     let esc_fname = s:MRU_escape_filename(a:fname)
 
     if a:open_type ==# 'newwin_horiz'
         " Edit the file in a new horizontally split window above the previous
         " window
         wincmd p
-        exe 'belowright new ' . esc_fname
+	if bufexists(esc_fname)
+	  exe 'belowright sbuffer ' . esc_fname
+	else
+	  exe 'belowright new ' . esc_fname
+	endif
     elseif a:open_type ==# 'newwin_vert'
         " Edit the file in a new vertically split window above the previous
         " window
         wincmd p
-        exe 'belowright vnew ' . esc_fname
+	if bufexists(esc_fname)
+          exe 'vertical belowright sbuffer ' . esc_fname
+	else
+          exe 'belowright vnew ' . esc_fname
+	endif
     elseif a:open_type ==# 'newtab' || g:MRU_Open_File_Use_Tabs
 	call s:MRU_Open_File_In_Tab(a:fname, esc_fname)
     elseif a:open_type ==# 'preview'
@@ -602,7 +449,7 @@ function! s:MRU_Window_Edit_File(fname, multi, edit_type, open_type)
             if &buftype != ''
                 " Current buffer is a special buffer (maybe used by a plugin)
                 if g:MRU_Use_Current_Window == 0 ||
-                            \ bufnr('%') != bufnr('__MRU_Files__')
+                            \ bufnr('%') != bufnr(s:MRU_buf_name)
                     let split_window = 1
                 endif
             endif
@@ -612,20 +459,28 @@ function! s:MRU_Window_Edit_File(fname, multi, edit_type, open_type)
                 " Current buffer has unsaved changes or is a special buffer or
                 " is the preview window.  So open the file in a new window
                 if a:edit_type ==# 'edit'
+		  if bufexists(esc_fname)
+                    exe 'sbuffer ' . esc_fname
+		  else
                     exe 'split ' . esc_fname
+		  endif
                 else
-                    exe 'sview ' . esc_fname
+                  exe 'sview ' . esc_fname
                 endif
             else
                 if a:edit_type ==# 'edit'
+		  if bufexists(esc_fname)
+                    exe 'buffer ' . esc_fname
+		  else
                     exe 'edit ' . esc_fname
+		  endif
                 else
                     exe 'view ' . esc_fname
                 endif
             endif
         endif
     endif
-endfunction
+endfunc
 
 " MRU_Select_File_Cmd                   {{{1
 " Open a file selected from the MRU window
@@ -639,7 +494,7 @@ endfunction
 "     'newtab' to open the file in a new tab.
 " If multiple file names are selected using visual mode, then open multiple
 " files (either in split windows or tabs)
-function! s:MRU_Select_File_Cmd(opt) range
+func! s:MRU_Select_File_Cmd(opt) range abort
     let [edit_type, open_type] = split(a:opt, ',')
 
     let fnames = getline(a:firstline, a:lastline)
@@ -667,21 +522,23 @@ function! s:MRU_Select_File_Cmd(opt) range
             let multi = 1
         endif
     endfor
-endfunction
+endfunc
 
 " MRU_Warn_Msg                          {{{1
 " Display a warning message
-function! s:MRU_Warn_Msg(msg)
+func! s:MRU_Warn_Msg(msg) abort
     echohl WarningMsg
     echo a:msg
     echohl None
-endfunction
+endfunc
 
 " MRU_Open_Window                       {{{1
 " Display the Most Recently Used file list in a temporary window.
-" If the optional argument is supplied, then it specifies the pattern of files
+" If the 'pat' argument is not empty, then it specifies the pattern of files
 " to selectively display in the MRU window.
-function! s:MRU_Open_Window(...)
+" The 'splitdir' argument specifies the location (topleft, belowright, etc.)
+" of the MRU window.
+func! s:MRU_Open_Window(pat, splitdir, winsz) abort
 
     " Load the latest MRU file list
     call s:MRU_LoadList()
@@ -697,7 +554,7 @@ function! s:MRU_Open_Window(...)
     " as the window number will change when new windows are opened.
     let s:MRU_last_buffer = bufnr('%')
 
-    let bname = '__MRU_Files__'
+    let bname = s:MRU_buf_name
 
     " If the window is already open, jump to it
     let winnum = bufwinnr(bname)
@@ -714,14 +571,31 @@ function! s:MRU_Open_Window(...)
     else
         if g:MRU_Use_Current_Window
             " Reuse the current window
-            "
+
+            " If the current buffer has unsaved changes or is a special buffer
+            " or is the preview window and 'hidden' is not set, then open a
+            " new window. Otherwise, open in the current window.
+            if !&hidden && (&modified || &buftype != '' || &previewwindow)
+                let split_window = 1
+            else
+                let split_window = 0
+            endif
+
             " If the __MRU_Files__ buffer exists, then reuse it. Otherwise open
             " a new buffer
             let bufnum = bufnr(bname)
             if bufnum == -1
-                let cmd = 'edit ' . bname
+                if split_window
+                    let cmd = 'botright split edit ' . bname
+                else
+                    let cmd = 'edit ' . bname
+                endif
             else
-                let cmd = 'buffer ' . bufnum
+                if split_window
+                    let cmd = 'botright sbuffer ' . bufnum
+                else
+                    let cmd = 'buffer ' . bufnum
+                endif
             endif
 
             exe cmd
@@ -732,17 +606,28 @@ function! s:MRU_Open_Window(...)
             endif
         else
             " Open a new window at the bottom
+	    let cmd = 'silent! '
+	    if a:splitdir == ''
+	      let cmd .= 'botright '
+	    else
+	      let cmd .= a:splitdir . ' '
+	    endif
+	    let sz = a:winsz
+	    if sz == 0
+	      let sz = g:MRU_Window_Height
+	    endif
+	    let cmd .= sz . 'split '
 
             " If the __MRU_Files__ buffer exists, then reuse it. Otherwise open
             " a new buffer
             let bufnum = bufnr(bname)
             if bufnum == -1
-                let wcmd = bname
+                let cmd .= bname
             else
-                let wcmd = '+buffer' . bufnum
+                let cmd .= '+buffer' . bufnum
             endif
 
-            exe 'silent! botright ' . g:MRU_Window_Height . 'split ' . wcmd
+            exe cmd
         endif
     endif
 
@@ -752,13 +637,21 @@ function! s:MRU_Open_Window(...)
     setlocal buftype=nofile
     setlocal bufhidden=delete
     setlocal noswapfile
-    setlocal nowrap
     setlocal nobuflisted
+    setlocal nowrap
+    setlocal nonumber
+    if exists('&relativenumber')
+      setlocal norelativenumber
+    endif
+    if exists('&signcolumn')
+      setlocal signcolumn=no
+    endif
+    setlocal foldcolumn=0
     " Set the 'filetype' to 'mru'. This allows the user to apply custom
     " syntax highlighting or other changes to the MRU bufer.
     setlocal filetype=mru
-    " Use fixed height for the MRU window
-    setlocal winfixheight
+    " Use fixed height and width for the MRU window
+    setlocal winfixheight winfixwidth
 
     " Setup the cpoptions properly for the maps to work
     let old_cpoptions = &cpoptions
@@ -798,22 +691,28 @@ function! s:MRU_Open_Window(...)
     nnoremap <buffer> <silent> u :MRU<CR>
     nnoremap <buffer> <silent> <2-LeftMouse>
                 \ :call <SID>MRU_Select_File_Cmd('edit,useopen')<CR>
+    nnoremap <buffer> <silent> d
+                \ :<C-U>call <SID>MRU_Delete_From_List()<CR>
     nnoremap <buffer> <silent> q :close<CR>
 
     " Restore the previous cpoptions settings
     let &cpoptions = old_cpoptions
 
     " Display the MRU list
-    if a:0 == 0
+    if a:pat == ''
         " No search pattern specified. Display the complete list
         let m = copy(s:MRU_files)
     else
-        " Display only the entries matching the specified pattern
-	" First try using it as a literal pattern
-	let m = filter(copy(s:MRU_files), 'stridx(v:val, a:1) != -1')
+	" Display only the entries matching the specified pattern. First try
+	" fuzzy matching or as a literal pattern.
+	if g:MRU_FuzzyMatch
+	  let m = matchfuzzy(s:MRU_files, a:pat)
+	else
+	  let m = filter(copy(s:MRU_files), 'stridx(v:val, a:pat) != -1')
+	endif
 	if len(m) == 0
 	    " No match. Try using it as a regular expression
-	    let m = filter(copy(s:MRU_files), 'v:val =~# a:1')
+	    let m = filter(copy(s:MRU_files), 'v:val =~# a:pat')
 	endif
     endif
 
@@ -835,27 +734,32 @@ function! s:MRU_Open_Window(...)
     endif
 
     setlocal nomodifiable
-endfunction
+endfunc
 
 " MRU_Complete                          {{{1
 " Command-line completion function used by :MRU command
-function! s:MRU_Complete(ArgLead, CmdLine, CursorPos)
+func! s:MRU_Complete(ArgLead, CmdLine, CursorPos) abort
     if a:ArgLead == ''
         " Return the complete list of MRU files
         return s:MRU_files
     else
-        " Return only the files matching the specified pattern
-        return filter(copy(s:MRU_files), 'v:val =~? a:ArgLead')
+	if g:MRU_FuzzyMatch
+	  " Return only the files fuzzy matching the specified pattern
+	  return matchfuzzy(s:MRU_files, a:ArgLead)
+	else
+	  " Return only the files matching the specified pattern
+	  return filter(copy(s:MRU_files), 'v:val =~? a:ArgLead')
+	endif
     endif
-endfunction
+endfunc
 
 " MRU_Cmd                               {{{1
 " Function to handle the MRU command
 "   pat - File name pattern passed to the MRU command
-function! s:MRU_Cmd(pat)
+func! s:MRU_Cmd(pat, splitdir, winsz) abort
     if a:pat == ''
         " No arguments specified. Open the MRU window
-        call s:MRU_Open_Window()
+        call s:MRU_Open_Window('', a:splitdir, a:winsz)
         return
     endif
 
@@ -868,17 +772,23 @@ function! s:MRU_Cmd(pat)
         return
     endif
 
-    " First use the specified string as a literal string and search for
-    " filenames containing the string. If only one filename is found,
-    " then edit it (unless the user wants to open the MRU window always)
-    let m = filter(copy(s:MRU_files), 'stridx(v:val, a:pat) != -1')
+    " If Vim supports fuzzy matching, then try fuzzy matching the pattern
+    " against the file names. Otherwise, use the specified string as a literal
+    " string and search for filenames containing the string. If only one
+    " filename is found, then edit it (unless the user wants to open the MRU
+    " window always)
+    if g:MRU_FuzzyMatch
+      let m = matchfuzzy(s:MRU_files, a:pat)
+    else
+      let m = filter(copy(s:MRU_files), 'stridx(v:val, a:pat) != -1')
+    endif
     if len(m) > 0
 	if len(m) == 1 && !g:MRU_Window_Open_Always
 	    call s:MRU_Edit_File(m[0], 0)
 	    return
 	endif
 
-	" More than one file matches. Try find an accurate match
+	" More than one file matches. Try to find an accurate match
 	let new_m = filter(m, 'v:val ==# a:pat')
 	if len(new_m) == 1 && !g:MRU_Window_Open_Always
 	    call s:MRU_Edit_File(new_m[0], 0)
@@ -887,7 +797,7 @@ function! s:MRU_Cmd(pat)
 
 	" Couldn't find an exact match, open the MRU window with all the
         " files matching the pattern.
-	call s:MRU_Open_Window(a:pat)
+	call s:MRU_Open_Window(a:pat, a:splitdir, a:winsz)
 	return
     endif
 
@@ -914,14 +824,14 @@ function! s:MRU_Cmd(pat)
         return
     endif
 
-    call s:MRU_Open_Window(a:pat)
-endfunction
+    call s:MRU_Open_Window(a:pat, a:splitdir, a:winsz)
+endfunc
 
 " MRU_add_files_to_menu                 {{{1
 " Adds a list of files to the "Recent Files" sub menu under the "File" menu.
 "   prefix - Prefix to use for each of the menu entries
 "   file_list - List of file names to add to the menu
-function! s:MRU_add_files_to_menu(prefix, file_list)
+func! s:MRU_add_files_to_menu(prefix, file_list) abort
     for fname in a:file_list
         " Escape special characters in the filename
         let esc_fname = escape(fnamemodify(fname, ':t'), ".\\" .
@@ -930,14 +840,25 @@ function! s:MRU_add_files_to_menu(prefix, file_list)
 
         " Truncate the directory name if it is long
         let dir_name = fnamemodify(fname, ':h')
-        let len = strlen(dir_name)
-        " Shorten long file names by adding only few characters from
-        " the beginning and end.
-        if len > 30
-            let dir_name = strpart(dir_name, 0, 10) .
-                        \ '...' . 
-                        \ strpart(dir_name, len - 20)
-        endif
+	if v:version >= 800 || has("patch-7.4.1730")
+	    let len = strchars(dir_name)
+	    " Shorten long file names by adding only few characters from
+	    " the beginning and end.
+	    if len > 30
+		let dir_name = strcharpart(dir_name, 0, 10) .
+			    \ '...' .
+			    \ strcharpart(dir_name, len - 20)
+	    endif
+	else
+	    let len = strlen(dir_name)
+	    " Shorten long file names by adding only few characters from
+	    " the beginning and end.
+	    if len > 30
+		let dir_name = strpart(dir_name, 0, 10) .
+			    \ '...' .
+			    \ strpart(dir_name, len - 20)
+	    endif
+	endif
         let esc_dir_name = escape(dir_name, ".\\" . s:esc_filename_chars)
         let esc_dir_name = substitute(esc_dir_name, '&', '&&', 'g')
 
@@ -948,11 +869,11 @@ function! s:MRU_add_files_to_menu(prefix, file_list)
                     \ " :call <SID>MRU_Edit_File('" . esc_mfname . "', 1)<CR>"
 	exe 'tmenu ' . menu_path . ' Edit file ' . esc_mfname
     endfor
-endfunction
+endfunc
 
 " MRU_Refresh_Menu                      {{{1
 " Refresh the MRU menu
-function! s:MRU_Refresh_Menu()
+func! s:MRU_Refresh_Menu() abort
     if !has('menu') || !g:MRU_Add_Menu
         " No support for menus
         return
@@ -1007,7 +928,19 @@ function! s:MRU_Refresh_Menu()
 
     " Restore the previous cpoptions settings
     let &cpoptions = old_cpoptions
-endfunction
+endfunc
+
+" MRU_Delete_From_List	{{{1
+" remove the entry under cursor in the MRU window from the MRU list
+func s:MRU_Delete_From_List()
+    call filter(s:MRU_files,
+	    \ 'v:val != matchstr(getline("."), g:MRU_Filename_Format.parser)')
+    setlocal modifiable
+    del _
+    setlocal nomodifiable
+    call s:MRU_SaveList()
+    call s:MRU_Refresh_Menu()
+endfunc
 
 " Load the MRU list on plugin startup
 call s:MRU_LoadList()
@@ -1025,10 +958,33 @@ autocmd QuickFixCmdPre *vimgrep* let s:mru_list_locked = 1
 autocmd QuickFixCmdPost *vimgrep* let s:mru_list_locked = 0
 
 " Command to open the MRU window
-command! -nargs=? -complete=customlist,s:MRU_Complete MRU
-            \ call s:MRU_Cmd(<q-args>)
-command! -nargs=? -complete=customlist,s:MRU_Complete Mru
-            \ call s:MRU_Cmd(<q-args>)
+if v:version >= 800
+  command! -nargs=? -complete=customlist,s:MRU_Complete -count=0 MRU
+              \ call s:MRU_Cmd(<q-args>, <q-mods>, <count>)
+  command! -nargs=? -complete=customlist,s:MRU_Complete -count=0 Mru
+              \ call s:MRU_Cmd(<q-args>, <q-mods>, <count>)
+else
+  command! -nargs=? -complete=customlist,s:MRU_Complete -count=0 MRU
+              \ call s:MRU_Cmd(<q-args>, '', <count>)
+  command! -nargs=? -complete=customlist,s:MRU_Complete -count=0 Mru
+              \ call s:MRU_Cmd(<q-args>, '', <count>)
+endif
+
+" FZF (fuzzy finder) integration
+func s:MRU_FZF_EditFile(fname) abort
+    call s:MRU_Window_Edit_File(a:fname, 0, 'edit', 'useopen')
+endfunc
+
+func s:MRU_FZF_Run() abort
+    if !exists('*fzf#run')
+	call s:MRU_Warn_Msg('FZF plugin is not present')
+	return
+    endif
+    call fzf#run(fzf#wrap({'source' : s:MRU_files,
+		\ 'sink' : function('s:MRU_FZF_EditFile'),
+		\'down' : '25%'}, 0))
+endfunc
+command! -nargs=0 FZFMru call s:MRU_FZF_Run()
 
 " }}}
 
