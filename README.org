@@ -1,5 +1,3 @@
-#ifndef _README_ORG
-#define _README_ORG
 * Chen Bin (redguardtoo)'s vimrc
 - Github: git://github.com/redguardtoo/vimrc.git
 - WIN32 is fine
@@ -82,7 +80,5 @@ Zoom in/out window. Press ",ff"
 ** undotree
 Undo and redo in tree
 
-* Other good references
-- [[http://amix.dk/vim/vimrc.html]]
-- [[http://spf13.com/post/perfect-vimrc-vim-config-file]]
-#endif // for #ifndef _README_ORG
+** [[https://github.com/terryma/vim-expand-region][vim-expand-region]]
+Keep pressing "v" to expand region
