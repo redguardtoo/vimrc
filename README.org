@@ -80,8 +80,8 @@ Zoom in/out window. Press ",ff"
 ** [[https://github.com/rickhowe/diffchar.vim][diffchar.vim]]
 Highlight the exact differences, based on characters and words
 
-** undotree
-Undo and redo in tree
+** [[https://github.com/mbbill/undotree][undotree]]
+Undo and redo in tree. Press ",ut" to show the ui
 
 ** [[https://github.com/terryma/vim-expand-region][vim-expand-region]]
 Keep pressing "v" to expand region
