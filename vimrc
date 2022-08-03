@@ -64,17 +64,16 @@ let g:EasyMotion_smartcase = 1
 let g:EasyMotion_use_smartsign_us = 1
 " }}
 
-set clipboard=unnamed " yank to the system register (*) by default
-set showmatch  " Cursor shows matching ) and }
-set showmode  " Show current mode
-set wildchar=<TAB> " start wild expansion in the command line using <TAB>
-set wildmenu            " wild char completion menu
-
-" {{ TAB setting
-set expandtab        "replace <TAB> with spaces
-set softtabstop=4
-set shiftwidth=4
-" }}
+" yank to the system register (*) by default
+set clipboard=unnamed
+" Cursor shows matching ) and }
+set showmatch
+" Show current mode
+set showmode
+" start wild expansion in the command line using <TAB>
+set wildchar=<TAB>
+" wild char completion menu
+set wildmenu
 
 " status line {
 set laststatus=2
@@ -199,6 +198,8 @@ noremap <leader>wl <C-W>l
 nmap <leader>yy :YRShow<CR>
 let g:yankring_replace_n_pkey = ''
 let g:yankring_replace_n_nkey = ''
+" @see https://github.com/neovim/neovim/issues/2642#issuecomment-218232937
+let g:yankring_clipboard_monitor = 0
 
 " remove trailing spaces
 nmap <leader>tr :%s/ \+$//g<CR>
