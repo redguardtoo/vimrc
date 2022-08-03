@@ -73,8 +73,8 @@ List symbols in current file
 ** easymotion
 Press ";;" jump to word by its first two characters
 
-** fugitive
-For git!
+** [[https://github.com/tpope/vim-fugitive][vim-fugitive]]
+Fugitive is the premier Vim plugin for Git. Or maybe it's the premier Git plugin for Vim? Either way, it's "so awesome, it should be illegal". That's why it's called Fugitive.
 
 ** zoomwin
 Zoom in/out window. Press ",ff"
