@@ -58,7 +58,7 @@ else
 endif
 
 " {{ vim-expand-region
-map ,xx <Plug>(expand_region_expand)
+map <leader>xx <Plug>(expand_region_expand)
 map N <Plug>(expand_region_expand)
 map M <Plug>(expand_region_shrink)
 " }}
@@ -181,15 +181,15 @@ map <silent> <SPACE>3 :diffget 3<CR>
 
 " grep result window operation alias
 " " Do :help cope if you are unsure what cope is. It's super useful!
-nmap ,co :botright copen<cr>
+nmap <leader>co :botright copen<cr>
 " spell check with aspell
-nmap ,fb :w!<CR>:!aspell check %<CR>:e! %<CR>
+nmap <leader>fb :w!<CR>:!aspell check %<CR>:e! %<CR>
 
 "Switch to current dir
-nmap ,cd :cd %:p:h<cr>
+nmap <leader>cd :cd %:p:h<cr>
 " vcscommand.vim : CVS/SVN/SVK/git/hg/bzr integration plugin
-nmap ,vv :VCSAnnotate<cr>
-nmap ,va :VCSAdd<cr>
+nmap <leader>vv :VCSAnnotate<cr>
+nmap <leader>va :VCSAdd<cr>
 
 " {{ --- Smart way to move window
 "  TIPS:
@@ -212,9 +212,9 @@ endif
 "  }
 
 " new tab
-map ,tn :tabnew<CR>
+map <leader>tn :tabnew<CR>
 " close tab
-map ,tc :tabclose<CR>
+map <leader>tc :tabclose<CR>
 
 " Bash like keys for the command line
 cnoremap <C-A>      <Home>
@@ -222,7 +222,7 @@ cnoremap <C-E>      <End>
 cnoremap <C-K>      <C-U>
 
 " ,pp toggles paste mode
-nmap ,tpp :set paste!<BAR>set paste?<CR>
+nmap <leader>tpp :set paste!<BAR>set paste?<CR>
 
 "---------------------------------------------------------------------------
 " PROGRAMMING SHORTCUTS
@@ -232,7 +232,7 @@ nmap ,tpp :set paste!<BAR>set paste?<CR>
 map <C-[> <ESC>:po<CR>
 
 " ,gg generates the header guard
-map ,gg :call IncludeGuard()<CR>
+map <leader>gg :call IncludeGuard()<CR>
 fun! IncludeGuard()
   let basename = substitute(bufname(""), '.*/', '', '')
   let guard = '_' . substitute(toupper(basename), '\.', '_', "H")
@@ -286,42 +286,42 @@ endif
 " }}
 
 " taglist
-map ,ii :TlistToggle<CR>
+map <leader>ii :TlistToggle<CR>
 
 " NERDTree
-map ,nt :NERDTreeToggle<CR>
+map <leader>nt :NERDTreeToggle<CR>
 
 " leader hotkeys
-nmap ,xs :write<CR>
-nmap ,s2 :sp<CR>
-nmap ,s3 :vs<CR>
-nmap ,s1 <C-W>o
-nmap ,s0 :close<CR>
-nmap ,x2 :sp<CR>
-nmap ,x3 :vs<CR>
-nmap ,x1 <C-W>o
-nmap ,x0 :close<CR>
-nmap ,xf :CtrlP<CR>
-nmap ,kk :CtrlP<CR>
-nmap ,xb :CtrlPBuffer<CR>
-nmap ,hr :CtrlPMRU<CR>
-nmap ,gt :CtrlPTag<CR>
+nmap <leader>xs :write<CR>
+nmap <leader>s2 :sp<CR>
+nmap <leader>s3 :vs<CR>
+nmap <leader>s1 <C-W>o
+nmap <leader>s0 :close<CR>
+nmap <leader>x2 :sp<CR>
+nmap <leader>x3 :vs<CR>
+nmap <leader>x1 <C-W>o
+nmap <leader>x0 :close<CR>
+nmap <leader>xf :CtrlP<CR>
+nmap <leader>kk :CtrlP<CR>
+nmap <leader>xb :CtrlPBuffer<CR>
+nmap <leader>hr :CtrlPMRU<CR>
+nmap <leader>gt :CtrlPTag<CR>
 nmap <leader>n ]n
 nmap <leader>p [n
-nmap ,dg1 ]nd]n[ndd[ndd
-nmap ,dg2 d]ndd]ndd
+nmap <leader>dg1 ]nd]n[ndd[ndd
+nmap <leader>dg2 d]ndd]ndd
 nmap <leader>nc ]c
 nmap <leader>pc [c
 " {{
-noremap ,wh <C-W>h
-noremap ,wj <C-W>j
-noremap ,wk <C-W>k
-noremap ,wl <C-W>l
+noremap <leader>wh <C-W>h
+noremap <leader>wj <C-W>j
+noremap <leader>wk <C-W>k
+noremap <leader>wl <C-W>l
 " }}"
-nmap ,tr :%s/ \+$//g<CR>
-nmap ,cg :CtrlPRoot<CR>
-nmap ,xc :suspend<CR>
-nmap ,ut :UndotreeToggle<CR>
+nmap <leader>tr :%s/ \+$//g<CR>
+nmap <leader>cg :CtrlPRoot<CR>
+nmap <leader>xc :suspend<CR>
+nmap <leader>ut :UndotreeToggle<CR>
 
 if !hasmapto("<Plug>ZoomWin")
  nmap <unique> ,ff  <Plug>ZoomWin
@@ -330,7 +330,7 @@ endif
 " For MRU plugin.
 let MRU_Max_Entries = 1024
 let MRU_Exclude_Files = '^/tmp/.*\|^/var/tmp/.*'
-map ,rr :MRU<CR>
+map <leader>rr :MRU<CR>
 
 if executable("ag")
   set grepprg=ag\ --nogroup\ --nocolor
@@ -362,32 +362,32 @@ set list
 " Stackoverflow doesn't help.
 " let s:uname = system("echo -n \"$(uname)\"")
 if has('clipboard')
-    vnoremap ,aa "+y
+    vnoremap <leader>aa "+y
                 \:echo 'Selection => clipboard'<cr>
-    nnoremap ,aa "+yy
+    nnoremap <leader>aa "+yy
                 \:echo 'Line(s) => clipboard'<cr>
-    nnoremap ,pp "+p
+    nnoremap <leader>pp "+p
 elseif executable('xclip')
   " Linux
-  vnoremap ,aa :w !xclip -selection clipboard -in<CR><CR>
+  vnoremap <leader>aa :w !xclip -selection clipboard -in<CR><CR>
         \:echo 'Selection => clipboard'<CR>
-  nnoremap ,aa V:w !xclip -selection clipboard -in<CR><CR>
+  nnoremap <leader>aa V:w !xclip -selection clipboard -in<CR><CR>
         \:echo 'Line(s) => clipboard'<cr>
-  nnoremap ,zz :silent :r!xclip -selection clipboard -out<CR>
+  nnoremap <leader>zz :silent :r!xclip -selection clipboard -out<CR>
 elseif executable('pbcopy')
   " OS X
-  vnoremap ,aa :w !pbcopy<CR><CR>
+  vnoremap <leader>aa :w !pbcopy<CR><CR>
         \:echo 'Selection => clipboard'<CR>
-  nnoremap ,aa V:w !pbcopy<CR><CR>
+  nnoremap <leader>aa V:w !pbcopy<CR><CR>
         \:echo 'Line(s) => clipboard'<cr>
-  nnoremap ,zz :silent :r!pbpaste<CR>
+  nnoremap <leader>zz :silent :r!pbpaste<CR>
 else
   " windows (cygwin)
-  vnoremap ,aa :w !putclip<CR><CR>
+  vnoremap <leader>aa :w !putclip<CR><CR>
         \:echo 'Selection => clipboard'<CR>
-  nnoremap ,aa V:w !putclip<CR><CR>
+  nnoremap <leader>aa V:w !putclip<CR><CR>
         \:echo 'Line(s) => clipboard'<cr>
-  nnoremap ,zz :silent :r!getclip<CR>
+  nnoremap <leader>zz :silent :r!getclip<CR>
 endif
 
 let g:DiffModeSync = 1

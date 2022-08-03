@@ -56,8 +56,8 @@ Inserts matching bracket, paren, brace or quote.
 ** [[https://github.com/tpope/vim-surround][vim-surround]] 
 deal with pairs of surroundings.
 
-** [[http://www.vim.org/scripts/script.php?script_id=39][matchit]] 
-extended % matching for HTML, LaTeX, and many other languages. 
+** [[https://github.com/andymass/vim-matchup][vim-matchup]] 
+match-up is a plugin that lets you highlight, navigate, and operate on sets of matching text. It extends vim's % key to language-specific words instead of just single characters.
 
 ** [[http://www.vim.org/scripts/script.php?script_id=1234][YankRing]] 
 Maintains a history of previous yanks, changes and deletes.
