@@ -71,7 +71,7 @@ Search files
 List symbols in current file
 
 ** easymotion
-Press <Space> to jump to the beginning of words
+Press ";;" jump to word by its first two characters
 
 ** fugitive
 For git!

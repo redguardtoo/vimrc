@@ -1,4 +1,4 @@
-*easymotion.txt*	Version 3.0
+*easymotion.txt*        Version 3.0
 
 
             ______                  __  ___       __  _
@@ -38,6 +38,7 @@ CONTENTS                                                 *easymotion-contents*
        Custom mappings ................. |easymotion-custom-mappings|
            Leader key .................. |easymotion-leader-key|
            Custom keys ................. |easymotion-custom-keys|
+       Autocommands .................... |easymotion-autocommands|
     License ............................ |easymotion-license|
     Known bugs ......................... |easymotion-known-bugs|
     Contributing ....................... |easymotion-contributing|
@@ -252,7 +253,7 @@ Bidirection ~
                 End of word forward and backward. See |e| & |ge|.
 
 <Plug>(easymotion-bd-E)                               *<Plug>(easymotion-bd-E)*
-                End of WORD forward and backward. See |e| & |ge|.
+                End of WORD forward and backward. See |E| & |gE|.
 
 <Plug>(easymotion-bd-jk)                             *<Plug>(easymotion-bd-jk)*
                 Line downward and upward. See |j| & |k|.
@@ -424,9 +425,9 @@ JK Motion ~
 JK motion option                    *<Plug>(easymotion-j)* *<Plug>(easymotion-k)*
                                                     *g:EasyMotion_startofline*
 
-        The default behavior of the |j| and |k| is to move your cursor to the
-        start of the line. Set this option to 0 to force the cursor to stay in
-        the same column If you want to use both movements as separate
+        The default behavior of the |j| and |k| keys is to move your cursor to
+        the start of the line. Set this option to 0 to force the cursor to stay
+        in the same column. If you want to use both movements as separate
         mappings, set |'g:EasyMotion_startofline'| to 0 and map
         |<Plug>(easymotion-sol-j)| & |<Plug>(easymotion-sol-k)| to the start
         of line mapping:
@@ -482,7 +483,7 @@ Search motion respect previous direction
 
     This is vim compatible |n| & |N| easymotion. Unlike |<Plug>(easymotion-n)|
     and |<Plug>(easymotion-N)| 's direction is always forward or backward,
-    these motions consider previous search direction. 
+    these motions consider previous search direction.
 
 Within line motion ~
                                                        *easymotion-within-line*
@@ -891,7 +892,7 @@ With this option enabled, |Easymotion| will shows target labels with
 uppercase letters, but allow you to type it in lowercase and have Easymotion
 automatically convert it uppercase.
 
-This feature improve targets' readability.
+This feature improves targets' readability.
 
 Example: >
 
@@ -1002,7 +1003,7 @@ EasyMotion_add_search_history                 *g:EasyMotion_add_search_history*
 EasyMotion_off_screen_search                   *g:EasyMotion_off_screen_search*
 
     If you set this option to 1, the 'n' key find motion will search patterns
-    even outside of the current screen range. If you want to disable this
+    even outside the current screen range. If you want to disable this
     feature, set this value to 0.
 >
     let g:EasyMotion_off_screen_search = 0
@@ -1138,6 +1139,28 @@ Example: >
 <
 See |easymotion-plug-table| for a table of motions that can be mapped
 and their default values.
+
+------------------------------------------------------------------------------
+Autocommands                                          *easymotion-autocommands*
+                                    *EasyMotionPromptBegin* *EasyMotionPromptEnd*
+
+EasyMotion invokes two |User| autocommands, |EasyMotionPromptBegin| and
+|EasyMotionPromptEnd|, so you can temporarily disable your linter to avoid
+annoying syntax errors.
+
+EasyMotionPromptBegin       Before the content of buffer is changed with
+                            markers. If EasyMotion directly jumps to the
+                            target (no prompts given), this autocommand will
+                            not be executed.
+
+EasyMotionPromptEnd         After the content of buffer and the undo tree are
+                            restored.
+
+Example with coc.nvim: >
+
+    autocmd User EasyMotionPromptBegin silent! CocDisable
+    autocmd User EasyMotionPromptEnd   silent! CocEnable
+<
 
 ==============================================================================
 License                                                    *easymotion-license*
