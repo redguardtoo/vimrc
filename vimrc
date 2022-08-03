@@ -320,6 +320,10 @@ noremap <leader>wk <C-W>k
 noremap <leader>wl <C-W>l
 " }}
 
+" YankRing
+nmap <leader>yy :YRShow<CR>
+let g:yankring_replace_n_pkey = ''
+let g:yankring_replace_n_nkey = ''
 
 " remove trailing spaces
 nmap <leader>tr :%s/ \+$//g<CR>
