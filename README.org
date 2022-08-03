@@ -53,7 +53,7 @@ Press ",ci" or ",cc" to comment/uncomment lines.
 ** [[http://www.vim.org/scripts/script.php?script_id=1849][AutoClose]] 
 Inserts matching bracket, paren, brace or quote.
 
-** [[https://github.com/tpope/vim-surround/blob/master/doc/surround.txt][vim-surround]] 
+** [[https://github.com/tpope/vim-surround][vim-surround]] 
 deal with pairs of surroundings.
 
 ** [[http://www.vim.org/scripts/script.php?script_id=39][matchit]] 
