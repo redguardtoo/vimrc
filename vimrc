@@ -187,9 +187,6 @@ nmap <leader>fb :w!<CR>:!aspell check %<CR>:e! %<CR>
 
 "Switch to current dir
 nmap <leader>cd :cd %:p:h<cr>
-" vcscommand.vim : CVS/SVN/SVK/git/hg/bzr integration plugin
-nmap <leader>vv :VCSAnnotate<cr>
-nmap <leader>va :VCSAdd<cr>
 
 " {{ --- Smart way to move window
 "  TIPS:
@@ -230,6 +227,10 @@ nmap <leader>tpp :set paste!<BAR>set paste?<CR>
 
 " Ctrl-[ jump out of the tag stack (undo Ctrl-])
 map <C-[> <ESC>:po<CR>
+
+" vim-fugitive
+nmap <leader>vm :Git blame<cr>
+nmap <leader>va :Gwrite<cr>
 
 " ,gg generates the header guard
 map <leader>gg :call IncludeGuard()<CR>
