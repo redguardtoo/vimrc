@@ -44,9 +44,6 @@ if has("gui_running")
   set guioptions-=r
   set guioptions-=R
   colorscheme molokai
-else
-  " terminal color settings
-  colorscheme evening
 endif
 
 " {{ vim-expand-region
