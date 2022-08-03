@@ -67,9 +67,6 @@ Maintains a history of previous yanks, changes and deletes.
 ** Ctrlp
 Search files
 
-** syntax checker for all languages
-syntastic/
-
 ** taglist
 List the structure of the source code
 

@@ -312,39 +312,35 @@ nmap <leader>dg1 ]nd]n[ndd[ndd
 nmap <leader>dg2 d]ndd]ndd
 nmap <leader>nc ]c
 nmap <leader>pc [c
-" {{
+
+" {{ move focus between sub-windows
 noremap <leader>wh <C-W>h
 noremap <leader>wj <C-W>j
 noremap <leader>wk <C-W>k
 noremap <leader>wl <C-W>l
-" }}"
+" }}
+
+
+" remove trailing spaces
 nmap <leader>tr :%s/ \+$//g<CR>
+
+" search file from project root
 nmap <leader>cg :CtrlPRoot<CR>
+
+" suspend
 nmap <leader>xc :suspend<CR>
+
+" undotree
 nmap <leader>ut :UndotreeToggle<CR>
 
 if !hasmapto("<Plug>ZoomWin")
  nmap <unique> ,ff  <Plug>ZoomWin
 endif
 
-" For MRU plugin.
+" MRU (recent files)
 let MRU_Max_Entries = 1024
 let MRU_Exclude_Files = '^/tmp/.*\|^/var/tmp/.*'
 map <leader>rr :MRU<CR>
-
-if executable("ag")
-  set grepprg=ag\ --nogroup\ --nocolor
-  "use ag in ctrlp for listing files. lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-endif
-
-" {{ vim-textobj-user
-call textobj#user#plugin('file', {
-      \ 'file': {
-      \ 'pattern': '\f\+', 'select': ['af', 'if']
-      \ }
-      \ })
-" }}
 
 " {{ set the 81st column of wide lines...
 highlight ColorColumn ctermbg=magenta
