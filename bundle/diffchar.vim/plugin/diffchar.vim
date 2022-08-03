@@ -8,30 +8,57 @@
 " |     || || |   | |   |  |__ |  _  ||  _  || |  | |
 " |____| |_||_|   |_|   |_____||_| |_||_| |_||_|  |_|
 "
-" Last Change:	2019/08/28
-" Version:		8.6
-" Author:		Rick Howe <rdcxy754@ybb.ne.jp>
-" Copyright:	(c) 2014-2019 by Rick Howe
+" Last Change:	2022/06/01
+" Version:		9.0 (on or after patch-8.1.1418 and nvim-0.5.0)
+" Author:		Rick Howe (Takumi Ohtani) <rdcxy754@ybb.ne.jp>
+" Copyright:	(c) 2014-2022 by Rick Howe
 
-if exists('g:loaded_diffchar') || !has('diff') || v:version < 800
+" This 9.0 version requires:
+" * the OptionSet autocommand event triggered with the diff option
+	" patch-8.0.0736 (nvim-0.3.0), patch-8.1.0414 (nvim-0.3.2)
+" * window ID argument in matchaddpos()/matchdelete()/getmatches()
+	" patch-8.1.0218 (nvim-0.3.5), patch-8.1.1084 (nvim-0.4.4)
+" * the DiffUpdated autocommand event
+	" patch-8.1.0397 (nvim-0.3.2)
+" * the win_execute() function
+	" patch-8.1.1418 (nvim-0.5.0)
+if exists('g:loaded_diffchar') || !has('diff') || v:version < 800 ||
+													\!exists('*win_execute')
 	finish
 endif
-let g:loaded_diffchar = 8.6
+let g:loaded_diffchar = 9.0
 
 let s:save_cpo = &cpoptions
 set cpo&vim
 
-" Commands
-command! -range -bar SDChar
-				\ call diffchar#ShowDiffChar(range(<line1>, <line2>))
-command! -range -bar RDChar
-				\ call diffchar#ResetDiffChar(range(<line1>, <line2>))
-command! -range -bar TDChar
-				\ call diffchar#ToggleDiffChar(range(<line1>, <line2>))
-command! -range -bang -bar EDChar
-				\ call diffchar#EchoDiffChar(range(<line1>, <line2>), <bang>1)
+" Options
+if !exists('g:DiffUnit')		" a type of diff unit
+	" let g:DiffUnit = 'Char'	" any single character
+	let g:DiffUnit = 'Word1'	" \w\+ word and any \W single character
+	" let g:DiffUnit = 'Word2'	" non-space and space words
+	" let g:DiffUnit = 'Word3'	" \< or \> character class boundaries
+	" let g:DiffUnit = 'CSV(,)'	" split characters (eg: ',', ';', '\t')
+	" let g:DiffUnit = '/{pattern}/'	" pattern to split
+endif
 
-" Configurable Keymaps
+if !exists('g:DiffColors')		" matching colors for changed units
+	let g:DiffColors = 0		" always 1 color
+	" let g:DiffColors = 1		" up to 4 colors in fixed order
+	" let g:DiffColors = 2		" up to 8 colors in fixed order
+	" let g:DiffColors = 3		" up to 16 colors in fixed order
+	" let g:DiffColors = 4		" all available colors in fixed order
+	" let g:DiffColors = 100	" all colors in dynamic random order
+endif
+
+if !exists('g:DiffPairVisible')	" a visibility of corresponding diff units
+	" let g:DiffPairVisible = 0	" disable
+	let g:DiffPairVisible = 1	" highlight
+	" let g:DiffPairVisible = 2	" highlight + echo
+	" let g:DiffPairVisible = 3	" highlight + popup/floating at cursor pos
+	" let g:DiffPairVisible = 4	" highlight + popup/floating at mouse pos
+endif
+
+" Keymaps
 for [key, plg, cmd] in [
 	\['[b', '<Plug>JumpDiffCharPrevStart',
 									\':call diffchar#JumpDiffChar(0, 0)'],
@@ -46,73 +73,20 @@ for [key, plg, cmd] in [
 	\['<Leader>p', '<Plug>PutDiffCharPair',
 									\':call diffchar#CopyDiffCharPair(1)']]
 	if !hasmapto(plg, 'n') && empty(maparg(key, 'n'))
-		execute 'nmap <silent> ' . key . ' ' . plg
+		if get(g:, 'DiffCharDoMapping', 1)
+			call execute('nmap <silent> ' . key . ' ' . plg)
+		endif
 	endif
-	execute 'nnoremap <silent> ' plg . ' ' . cmd . '<CR>'
+	call execute('nnoremap <silent> ' . plg . ' ' . cmd . '<CR>')
 endfor
 
-" Set a difference unit type
-if !exists('g:DiffUnit')
-	let g:DiffUnit = 'Word1'	" \w\+ word and any \W single character
-	" let g:DiffUnit = 'Word2'	" non-space and space words
-	" let g:DiffUnit = 'Word3'	" \< or \> character class boundaries
-	" let g:DiffUnit = 'Char'	" any single character
-	" let g:DiffUnit = 'CSV(,)'	" split characters
-endif
-
-" Set a difference unit matching colors
-if !exists('g:DiffColors')
-	let g:DiffColors = 0		" always 1 color
-	" let g:DiffColors = 1		" 4 colors in fixed order
-	" let g:DiffColors = 2		" 8 colors in fixed order
-	" let g:DiffColors = 3		" 16 colors in fixed order
-	" let g:DiffColors = 100	" all available colors in dynamic random order
-endif
-
-" Make a corresponding unit visible when cursor is moved on a diff unit
-if !exists('g:DiffPairVisible')
-	let g:DiffPairVisible = 1	" highlight with hl-Cursor
-	" let g:DiffPairVisible = 2	" highlight with hl-Cursor + echo
-	" let g:DiffPairVisible = 3	" highlight with hl-Cursor + popup-window
-	" let g:DiffPairVisible = 0	" disable
-endif
-
-" Set a diff mode synchronization to show/reset/update exact differences
-if !exists('g:DiffModeSync')
-	let g:DiffModeSync = 1		" enable
-	" let g:DiffModeSync = 0	" disable
-endif
-
-" Set a number of maximum hl-DiffChange lines to be dynamically detected
-if !exists('g:DiffMaxLines')
-	let g:DiffMaxLines = -3		" 3 times as many lines as higher window
-	" let g:DiffMaxLines = 50	" 50 lines including visible ones
-	" let g:DiffMaxLines = 1	" as few as visible lines
-	" let g:DiffMaxLines = 0	" disable and statically detect all lines
-endif
-
-" Set this plugin's DiffCharExpr() to the diffexpr option if empty
-" and when internal diff is not used
-if !exists('g:DiffExpr')
-	let g:DiffExpr = 1			" enable
-	" let g:DiffExpr = 0		" disable
-endif
-if g:DiffExpr && empty(&diffexpr) && &diffopt !~ 'internal'
-	let &diffexpr = 'diffchar#DiffCharExpr()'
-endif
-
-" Set an event group of this plugin
-augroup diffchar
-	autocmd!
-	if has('patch-8.0.736')			" OptionSet triggered with diff option
-		autocmd OptionSet diff call diffchar#ToggleDiffModeSync(0)
-		autocmd VimEnter *
-					\ if &diff | call diffchar#ToggleDiffModeSync(1) | endif |
-												\ autocmd! diffchar VimEnter
-	else
-		autocmd FilterWritePost * call diffchar#SetDiffModeSync()
-	endif
-augroup END
+" Event groups
+let g:DiffCharInitEvent = ['augroup diffchar', 'autocmd!',
+				\'autocmd OptionSet diff call diffchar#ToggleDiffModeSync(0)',
+															\'augroup END']
+call execute(g:DiffCharInitEvent)
+call execute('autocmd diffchar VimEnter * ++once
+					\ if &diff | call diffchar#ToggleDiffModeSync(1) | endif')
 
 let &cpoptions = s:save_cpo
 unlet s:save_cpo

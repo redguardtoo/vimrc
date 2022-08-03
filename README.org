@@ -77,6 +77,9 @@ Fugitive is the premier Vim plugin for Git. Or maybe it's the premier Git plugin
 ** zoomwin
 Zoom in/out window. Press ",ff"
 
+** [[https://github.com/rickhowe/diffchar.vim][diffchar.vim]]
+Highlight the exact differences, based on characters and words
+
 ** undotree
 Undo and redo in tree
 
