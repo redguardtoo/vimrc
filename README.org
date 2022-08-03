@@ -1,3 +1,5 @@
+#ifndef _README_ORG
+#define _README_ORG
 * Chen Bin (redguardtoo)'s vimrc
 - Github: git://github.com/redguardtoo/vimrc.git
 - WIN32 is fine
@@ -38,14 +40,14 @@ source $VIM/vimfiles/vimrc
 ** [[https://github.com/tpope/vim-pathogen][Pathogen]]
 Pathogen let us install a plugin as a bundle in ~/.vim/bundle seprately.
 
-** [[http://www.vim.org/scripts/script.php?script_id=1658][Nerd Tree]]
+** [[https://github.com/preservim/nerdtree][Nerd Tree]]
 A tree explorer plugin for navigating the filesystem.
 
 Useful commands:
 - `:Bookmark [name]` - bookmark any directory as name
 - `:NERDTree [name]` - open the bookmark [name] in Nerd Tree
 
-** [[http://www.vim.org/scripts/script.php?script_id=1218][NERD commenter]]
+** [[https://github.com/preservim/nerdcommenter][NERD commenter]]
 Press ",ci" or ",cc" to comment/uncomment lines.
 
 ** [[http://www.vim.org/scripts/script.php?script_id=1849][AutoClose]] 
@@ -101,3 +103,4 @@ Undo and redo in tree
 * Other good references
 - [[http://amix.dk/vim/vimrc.html]]
 - [[http://spf13.com/post/perfect-vimrc-vim-config-file]]
+#endif // for #ifndef _README_ORG
