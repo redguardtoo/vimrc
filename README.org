@@ -1,13 +1,9 @@
 * Chen Bin (redguardtoo)'s vimrc
-- Github: git://github.com/redguardtoo/vimrc.git
-- WIN32 is fine
-- NO Ruby/Python/Perl dependency. The only language except vim script I can accept is C
-- This vimrc is light weight because I'm [[https://github.com/redguardtoo/emacs.d][Emacs user now]]
-- No "git submodule"
-- Vim 7+ requried
+- Light weight
+- Works out of box
+- Vim 7+ required
 
 * Install
-
 ** Linux
 
 #+BEGIN_SRC sh
@@ -36,14 +32,10 @@ source $VIM/vimfiles/vimrc
 
 * Plugins
 ** [[https://github.com/tpope/vim-pathogen][Pathogen]]
-Pathogen let us install a plugin as a bundle in ~/.vim/bundle seprately.
+Pathogen let us install a plugin as a bundle in ~/.vim/bundle separately.
 
 ** [[https://github.com/preservim/nerdtree][Nerd Tree]]
-A tree explorer plugin for navigating the filesystem.
-
-Useful commands:
-- `:Bookmark [name]` - bookmark any directory as name
-- `:NERDTree [name]` - open the bookmark [name] in Nerd Tree
+A tree explorer plugin for navigating the filesystem. Press ",nt".
 
 ** [[https://github.com/preservim/nerdcommenter][NERD commenter]]
 Press ",ci" or ",cc" to comment/uncomment lines.
@@ -58,12 +50,10 @@ deal with pairs of surroundings.
 match-up is a plugin that lets you highlight, navigate, and operate on sets of matching text. It extends vim's % key to language-specific words instead of just single characters.
 
 ** [[http://www.vim.org/scripts/script.php?script_id=1234][YankRing]] 
-Maintains a history of previous yanks, changes and deletes.
-
-Run `:help yankring` to see more info.
+Maintains a history of previous yanks, changes and deletes. Press ",yy"
 
 ** [[https://github.com/ctrlpvim/ctrlp.vim][ctrlp.vim]]
-Search files
+Press ",kk" to search files in project root. ",xf" to search files"
 
 ** [[https://github.com/preservim/tagbar][tagbar]]
 List symbols in current file
