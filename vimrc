@@ -169,17 +169,14 @@ map ]] ]n
 map [[ [n
 " }}
 "
-" set leader to ,
-let mapleader = " " " Leader is the space key
-let g:mapleader = " "
-let maplocalleader = "`"
-let g:maplocalleader = "`"
+" set leader to comma key
+let mapleader = ","
 nnoremap <SPACE> <Nop>
 
 " {{ for merge tool
-map <silent> <leader>1 :diffget 1<CR>
-map <silent> <leader>2 :diffget 2<CR>
-map <silent> <leader>3 :diffget 3<CR>
+map <silent> <SPACE>1 :diffget 1<CR>
+map <silent> <SPACE>2 :diffget 2<CR>
+map <silent> <SPACE>3 :diffget 3<CR>
 " }}
 
 " grep result window operation alias
