@@ -1,40 +1,39 @@
-" Chen Bin's vimrc
-" shameless copied from Tsung-Hsiang (Sean) Chang <vgod@vgod.tw>
-" Fork me on GITHUB git://github.com/redguardtoo/vimrc.git
-
 " {{ For pathogen.vim: auto load all plugins in .vim/bundle
 execute pathogen#infect()
 " }}
 
-" == General Settings ==
-set nocompatible " not compatible with the old-fashion vi mode
-set bs=2  " allow backspacing over everything in insert mode
-set history=1024  " command line history
-set ruler  " show the cursor position all the time
-set autoread  " auto read when file is changed from outside
-set number " show line numbers
-set ignorecase " ignore case when searching
+" not compatible with the old-fashion vi mode
+set nocompatible
+" allow backspacing over everything in insert mode
+set bs=2
+" command line history
+set history=1024
+" show the cursor position all the time
+set ruler
+" auto read when file is changed from outside
+set autoread
+" show line numbers
+set number
+" ignore case when searching
+set ignorecase
 " ignore these files while expanding wild chars
 set wildignore=*.o,*.class,*.pyc,*.elc,*.a,*.lib
-set autoindent  " auto indentation
-set incsearch  " incremental search
-set nobackup  " no *~ backup files
-set copyindent  " copy the previous indentation on autoindenting
-set smartcase  " ignore case if search pattern is all lowercase,case-sensitive otherwise
-set smarttab  " insert tabs on the start of a line according to context
-
-" disable sound on errors
-set noerrorbells
-set novisualbell
-set t_vb= " never flash the screen
-set tm=500
+" auto indentation
+set autoindent
+" copy the previous indentation
+set copyindent
+" incremental search
+set incsearch
+" no *~ backup files
+set nobackup
+" ignore case if search pattern is all lowercase,case-sensitive otherwise
+set smartcase
+" insert tabs on the start of a line according to context
+set smarttab
 
 filetype plugin indent on
 
-set hlsearch  " search highlighting
-set tags=./tags;
-
-if has("gui_running") " GUI color and font settings
+if has("gui_running")
   set background=dark
   set t_Co=256          " 256 color mode
   " NO menu,toolbar ...
@@ -44,13 +43,6 @@ if has("gui_running") " GUI color and font settings
   set guioptions-=L
   set guioptions-=r
   set guioptions-=R
-
-  if has("win32")
-    "start gvim maximized
-    if has("autocmd")
-      au GUIEnter * simalt ~x
-    endif
-  endif
   colorscheme molokai
 else
   " terminal color settings
@@ -59,8 +51,6 @@ endif
 
 " {{ vim-expand-region
 map <leader>xx <Plug>(expand_region_expand)
-map N <Plug>(expand_region_expand)
-map M <Plug>(expand_region_shrink)
 " }}
 
 " {{ vim-easymotion
@@ -76,10 +66,6 @@ let g:EasyMotion_smartcase = 1
 " Smartsign (type `3` and match `3`&`#`)
 let g:EasyMotion_use_smartsign_us = 1
 " }}
-
-
-" syntastic has some performance impact.
-" I don't use it because vi should be light weight
 
 set clipboard=unnamed " yank to the system register (*) by default
 set showmatch  " Cursor shows matching ) and }
@@ -108,67 +94,11 @@ set statusline+=%c      "cursor column
 set statusline+=\ %P    "percent through file
 "}
 
-if has("autocmd")
-  autocmd BufNewFile,BufRead *.vb set ft=vbnet
-  autocmd BufNewFile,BufRead *.{ps1,psm1,psd1} set ft=ps1
-  autocmd BufNewFile,BufRead *.{md,markdown} set ft=markdown
-  autocmd BufNewFile,BufRead *.json set ft=javascript
-  autocmd BufNewFile,BufRead *.{ftl,jsp} set ft=html
-  autocmd BufNewFile,BufRead *.build set ft=xml
-  " Support Format-Flowed in email (mutt).
-  autocmd FileType mail setlocal fo+=aw tw=72
-  " Use TAB only in makefile
-  autocmd FileType Makefile set noexpandtab
-  " C/C++ specific settings
-  autocmd FileType c,cpp,cc  set cindent comments=sr:/*,mb:*,el:*/,:// cino=>s,e0,n0,f0,{0,}0,^-1s,:0,=s,g0,h1s,p2,t0,+2,(2,)20,*30
-  " auto reload vimrc when editing it
-  autocmd! bufwritepost .vimrc source ~/.vimrc
-endif
+autocmd FileType Makefile set noexpandtab
 
 "Restore cursor to file position in previous editing session
 set viminfo='10,\"100,:20,%,n~/.viminfo
 
-if has("autocmd")
-  au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
-
-  " @see https://www.antagonism.org/privacy/gpg-vi.shtml
-  " Transparent editing of GnuPG-encrypted files
-  " Based on a solution by Wouter Hanegraaff
-  augroup encrypted
-    au!
-    " First make sure nothing is written to ~/.viminfo while editing
-    " an encrypted file.
-    autocmd BufReadPre,FileReadPre *.gpg,*.asc set viminfo=
-    " We don't want a swap file, as it writes unencrypted data to disk.
-    autocmd BufReadPre,FileReadPre *.gpg,*.asc set noswapfile
-    " Switch to binary mode to read the encrypted file.
-    autocmd BufReadPre,FileReadPre *.gpg set bin
-    autocmd BufReadPre,FileReadPre *.gpg,*.asc let ch_save = &ch|set ch=2
-    autocmd BufReadPost,FileReadPost *.gpg,*.asc
-          \ '[,']!sh -c 'gpg --decrypt 2> /dev/null'
-    " Switch to normal mode for editing
-    autocmd BufReadPost,FileReadPost *.gpg set nobin
-    autocmd BufReadPost,FileReadPost *.gpg,*.asc let &ch = ch_save|unlet ch_save
-    autocmd BufReadPost,FileReadPost *.gpg,*.asc
-          \ execute ":doautocmd BufReadPost " . expand("%:r")
-
-    " Convert all text to encrypted text before writing
-    autocmd BufWritePre,FileWritePre *.gpg set bin
-    autocmd BufWritePre,FileWritePre *.gpg
-          \ '[,']!sh -c 'gpg --default-recipient-self -e 2>/dev/null'
-    autocmd BufWritePre,FileWritePre *.asc
-          \ '[,']!sh -c 'gpg --default-recipient-self -e -a 2>/dev/null'
-    " Undo the encryption so we are back in the normal text, directly
-    " after the file has been written.
-    autocmd BufWritePost,FileWritePost *.gpg,*.asc u
-  augroup END
-endif
-
-" {{ go to SCM conflict marker
-map ]] ]n
-map [[ [n
-" }}
-"
 " set leader to comma key
 let mapleader = ","
 nnoremap <SPACE> <Nop>
@@ -177,6 +107,11 @@ nnoremap <SPACE> <Nop>
 map <silent> <SPACE>1 :diffget 1<CR>
 map <silent> <SPACE>2 :diffget 2<CR>
 map <silent> <SPACE>3 :diffget 3<CR>
+" }}
+
+" {{ go to SCM conflict marker
+map <SPACE>n ]n
+map <SPACE>p [n
 " }}
 
 " grep result window operation alias
@@ -194,74 +129,23 @@ nmap <leader>cd :cd %:p:h<cr>
 "  C-W _ maxmize window height
 "  C-W = restore window size
 "  C-W | maxmize window width
-set wmw=0 " set the min width of a window to 0 so we can maximize others
-set wmh=0 " set the min height of a window to 0 so we can maximize others
+" set the min width of a window to 0 so we can maximize others
+set wmw=0
+" set the min height of a window to 0 so we can maximize others
+set wmh=0
 " }}
-
-" --- Faster window resize {
-"  TIPS:
-"  C-W </ > resize window width
-if bufwinnr(1)
-  " recommend using scroll pad
-  map + <C-W>+
-  map - <C-W>-
-endif
-"  }
 
 " new tab
 map <leader>tn :tabnew<CR>
 " close tab
 map <leader>tc :tabclose<CR>
 
-" Bash like keys for the command line
-cnoremap <C-A>      <Home>
-cnoremap <C-E>      <End>
-cnoremap <C-K>      <C-U>
-
-" ,pp toggles paste mode
+" toggles paste mode
 nmap <leader>tpp :set paste!<BAR>set paste?<CR>
-
-"---------------------------------------------------------------------------
-" PROGRAMMING SHORTCUTS
-"---------------------------------------------------------------------------
-
-" Ctrl-[ jump out of the tag stack (undo Ctrl-])
-map <C-[> <ESC>:po<CR>
 
 " vim-fugitive
 nmap <leader>vm :Git blame<cr>
 nmap <leader>va :Gwrite<cr>
-
-" ,gg generates the header guard
-map <leader>gg :call IncludeGuard()<CR>
-fun! IncludeGuard()
-  let basename = substitute(bufname(""), '.*/', '', '')
-  let guard = '_' . substitute(toupper(basename), '\.', '_', "H")
-  call append(0, "#ifndef " . guard)
-  call append(1, "#define " . guard)
-  call append( line("$"), "#endif // for #ifndef " . guard)
-endfun
-
-if has("autocmd") && exists("+omnifunc")
-  " Enable omni completion. (Ctrl-X Ctrl-O)
-  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-  autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-
-  " use syntax complete if nothing else available
-  autocmd FileType *
-        \ if &omnifunc == "" |
-        \  setlocal omnifunc=syntaxcomplete#Complete |
-        \ endif
-endif
-
-set cot-=preview "disable doc preview in omnicomplete
-
-if has("autocmd")
-  " make CSS omnicompletion work for SASS and SCSS
-  autocmd BufNewFile,BufRead *.scss             set ft=scss.css
-  autocmd BufNewFile,BufRead *.sass             set ft=sass.css
-endif
 
 " {{ ENCODING SETTINGS
 set encoding=utf-8
@@ -270,7 +154,6 @@ set fileencoding=utf-8
 set fileencodings=ucs-bom,utf-8,big5,gb2312,latin1
 " }}
 
-" == PLUGIN ==
 " {{ -- AutoClose - Inserts matching bracket, paren, brace or quote
 " fixed the arrow key problems caused by AutoClose
 if !has("gui_running")
@@ -311,12 +194,6 @@ nmap <leader>kk :CtrlPRoot<CR>
 " switch buffer
 nmap <leader>xb :CtrlPBuffer<CR>
 nmap <leader>gt :CtrlPTag<CR>
-nmap <leader>n ]n
-nmap <leader>p [n
-nmap <leader>dg1 ]nd]n[ndd[ndd
-nmap <leader>dg2 d]ndd]ndd
-nmap <leader>nc ]c
-nmap <leader>pc [c
 
 " {{ move focus between sub-windows
 noremap <leader>wh <C-W>h
@@ -354,10 +231,6 @@ highlight ColorColumn ctermbg=magenta
 call matchadd('ColorColumn', '\%81v', 100)
 " }}
 
-"====[ Make tabs, trailing whitespace, and non-breaking spaces visible ]======
-exec "set listchars=trail:\uB7,nbsp:~"
-set list
-
 " Copy/Paste, can only handle lines
 " ',aa' => copy
 " ',zz' = paste
@@ -376,21 +249,14 @@ elseif executable('xclip')
         \:echo 'Selection => clipboard'<CR>
   nnoremap <leader>aa V:w !xclip -selection clipboard -in<CR><CR>
         \:echo 'Line(s) => clipboard'<cr>
-  nnoremap <leader>zz :silent :r!xclip -selection clipboard -out<CR>
+  nnoremap <leader>pp :silent :r!xclip -selection clipboard -out<CR>
 elseif executable('pbcopy')
   " OS X
   vnoremap <leader>aa :w !pbcopy<CR><CR>
         \:echo 'Selection => clipboard'<CR>
   nnoremap <leader>aa V:w !pbcopy<CR><CR>
         \:echo 'Line(s) => clipboard'<cr>
-  nnoremap <leader>zz :silent :r!pbpaste<CR>
-else
-  " windows (cygwin)
-  vnoremap <leader>aa :w !putclip<CR><CR>
-        \:echo 'Selection => clipboard'<CR>
-  nnoremap <leader>aa V:w !putclip<CR><CR>
-        \:echo 'Line(s) => clipboard'<cr>
-  nnoremap <leader>zz :silent :r!getclip<CR>
+  nnoremap <leader>pp :silent :r!pbpaste<CR>
 endif
 
 let g:DiffModeSync = 1
