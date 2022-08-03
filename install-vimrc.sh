@@ -10,4 +10,6 @@ if [ $(uname -s | grep -c CYGWIN) -eq 1 ]; then
 else
     ln -fs ~/.vim/vimrc ~/.vimrc
     ln -fs ~/.vim/gvimrc ~/.gvimrc
+    ln -fs ~/.vim/vimrc ~/.vim/init.vim
+    ln -s ~/.vim ~/.config/nvim
 fi

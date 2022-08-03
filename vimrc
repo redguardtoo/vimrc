@@ -96,9 +96,6 @@ set statusline+=\ %P    "percent through file
 
 autocmd FileType Makefile set noexpandtab
 
-"Restore cursor to file position in previous editing session
-set viminfo='10,\"100,:20,%,n~/.viminfo
-
 " set leader to comma key
 let mapleader = ","
 nnoremap <SPACE> <Nop>
@@ -157,7 +154,6 @@ set fileencodings=ucs-bom,utf-8,big5,gb2312,latin1
 " {{ -- AutoClose - Inserts matching bracket, paren, brace or quote
 " fixed the arrow key problems caused by AutoClose
 if !has("gui_running")
-  set term=linux
   imap OA <ESC>ki
   imap OB <ESC>ji
   imap OC <ESC>li
