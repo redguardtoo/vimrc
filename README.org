@@ -64,9 +64,6 @@ Maintains a history of previous yanks, changes and deletes.
 
 `:help yankring` to see more info.
 
-** cmake
-Syntax highlight CmakeLists.txt
-
 ** Ctrlp
 Search files
 
