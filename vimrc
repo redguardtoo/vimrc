@@ -217,7 +217,7 @@ endif
 
 " MRU (recent files)
 let MRU_Max_Entries = 1024
-let MRU_Exclude_Files = '^/tmp/.*\|^/var/tmp/.*'
+let MRU_Exclude_Files = '^/tmp/.*\|^/var/tmp/.*\|.*/.git/.*'
 map <leader>rr :MRU<CR>
 
 " {{ set the 81st column of wide lines...
