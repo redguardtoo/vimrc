@@ -43,18 +43,6 @@ set smarttab
 
 filetype plugin indent on
 
-if has("gui_running")
-  set background=dark
-  " NO menu,toolbar ...
-  set guioptions-=m
-  set guioptions-=T
-  set guioptions-=l
-  set guioptions-=L
-  set guioptions-=r
-  set guioptions-=R
-endif
-
-
 " Enable true-color (24-bit RGB) in terminal if supported (highly recommended)
 if has('termguicolors')
   set termguicolors
