@@ -119,17 +119,14 @@ set wildmenu
 
 " status line {
 set laststatus=2
-set statusline=%-10.3n "buffer number
-set statusline+=%t "tail of the filename
-set statusline+=[%{&fenc!=''?&fenc:'none'}, "file encoding
-set statusline+=%{&ff}] "file format
+" W:window-number file-name encoding format
+set statusline=W:%{winnr()}\ %t\ [%{&fenc!=''?&fenc:'none'},%{&ff}]
 set statusline+=%h "help file flag
 set statusline+=%m "modified flag
 set statusline+=%r "read only flag
 set statusline+=%y "filetype
 set statusline+=%= "left/right separator
 set statusline+=%c "cursor column
-set statusline+=\ %P "percent through file
 "}
 
 augroup my_filetypes
@@ -307,6 +304,16 @@ set diffopt+=indent-heuristic
 " {{ vim-expand-region
 vmap v <Plug>(expand_region_expand)
 " }}
+
+nnoremap <leader>1 :execute "1wincmd w"<CR>
+nnoremap <leader>2 :execute "2wincmd w"<CR>
+nnoremap <leader>3 :execute "3wincmd w"<CR>
+nnoremap <leader>4 :execute "4wincmd w"<CR>
+nnoremap <leader>5 :execute "5wincmd w"<CR>
+nnoremap <leader>6 :execute "6wincmd w"<CR>
+nnoremap <leader>7 :execute "7wincmd w"<CR>
+nnoremap <leader>8 :execute "8wincmd w"<CR>
+nnoremap <leader>9 :execute "9wincmd w"<CR>
 
 " should be placed at the very end
 syntax on " syntax highlight
