@@ -1,6 +1,6 @@
 " not compatible with the old-fashion vi mode
 set nocompatible
- "allow backspacing over everything in insert mode
+" allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 " command line history
 set history=1024
