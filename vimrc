@@ -117,7 +117,7 @@ set wildmenu
 " {{ status line
 set laststatus=2
 " window-number file-name encoding format
-set statusline=W:%{winnr()}\ %t\ [%{&fenc!=''?&fenc:'none'},%{&ff}]
+set statusline=[%{winnr()}]\ %t\ [%{&fenc!=''?&fenc:'none'},%{&ff}]
 " help file flag
 set statusline+=%h
 " modified flag
