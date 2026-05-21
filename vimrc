@@ -165,12 +165,17 @@ nmap <leader>x1 <C-W>o
 nmap <leader>x0 :close<CR>
 
 " search files
-nmap <leader>xf :CtrlP<CR>
+nmap <leader>xf :FuzzyFiles<CR>
 " search file from project root
-nmap <leader>kk :CtrlPRoot<CR>
+nmap <leader>kk :FuzzyFilesRoot<CR>
 " switch buffer
-nmap <leader>xb :CtrlPBuffer<CR>
-nmap <leader>gt :CtrlPTag<CR>
+nmap <leader>xb :FuzzyBuffers<CR>
+" search tag tags file of project root  (Universal Ctags needed)
+nmap <leader>ft :FuzzyTagsRoot<CR>
+nmap <leader>gf :FuzzyGitFiles<CR>
+nmap <leader>gg :FuzzyGitGrep<CR>
+nmap <leader>rr :FuzzyMru<CR>
+nmap <leader>yy :FuzzyRegisters<CR>
 
 " {{ move focus between sub-windows
 noremap <leader>wh <C-W>h
@@ -179,16 +184,8 @@ noremap <leader>wk <C-W>k
 noremap <leader>wl <C-W>l
 " }}
 
-" YankRing
-nmap <leader>yy :YRShow<CR>
-let g:yankring_replace_n_pkey = ''
-let g:yankring_replace_n_nkey = ''
-" @see https://github.com/neovim/neovim/issues/2642#issuecomment-218232937
-let g:yankring_clipboard_monitor = 0
-
 " remove trailing spaces
 nmap <leader>tr :%s/ \+$//g<CR>
-
 
 " suspend
 nmap <leader>xc :suspend<CR>
@@ -199,9 +196,6 @@ nmap <leader>ut :UndotreeToggle<CR>
 if !hasmapto("<Plug>ZoomWin")
  nmap <unique> ,ff  <Plug>ZoomWin
 endif
-
-" press <SPACE> and number to select old files
-map <leader>rr :browse oldfiles<CR>
 
 " {{ set the 81st column of wide lines...
 highlight ColorColumn ctermbg=magenta

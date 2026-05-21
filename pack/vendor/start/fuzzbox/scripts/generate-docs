@@ -1,0 +1,51 @@
+#!/bin/bash
+# vim:ft=bash:
+
+# Script to generate vim docs from README.md
+# Uses md2vim, see https://github.com/FooSoft/md2vim
+#
+# Install md2vim with `go install git.foosoft.net/alex/md2vim@latest`
+# Or download a binary from https://github.com/FooSoft/md2vim/releases
+
+if which md2vim &>/dev/null; then
+  MD2VIM=$(which md2vim)
+elif test -f $GOPATH/bin/md2vim; then
+  MD2VIM=$GOPATH/bin/md2vim
+elif test -f $HOME/go/bin/md2vim; then
+  MD2VIM=$HOME/go/bin/md2vim
+else
+  echo "Error: Required binary md2vim not found" >&2
+  echo "Install md2vim with 'go install git.foosoft.net/alex/md2vim@latest'" >&2
+  echo "Or download a binary from https://github.com/FooSoft/md2vim/releases" >&2
+  exit 1
+fi
+
+if sed --version 2>/dev/null | head -n1 | grep GNU &>/dev/null; then
+  GSED="sed"
+elif gsed --version 2>/dev/null | head -n1 | grep GNU &>/dev/null; then
+  GSED="gsed"
+else
+  echo "Error: GNU sed is required but was not found" >&2
+  exit 1
+fi
+
+echo Generating documentation
+cmd="$MD2VIM -cols 78 -tabs 2 -desc 'A vim9 fuzzy finder with a modern UI' README.md doc/fuzzbox.txt"
+echo Executing $cmd
+eval $cmd
+
+if ! tail -n1 doc/fuzzbox.txt | fgrep "vim:" &>/dev/null; then
+  # Note: leading space required!
+  modeline=" vim:tw=78:ts=2:ft=help:"
+  echo Adding missing modeline
+  cmd="echo \"$modeline\" >> doc/fuzzbox.txt"
+  echo Executing $cmd
+  eval $cmd
+fi
+
+if ! head -n1 doc/fuzzbox.txt | fgrep "*fuzzbox.txt*" &>/dev/null; then
+  echo Adding missing help tag
+  cmd="$GSED -i '1s/fuzzbox.txt/*fuzzbox.txt*/' doc/fuzzbox.txt"
+  echo Executing $cmd
+  eval $cmd
+fi
