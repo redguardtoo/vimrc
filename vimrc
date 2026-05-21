@@ -45,7 +45,6 @@ filetype plugin indent on
 
 if has("gui_running")
   set background=dark
-  set t_Co=256          " 256 color mode
   " NO menu,toolbar ...
   set guioptions-=m
   set guioptions-=T
