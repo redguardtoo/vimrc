@@ -238,9 +238,6 @@ nmap <leader>xc :suspend<CR>
 " save&quit
 nmap <SPACE>xc :xa<CR>
 
-" undotree
-nmap <leader>ut :UndotreeToggle<CR>
-
 if !hasmapto("<Plug>ZoomWin")
   nmap <unique> ,ff  <Plug>ZoomWin
 endif
