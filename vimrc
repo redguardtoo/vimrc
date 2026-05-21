@@ -207,33 +207,43 @@ set linebreak
 nnoremap j gj
 nnoremap k gk
 
-" Copy/Paste, can only handle lines
-" ',aa' => copy
-" ',zz' = paste
-" Vim always copy lines!
-" Stackoverflow doesn't help.
-" let s:uname = system("echo -n \"$(uname)\"")
-if has('clipboard')
-    vnoremap <leader>aa "+y
-                \:echo 'Selection => clipboard'<cr>
-    nnoremap <leader>aa "+yy
-                \:echo 'Line(s) => clipboard'<cr>
+" {{ Cross-Platform Clipboard (Optimized for 64-bit Windows, WSL, Linux, macOS)
+" Fixes the old bug where only entire lines could be copied.
+" Supports precise character, visual block, and line selection.
+if has('win64')
+    " 1. Native Windows 64-bit environment (32-bit ignored)
+    set clipboard=unnamed,unnamedplus
+    vnoremap <leader>aa "+y:echo 'Selection => Windows Clipboard'<CR>
+    nnoremap <leader>aa "+yy:echo 'Line => Windows Clipboard'<CR>
     nnoremap <leader>pp "+p
+
+elseif executable('clip.exe')
+    " 2. WSL (Windows Subsystem for Linux) environment
+    " Copy: Yank to unnamed register first, then pipe exact selection to clip.exe
+    vnoremap <leader>aa y:call system('clip.exe', @")<CR>:echo 'Selection => Win Clipboard via WSL'<CR>
+    nnoremap <leader>aa yy:call system('clip.exe', @")<CR>:echo 'Line => Win Clipboard via WSL'<CR>
+    " Paste: Retrieve Windows clipboard via powershell safely to preserve indentation
+    nnoremap <leader>pp :set paste<CR>:let @" = system('powershell.exe -NoProfile -Command "Get-Clipboard"')<CR>p:set nopaste<CR>
+
+elseif has('clipboard')
+    " 3. Linux/macOS environments with native +clipboard support
+    vnoremap <leader>aa "+y:echo 'Selection => Clipboard'<CR>
+    nnoremap <leader>aa "+yy:echo 'Line => Clipboard'<CR>
+    nnoremap <leader>pp "+p
+
 elseif executable('xclip')
-  " Linux
-  vnoremap <leader>aa :w !xclip -selection clipboard -in<CR><CR>
-        \:echo 'Selection => clipboard'<CR>
-  nnoremap <leader>aa V:w !xclip -selection clipboard -in<CR><CR>
-        \:echo 'Line(s) => clipboard'<cr>
-  nnoremap <leader>pp :silent :r!xclip -selection clipboard -out<CR>
+    " 4. Linux terminal fallback (No native +clipboard feature)
+    vnoremap <leader>aa y:call system('xclip -selection clipboard -in', @")<CR>:echo 'Selection => Clipboard'<CR>
+    nnoremap <leader>aa yy:call system('xclip -selection clipboard -in', @")<CR>:echo 'Line => Clipboard'<CR>
+    nnoremap <leader>pp :set paste<CR>:let @" = system('xclip -selection clipboard -out')<CR>p:set nopaste<CR>
+
 elseif executable('pbcopy')
-  " OS X
-  vnoremap <leader>aa :w !pbcopy<CR><CR>
-        \:echo 'Selection => clipboard'<CR>
-  nnoremap <leader>aa V:w !pbcopy<CR><CR>
-        \:echo 'Line(s) => clipboard'<cr>
-  nnoremap <leader>pp :silent :r!pbpaste<CR>
+    " 5. macOS terminal fallback
+    vnoremap <leader>aa y:call system('pbcopy', @")<CR>:echo 'Selection => Clipboard'<CR>
+    nnoremap <leader>aa yy:call system('pbcopy', @")<CR>:echo 'Line => Clipboard'<CR>
+    nnoremap <leader>pp :set paste<CR>:let @" = system('pbpaste')<CR>p:set nopaste<CR>
 endif
+" }}
 
 " toggle highlighted items
 nnoremap <expr> <SPACE>hl v:hlsearch ? ':nohlsearch<CR>' : ':set hlsearch<CR>'
