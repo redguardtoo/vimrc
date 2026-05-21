@@ -1,7 +1,3 @@
-" {{ For pathogen.vim: auto load all plugins in .vim/bundle
-execute pathogen#infect()
-" }}
-
 " not compatible with the old-fashion vi mode
 set nocompatible
  "allow backspacing over everything in insert mode
