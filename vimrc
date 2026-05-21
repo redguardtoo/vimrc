@@ -5,7 +5,7 @@ execute pathogen#infect()
 " not compatible with the old-fashion vi mode
 set nocompatible
 " allow backspacing over everything in insert mode
-set bs=2
+set backspace=indent,eol,start
 " command line history
 set history=1024
 " show the cursor position all the time
@@ -16,8 +16,8 @@ set autoread
 set number
 " ignore case when searching
 set ignorecase
-" ignore these files while expanding wild chars
-set wildignore=*.o,*.class,*.pyc,*.elc,*.a,*.lib
+" ignore directories
+set wildignore+=*/node_modules/*,*/tmp/*
 " auto indentation
 set autoindent
 " copy the previous indentation
@@ -90,7 +90,10 @@ set statusline+=%c      "cursor column
 set statusline+=\ %P    "percent through file
 "}
 
-autocmd FileType Makefile set noexpandtab
+augroup my_filetypes
+  autocmd!
+  autocmd FileType make setlocal noexpandtab
+augroup END
 
 " set leader to comma key
 let mapleader = ","
@@ -111,14 +114,14 @@ map <SPACE>p [n
 " " Do :help cope if you are unsure what cope is. It's super useful!
 nmap <leader>co :botright copen<cr>
 " spell check with aspell
-nmap <leader>fb :w!<CR>:!aspell check %<CR>:e! %<CR>
-
+nmap <leader>fb :setlocal spell spelllang=en_us
+nmap <leader>fe ]s
 "Switch to current dir
 nmap <leader>cd :cd %:p:h<cr>
 
 " {{ --- Smart way to move window
 "  TIPS:
-"  C-W +/- increase/descrease window height
+"  C-W +/- increase/decrease window height
 "  C-W _ maxmize window height
 "  C-W = restore window size
 "  C-W | maxmize window width
@@ -147,20 +150,6 @@ set fileencoding=utf-8
 set fileencodings=ucs-bom,utf-8,big5,gb2312,latin1
 " }}
 
-" {{ -- AutoClose - Inserts matching bracket, paren, brace or quote
-" fixed the arrow key problems caused by AutoClose
-if !has("gui_running")
-  imap OA <ESC>ki
-  imap OB <ESC>ji
-  imap OC <ESC>li
-  imap OD <ESC>hi
-  nmap OA k
-  nmap OB j
-  nmap OC l
-  nmap OD h
-endif
-" }}
-
 " {{ tagbar
 map <leader>ii :TagbarToggle<CR>
 let g:tagbar_position = 'left'
@@ -179,6 +168,7 @@ nmap <leader>x2 :sp<CR>
 nmap <leader>x3 :vs<CR>
 nmap <leader>x1 <C-W>o
 nmap <leader>x0 :close<CR>
+
 " search files
 nmap <leader>xf :CtrlP<CR>
 " search file from project root
@@ -271,10 +261,3 @@ endif
 " {{ vim-expand-region
 vmap v <Plug>(expand_region_expand)
 " }}
-"
-" Local Variables:
-" coding: utf-8
-" indent-tabs-mode: nil
-" tab-width: 2
-" End:
-" vim: set fenc=utf-8 et ts=2 sts=2 sw=2 foldmethod=marker :
