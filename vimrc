@@ -8,6 +8,10 @@ if v:version < 901
   finish
 endif
 
+" set leader to comma key
+let mapleader = ","
+nnoremap <SPACE> <Nop>
+
 "  not compatible with the old-fashion vi mode
 set nocompatible
 " allow backspacing over everything in insert mode
@@ -133,10 +137,6 @@ augroup my_filetypes
   autocmd FileType make setlocal noexpandtab
   autocmd FileType vim setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
 augroup END
-
-" set leader to comma key
-let mapleader = ","
-nnoremap <SPACE> <Nop>
 
 " {{ for merge tool
 map <silent> <SPACE>1 :diffget 1<CR>
