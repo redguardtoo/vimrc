@@ -4,7 +4,7 @@ execute pathogen#infect()
 
 " not compatible with the old-fashion vi mode
 set nocompatible
-" allow backspacing over everything in insert mode
+ "allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 " command line history
 set history=1024
@@ -49,6 +49,9 @@ endif
 " {{ vim-expand-region
 map <leader>xx <Plug>(expand_region_expand)
 " }}
+
+" enable vim9.1+ built in plugin, gcc or gc{motion}
+packadd comment
 
 " {{ vim-easymotion
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
