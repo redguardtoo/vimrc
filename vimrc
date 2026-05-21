@@ -235,6 +235,9 @@ nmap <leader>tr :%s/ \+$//g<CR>
 " suspend
 nmap <leader>xc :suspend<CR>
 
+" save&quit
+nmap <SPACE>xc :xa<CR>
+
 " undotree
 nmap <leader>ut :UndotreeToggle<CR>
 
