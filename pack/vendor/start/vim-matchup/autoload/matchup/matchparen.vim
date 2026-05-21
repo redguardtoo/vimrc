@@ -140,7 +140,10 @@ function! s:matchparen.clear() abort dict " {{{1
     unlet! w:matchup_match_id_list
   endif
   if exists('s:ns_id')
-    call nvim_buf_clear_namespace(0, s:ns_id, 0, -1)
+    try
+      call nvim_buf_clear_namespace(0, s:ns_id, 0, -1)
+    catch /\<E12\>/
+    endtry
   endif
 
   if !has('nvim') && exists('t:match_popup') && (exists('*win_gettype')
@@ -174,7 +177,7 @@ function! s:timer_callback(win_id, timer_id) abort " {{{1
   endif
 
   " if we timed out, do a highlight and pause the timer
-  let l:elapsed = 1000*s:reltimefloat(reltime(w:matchup_pulse_time))
+  let l:elapsed = 1000 * reltimefloat(reltime(w:matchup_pulse_time))
   if l:elapsed >= s:show_delay
     call timer_pause(a:timer_id, 1)
     if exists('#TextYankPost') && !has('patch-8.1.0192')
@@ -191,7 +194,7 @@ function! s:timer_callback(win_id, timer_id) abort " {{{1
     endif
   elseif w:matchup_need_clear && exists('w:matchup_hi_time')
     " if highlighting becomes too stale, clear it
-    let l:elapsed = 1000*s:reltimefloat(reltime(w:matchup_hi_time))
+    let l:elapsed = 1000 * reltimefloat(reltime(w:matchup_hi_time))
     if l:elapsed >= s:hide_delay
       call s:matchparen.clear()
     endif
@@ -278,25 +281,12 @@ function! s:fade_timer_callback(win_id, timer_id) abort " {{{1
     return
   endif
 
-  let l:elapsed = 1000*s:reltimefloat(reltime(w:matchup_fade_start))
+  let l:elapsed = 1000 * reltimefloat(reltime(w:matchup_fade_start))
   if l:elapsed >= s:fade_time
     call s:matchparen.clear()
     call timer_pause(a:timer_id, 1)
   endif
 endfunction
-
-" }}}1
-
-" function! s:reltimefloat(time) {{{1
-if exists('*reltimefloat')
-  function! s:reltimefloat(time)
-    return reltimefloat(a:time)
-  endfunction
-else
-  function! s:reltimefloat(time)
-    return str2float(reltimestr(a:time))
-  endfunction
-endif
 
 " }}}1
 
@@ -344,7 +334,7 @@ function! s:matchparen.highlight(...) abort dict " {{{1
 
   if has('vim_starting') | return | endif
 
-  if !g:matchup_matchparen_pumvisible && pumvisible() | return | endif
+  if !g:matchup_matchparen_pumvisible && s:pumvisible() | return | endif
 
   " try to avoid interfering with some auto-complete plugins
   if has('*state') && state('a') !=# '' | return | endif
@@ -515,6 +505,17 @@ function s:matchparen.transmute_reset() abort dict
   endif
 endfunction
 
+
+if has('nvim')
+  function s:pumvisible() abort
+    return pumvisible() || luaeval('(function() local ok, cmp = pcall(require, "cmp") if ok and type(cmp.visible) == "function" then return cmp.visible() else return false end end)()')
+  endfunction
+else
+  function s:pumvisible() abort
+    return pumvisible()
+  endfunction
+endif
+
 " }}}1
 
 function! s:do_popup_autocmd_enter(win_context) abort "{{{1
@@ -639,6 +640,7 @@ function! s:do_offscreen_popup(offscreen) abort " {{{1
         \})
 
   call matchup#perf#tic('matchparen.render_popup')
+
   if exists('*prop_type_add') && exists('*popup_settext')
       \ && get(g:matchup_matchparen_offscreen, 'syntax_hl', 0)
     " requires patch 8.1.1553
@@ -646,6 +648,7 @@ function! s:do_offscreen_popup(offscreen) abort " {{{1
   else
     let l:width = s:set_popup_text(l:lnum, l:adjust, a:offscreen)
   endif
+
   call matchup#perf#toc('matchparen.render_popup', 'done')
 
   let l:rpad = 0
@@ -696,8 +699,12 @@ function! s:set_popup_text(lnum, adjust, offscreen) abort
           \ 'combine': 1
           \}
     call popup_settext(t:match_popup, [{'text': l:text, 'props': [l:prop]}])
-  else
+  elseif exists('t:match_popup')
     call setbufline(winbufnr(t:match_popup), 1, l:text)
+  elseif exists('s:float_id')
+    if s:float_id > 0 && winbufnr(s:float_id) != bufnr('%')
+      call setbufline(winbufnr(s:float_id), 1, l:text)
+    endif
   endif
   return strdisplaywidth(l:text)
 endfunction
@@ -706,6 +713,9 @@ function! s:set_popup_text_2(lnum, adjust, offscreen) abort
   let [l:sl, l:lnum] = matchup#matchparen#status_str(
         \ a:offscreen, {'noshowdir': 1})
   let l:sl = '%#Normal#' . substitute(l:sl, '%<', '', 'g')
+
+  let l:popup_winnr = !has('nvim') ? t:match_popup : s:float_id
+  let l:popup_bufnr = winbufnr(l:popup_winnr)
 
   let l:props = []
   let l:col = 1
@@ -725,10 +735,10 @@ function! s:set_popup_text_2(lnum, adjust, offscreen) abort
     endif
 
     let l:key = 'matchup__' . l:hl
-    let l:popup_bufnr = winbufnr(t:match_popup)
-    let l:cache_key = l:key . '__' . l:popup_bufnr . '__' . t:match_popup
+    let l:cache_key = l:key . '__' . l:popup_bufnr . '__' . l:popup_winnr
     if !has_key(s:prop_cache, l:cache_key)
-      if empty(prop_type_get(l:key, {'bufnr': l:popup_bufnr}))
+      if exists('*prop_type_get')
+            \ && empty(prop_type_get(l:key, {'bufnr': l:popup_bufnr}))
         call prop_type_add(l:key, {
               \ 'bufnr': l:popup_bufnr,
               \ 'highlight': l:hl
@@ -740,14 +750,27 @@ function! s:set_popup_text_2(lnum, adjust, offscreen) abort
     call add(l:props, {
           \ 'length': l:len,
           \ 'col': l:col,
-          \ 'type': l:key
+          \ 'type': l:key,
+          \ 'hl': l:hl
           \})
 
     let l:text .= l:rest
     let l:col += l:len
   endfor
 
-  call popup_settext(t:match_popup, [{'text': l:text, 'props': l:props}])
+  if !has('nvim')
+    call popup_settext(t:match_popup,
+          \ [{'text': l:text, 'props': l:props}])
+  else
+    call setbufline(l:popup_bufnr, 1, l:text)
+    for l:prop in l:props
+      call nvim_buf_set_extmark(l:popup_bufnr, s:ns_id,
+            \ 0, l:prop.col - 1, {
+            \   'end_col' : l:prop.col + l:prop.length - 1,
+            \   'hl_group' : l:prop.hl,
+            \})
+    endfor
+  endif
   return strdisplaywidth(l:text)
 endfunction
 
@@ -756,6 +779,7 @@ if !exists('s:prop_cache')
 endif
 
 " }}}1
+
 function! s:do_offscreen_popup_nvim(offscreen) abort " {{{1
   if exists('*nvim_open_win')
     " neovim floating window
@@ -787,13 +811,33 @@ function! s:do_offscreen_popup_nvim(offscreen) abort " {{{1
     let l:border = get(g:matchup_matchparen_offscreen, 'border', 0)
     if !empty(l:border)
       let l:win_cfg.border = has('nvim-0.5')
-            \ && type(l:border) == v:t_string
+            \ && (type(l:border) == v:t_string || type(l:border) == v:t_list)
             \ ? l:border : ['', '═' ,'╗', '║', '╝', '═', '', '']
       if !has('nvim-0.6') && l:lnum >= line('.')
         let l:win_cfg.row -= min([2, l:row - winline() - 1])
       endif
     endif
-    let s:float_id = nvim_open_win(bufnr('%'), v:false, l:win_cfg)
+
+    let l:text_method = 0
+    if &relativenumber
+      let l:text_method = 1
+    endif
+
+    if l:text_method
+      if !exists('s:float_bufnr') || bufnr(s:float_bufnr) < 0
+        call s:close_floating_win()
+        let s:float_bufnr = nvim_create_buf(0, 1)
+      endif
+      let l:bufnr = s:float_bufnr
+    else
+      let l:bufnr = bufnr('%')
+    endif
+    try
+      silent let s:float_id = nvim_open_win(l:bufnr, v:false, l:win_cfg)
+    catch /E242:/
+      " Ignore errors when trying to open a window while closing another
+      return
+    endtry
 
     if has_key(g:matchup_matchparen_offscreen, 'highlight')
       call nvim_win_set_option(s:float_id, 'winhighlight',
@@ -807,13 +851,12 @@ function! s:do_offscreen_popup_nvim(offscreen) abort " {{{1
     if &cursorline
       call nvim_win_set_option(s:float_id, 'cursorline', v:false)
     endif
-
-    if &relativenumber
-      call nvim_win_set_option(s:float_id, 'number', v:true)
-      call nvim_win_set_option(s:float_id, 'relativenumber', v:false)
+    " winbar was added in nvim 0.8.0
+    if has('nvim-0.8.0')
+      call nvim_win_set_option(s:float_id, 'winbar', '')
     endif
 
-    call s:populate_floating_win(a:offscreen)
+    call s:populate_floating_win(a:offscreen, l:text_method)
 
     if exists('##WinScrolled')
       augroup matchup_matchparen_scroll
@@ -832,12 +875,15 @@ function! s:do_offscreen_popup_nvim(offscreen) abort " {{{1
 endfunction
 
 " }}}1
-function! s:populate_floating_win(offscreen) " {{{1
+function! s:populate_floating_win(offscreen, text_method) abort " {{{1
   let l:adjust = matchup#quirks#status_adjust(a:offscreen)
   let l:lnum = a:offscreen.lnum + l:adjust
   let l:body = getline(l:lnum, a:offscreen.lnum)
   let l:body_length = len(l:body)
-  let l:height = min([l:body_length, &previewheight])
+  let l:height = 1
+  if !a:text_method
+    let l:height = min([l:body_length, &previewheight])
+  endif
 
   if exists('*nvim_open_win')
     " neovim floating win
@@ -852,8 +898,9 @@ function! s:populate_floating_win(offscreen) " {{{1
         let l:width += 3 + len(a:offscreen.links.open.match)
       endif
       let l:width += wincol()-virtcol('.')
+      let l:width = min([l:width, winwidth(0) - 1])
     endif
-    call nvim_win_set_width(s:float_id, l:width + 1)
+    call nvim_win_set_width(s:float_id, l:width + 1 + strlen(line('$')))
 
     if &winminheight != 1
       let l:save_wmh = &winminheight
@@ -866,8 +913,25 @@ function! s:populate_floating_win(offscreen) " {{{1
 
     call nvim_win_set_option(s:float_id, 'wrap', v:false)
     silent! call nvim_win_set_option(s:float_id, 'scrolloff', 0)
-    call nvim_win_set_cursor(s:float_id, [l:lnum, 0])
-    call nvim_win_set_cursor(s:float_id, [a:offscreen.lnum, 0])
+
+    if a:text_method
+      call nvim_win_set_option(s:float_id, 'number', v:false)
+      call nvim_win_set_option(s:float_id, 'relativenumber', v:false)
+      call nvim_win_set_option(s:float_id, 'colorcolumn', '')
+      call nvim_win_set_option(s:float_id, 'foldcolumn', '0')
+      call nvim_win_set_option(s:float_id, 'signcolumn', 'no')
+      if get(g:matchup_matchparen_offscreen, 'syntax_hl', 0)
+        call s:set_popup_text_2(l:lnum, l:adjust, a:offscreen)
+      else
+        call s:set_popup_text(l:lnum, l:adjust, a:offscreen)
+      endif
+      silent! call nvim_win_set_option(s:float_id, 'statuscolumn', '')
+    else
+      call nvim_win_set_option(s:float_id, 'number', v:true)
+      call nvim_win_set_option(s:float_id, 'relativenumber', v:false)
+      call nvim_win_set_cursor(s:float_id, [l:lnum, 0])
+      call nvim_win_set_cursor(s:float_id, [a:offscreen.lnum, 0])
+    endif
   endif
 endfunction
 
@@ -876,7 +940,7 @@ function! s:close_floating_win() " {{{1
   if !exists('s:float_id')
     return
   endif
-  if win_id2win(s:float_id) > 0
+  if (has('nvim-0.12') && s:float_id > 0) || (!has('nvim-0.12') && win_id2win(s:float_id) > 0)
     call s:do_popup_autocmd_leave(s:float_id)
     call nvim_win_close(s:float_id, 0)
   endif
@@ -1144,8 +1208,7 @@ function! s:add_matches(corrlist, ...) " {{{1
     if exists('s:ns_id')
       if strlen(l:corr.match) == 0
             \ && matchup#loader#_treesitter_may_be_supported()
-            \ && !matchup#ts_engine#get_option(
-            \   bufnr('%'), 'disable_virtual_text')
+            \ && !g:matchup_treesitter_disable_virtual_text
         if hlexists('MatchupVirtualText')
           let l:group = 'MatchupVirtualText'
         endif

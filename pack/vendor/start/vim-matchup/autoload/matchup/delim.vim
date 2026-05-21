@@ -40,7 +40,7 @@ endfunction
 
 " }}}1
 
-function! s:get_delim_multi(opts) " {{{1
+function! s:get_delim_multi(opts) abort " {{{1
   let l:best = {}
   for l:e in get(get(b:, 'matchup_active_engines', {}), a:opts.type, [])
     let l:res = call(s:engines[l:e].get_delim, [a:opts])
@@ -406,7 +406,6 @@ function! s:get_delim(opts) abort " {{{1
   " note: we expect this to give false-positives with \ze
   if a:opts.direction ==# 'current'
     let l:re .= '\%>'.(l:cursorpos).'c'
-  "  let l:re = '\%<'.(l:cursorpos+1).'c' . l:re
   endif
 
   " allow overlapping delimiters
@@ -419,12 +418,7 @@ function! s:get_delim(opts) abort " {{{1
     let l:re .= '\&'
   endif
 
-  " move cursor one left for searchpos if necessary
   let l:need_restore_cursor = 0
-  if l:insertmode
-    call matchup#pos#set_cursor(line('.'), col('.')-1)
-    let l:need_restore_cursor = 1
-  endif
 
   " stopline may depend on the current action
   let l:stopline = get(a:opts, 'stopline', s:stopline)
@@ -441,14 +435,16 @@ function! s:get_delim(opts) abort " {{{1
           \ : a:opts.direction ==# 'prev'
           \   ? searchpos(l:re, 'bcnW',
           \               max([line('.') - l:stopline, 1]), l:to)
-          \   : searchpos(l:re, 'bcnW', line('.'), l:to)
+          \   : searchpos(l:re, l:insertmode ? 'bnW' : 'bcnW',
+          \               line('.'), l:to)
     if l:lnum == 0 | break | endif
 
-    " note: the skip here should not be needed
+    " note: the skip here should never be called
     " in 'current' mode, but be explicit
     if a:opts.direction !=# 'current'
           \ && (l:check_skip || g:matchup_delim_noskips == 1
-          \     && getline(l:lnum)[l:cnum-1] =~? '[^[:punct:]]')
+          \     && getline(l:lnum)[l:cnum-1] =~? '[^[:punct:]]'
+          \     || g:matchup_delim_noskips >= 2)
           \ && matchup#delim#skip(l:lnum, l:cnum)
           \ && (a:opts.direction ==# 'prev' ? (l:lnum > 1 || l:cnum > 1)
           \     : (l:lnum < line('$') || l:cnum < len(getline('$'))))
