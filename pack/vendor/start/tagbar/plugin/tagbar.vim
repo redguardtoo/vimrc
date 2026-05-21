@@ -4,7 +4,7 @@
 " Author:      Jan Larres <jan@majutsushi.net>
 " Licence:     Vim licence
 " Website:     https://preservim.github.io/tagbar
-" Version:     3.0.0
+" Version:     3.1.1
 " Note:        This plugin was heavily inspired by the 'Taglist' plugin by
 "              Yegappan Lakshmanan and uses a small amount of code from it.
 "
@@ -41,6 +41,8 @@ if v:version == 700 && !has('patch167')
     echohl None
     finish
 endif
+
+let g:loaded_tagbar = 1
 
 function! s:init_var(var, value) abort
     if !exists('g:tagbar_' . a:var)
@@ -85,6 +87,7 @@ function! s:setup_options() abort
     endif
     let options = [
         \ ['autoclose', 0],
+        \ ['autoclose_netrw', 0],
         \ ['autofocus', 0],
         \ ['autopreview', 0],
         \ ['autoshowtag', 0],
@@ -112,6 +115,8 @@ function! s:setup_options() abort
         \ ['show_data_type', 0],
         \ ['show_visibility', 1],
         \ ['show_linenumbers', 0],
+        \ ['show_prefix', 1],
+        \ ['show_suffix', 1],
         \ ['show_tag_count', 0],
         \ ['show_tag_linenumbers', 0],
         \ ['singleclick', 0],

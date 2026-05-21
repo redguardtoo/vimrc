@@ -3,7 +3,7 @@
 Author:         Jan Larres <jan@majutsushi.net>
 Licence:        Vim licence, see |license|
 Homepage:       https://preservim.github.io/tagbar
-Version:        3.0.0
+Version:        3.1.1
 
 ==============================================================================
 Contents                                            *tagbar* *tagbar-contents*
@@ -548,7 +548,7 @@ g:tagbar_position~
 Default: 'botright vertical'
 
 By default the Tagbar window will be opened on the right-hand side of vim in a
-vertical split. Set this option to one of the standart vim split options such
+vertical split. Set this option to one of the standard vim split options such
 as 'topleft', 'botright', 'leftabove', or 'rightbelow' to open in the
 corresponding position instead. If desiring a vertically split window, then
 include a ' vertical' in the field value as well. This can be useful when
@@ -658,6 +658,23 @@ a key, see |tagbar-keys|.
 Example:
 >
         let g:tagbar_autoclose = 1
+<
+
+                                                    *g:tagbar_autoclose_netrw*
+g:tagbar_autoclose_netrw~
+Default: 0
+
+This option is used to control the behavior when tagbar is the last window
+open, but the netrw (or nerdtree) window is also open. If this value is set to
+1, that will indicate that vim should be closed if tagbar and netrw are the
+last windows open. If you set this to 0 and tagbar and the netrw (or nerdtree)
+windows are the only remaining windows, then it will still close the tagbar
+window, however it will leave vim open with the netrw (or nerdtree) window
+open.
+
+Example:
+>
+        let g:tagbar_autoclose_netrw = 1
 <
 
                                                           *g:tagbar_autofocus*
@@ -803,6 +820,37 @@ Possible values are:
 Example:
 >
         let g:tagbar_show_linenumbers = 2
+<
+                                                          *g:tagbar_show_prefix*
+g:tagbar_show_prefix~
+Default: 1
+
+Controls if the prefix information is shown before the tag. The prefix info is
+usually defined as the variable scope. For example, if a variable is private
+scope only, then a '-' symbol will be used by default.
+
+Possible values are:
+  0: Don't show the prefix.
+  1: Show the prefix.
+
+Example:
+>
+        let g:tagbar_show_prefix = 0
+<
+                                                          *g:tagbar_show_suffix*
+g:tagbar_show_suffix~
+Default: 1
+
+Controls if the suffix information is shown after the tag. The suffix info is
+usually data type.
+
+Possible values are:
+  0: Don't show the suffix.
+  1: Show the suffix.
+
+Example:
+>
+        let g:tagbar_show_suffix = 0
 <
                                                  *g:tagbar_show_tag_linenumbers*
 g:tagbar_show_tag_linenumbers~
@@ -1072,7 +1120,7 @@ a temporary file and invoking ctags on that file. This greatly speeds up tag
 generation in the event of slow file systems such as network shares and
 enables tagbar to run even on netrw virtual files that ctags would otherwise
 not be able to find at all. However it does incure the cost of an extra write
-operation. Additionally not all sysems are able to let programs share access
+operation. Additionally not all systems are able to let programs share access
 to temporary file space (for example Snap packages cannot read from the host
 system's temp file space). This setting can disable the cache mechanism
 entriely forcing the tags to be generated from the existing copy of the file
@@ -1464,7 +1512,7 @@ IGNORING SPECIFIC FILES                                        *tagbar-ignore*
 You can ignore specific files by setting the |buffer-variable|
 "b:tagbar_ignore" to 1. This is best done with an |autocommand|:
 >
-    autocmd BufNewFile,BufReadPost foo.cpp let b:tagbar_ignore = 1
+    autocmd BufNewFile,BufReadPre foo.cpp let b:tagbar_ignore = 1
 <
 Note that autocommands are order-sensitive, so make sure that this autocommand
 gets defined before the ones that Tagbar defines so the variable will get
@@ -1492,6 +1540,7 @@ former allows simple regular expression-based parsing that is easy to get
 started with, but doesn't support scopes unless you instead want to write a
 C-based parser module for Exuberant Ctags. The regex approach is described in
 more detail below.
+
 Writing your own program is the approach used by for example jsctags and can
 be useful if your language can best be parsed by a program written in the
 language itself, or if you want to provide the program as part of a complete
@@ -1502,6 +1551,28 @@ Before writing your own extension have a look at the wiki
 (https://github.com/preservim/tagbar/wiki) or try googling for existing ones.
 If you do end up creating your own extension please consider adding it to the
 wiki so that others can benefit from it, too.
+
+In some cases there may be a definition for the filetype defined, but vim may
+not recognize the extension. For example, the BibLaTeX file format is defined
+separately from the BibTeX support for universal-ctags. So there are two defined
+language types in tagbar. However VIM does not have a specific extension that
+is recognized for the BibLaTeX filetype. In these cases it is necessary to add
+a custom filetype extension definition in your .vim configuration.
+
+For example:
+>
+        $ cat ~/.vim/filetype.vim
+        " custom filetypes
+
+        augroup filetypedetect
+            au! BufRead,BufNewFile *.biblatex setfiletype biblatex
+        augroup END
+        $
+<
+
+This will automatically detect the file extension of *.biblatex and define the
+filetype in VIM as a biblatex filetype so tagbar will correctly identify the
+filetype and use the correct definition.
 
 Every type definition in Tagbar is a dictionary with the following keys:
 
@@ -2009,6 +2080,16 @@ Known issues~
 
 ==============================================================================
 8. History                                                    *tagbar-history*
+
+Note: All tagged releases are an accomodation to distribution packagers. The
+upstream developers of this plugin recommend using a plugin manager and
+tracking HEAD in the default branch rather than tagged releases.
+
+3.1.1 (2022-11-04)
+    - Periodic rollup, see `git log v3.0.0..v3.1.1`
+
+3.1.0 (2022-11-04)
+    - Periodic rollup (incomplete merge, suggest 3.1.1)
 
 3.0.0 (2021-01-21)
     - Massive rollup with years of small changes, see `git log v2.7..v3.0.0`

@@ -4,7 +4,7 @@
 " Author:      Jan Larres <jan@majutsushi.net>
 " Licence:     Vim licence
 " Website:     https://preservim.github.io/tagbar
-" Version:     3.0.0
+" Version:     3.1.1
 " Note:        This plugin was heavily inspired by the 'Taglist' plugin by
 "              Yegappan Lakshmanan and uses a small amount of code from it.
 "
@@ -77,8 +77,6 @@ let s:window_pos = {
 \}
 
 let s:delayed_update_files = []
-
-let g:loaded_tagbar = 1
 
 let s:last_highlight_tline = 0
 
@@ -232,18 +230,18 @@ endfunction
 function! s:InitTypes() abort
     call tagbar#debug#log('Initializing types')
 
-    let supported_types = s:GetSupportedFiletypes()
+    let s:supported_types = s:GetSupportedFiletypes()
 
     if s:ctags_is_uctags
-        let s:known_types = tagbar#types#uctags#init(supported_types)
+        let s:known_types = tagbar#types#uctags#init(s:supported_types)
     else
-        let s:known_types = tagbar#types#ctags#init(supported_types)
+        let s:known_types = tagbar#types#ctags#init(s:supported_types)
     endif
 
     " Use dart_ctags if available
     let dart_ctags = s:CheckFTCtags('dart_ctags', 'dart')
     if dart_ctags !=# ''
-        let supported_types['dart'] = 1
+        let s:supported_types['dart'] = 1
         call tagbar#debug#log('Detected dart_ctags, overriding typedef')
         let type_dart = tagbar#prototypes#typeinfo#new()
         let type_dart.ctagstype = 'dart'
@@ -328,17 +326,17 @@ function! s:InitTypes() abort
         let type_go = tagbar#prototypes#typeinfo#new()
         let type_go.ctagstype = 'go'
         let type_go.kinds = [
-            \ {'short' : 'p', 'long' : 'package',      'fold' : 0, 'stl' : 0},
-            \ {'short' : 'i', 'long' : 'imports',      'fold' : 1, 'stl' : 0},
+            \ {'short' : 'p', 'long' : 'package',      'fold' : 0, 'stl' : 1},
+            \ {'short' : 'i', 'long' : 'imports',      'fold' : 1, 'stl' : 1},
             \ {'short' : 'c', 'long' : 'constants',    'fold' : 0, 'stl' : 0},
             \ {'short' : 'v', 'long' : 'variables',    'fold' : 0, 'stl' : 0},
-            \ {'short' : 't', 'long' : 'types',        'fold' : 0, 'stl' : 0},
+            \ {'short' : 't', 'long' : 'types',        'fold' : 0, 'stl' : 1},
             \ {'short' : 'n', 'long' : 'intefaces',    'fold' : 0, 'stl' : 0},
-            \ {'short' : 'w', 'long' : 'fields',       'fold' : 0, 'stl' : 0},
+            \ {'short' : 'w', 'long' : 'fields',       'fold' : 0, 'stl' : 1},
             \ {'short' : 'e', 'long' : 'embedded',     'fold' : 0, 'stl' : 0},
-            \ {'short' : 'm', 'long' : 'methods',      'fold' : 0, 'stl' : 0},
+            \ {'short' : 'm', 'long' : 'methods',      'fold' : 0, 'stl' : 1},
             \ {'short' : 'r', 'long' : 'constructors', 'fold' : 0, 'stl' : 0},
-            \ {'short' : 'f', 'long' : 'functions',    'fold' : 0, 'stl' : 0},
+            \ {'short' : 'f', 'long' : 'functions',    'fold' : 0, 'stl' : 1},
         \ ]
         let type_go.sro        = '.'
         let type_go.kind2scope = {
@@ -680,16 +678,16 @@ function! s:CheckForExCtags(silent) abort
     let ctags_output = s:ExecuteCtags(ctags_cmd)
 
     call tagbar#debug#log("Command output:\n" . ctags_output)
-    call tagbar#debug#log('Exit code: ' . v:shell_error)
+    call tagbar#debug#log('Exit code: ' . s:shell_error)
 
-    if v:shell_error || ctags_output !~# '\(Exuberant\|Universal\) Ctags'
+    if s:shell_error || ctags_output !~# '\(Exuberant\|Universal\) Ctags'
         let l:errmsg = 'Tagbar: Ctags doesn''t seem to be Exuberant Ctags!'
         let l:infomsg = 'BSD ctags will NOT WORK.' .
             \ ' Please download Exuberant Ctags from ctags.sourceforge.net' .
             \ ' and install it in a directory in your $PATH' .
             \ ' or set g:tagbar_ctags_bin.'
         call s:CtagsErrMsg(l:errmsg, l:infomsg, a:silent,
-                         \ ctags_cmd, ctags_output, v:shell_error)
+                         \ ctags_cmd, ctags_output, s:shell_error)
         let s:checked_ctags = 2
         return 0
     elseif !s:CheckExCtagsVersion(ctags_output)
@@ -771,19 +769,18 @@ endfunction
 
 " s:CheckFTCtags() {{{2
 function! s:CheckFTCtags(bin, ftype) abort
-    if executable(a:bin)
-        return a:bin
-    endif
-
     if exists('g:tagbar_type_' . a:ftype)
         let userdef = g:tagbar_type_{a:ftype}
-        if has_key(userdef, 'ctagsbin')
-            return userdef.ctagsbin
-        else
+        if has_key(userdef, 'kinds')
             return ''
+        elseif has_key(userdef, 'ctagsbin')
+            return userdef.ctagsbin
         endif
     endif
 
+    if executable(a:bin)
+        return a:bin
+    endif
     return ''
 endfunction
 
@@ -798,7 +795,7 @@ function! s:GetSupportedFiletypes() abort
 
     let ctags_output = s:ExecuteCtags(ctags_cmd)
 
-    if v:shell_error
+    if s:shell_error
         " this shouldn't happen as potential problems would have already been
         " caught by the previous ctags checking
         return
@@ -806,14 +803,14 @@ function! s:GetSupportedFiletypes() abort
 
     let types = split(ctags_output, '\n\+')
 
-    let supported_types = {}
+    let ctags_supported_types = {}
     for type in types
         if match(type, '\[disabled\]') == -1
-            let supported_types[tolower(type)] = 1
+            let ctags_supported_types[tolower(type)] = 1
         endif
     endfor
 
-    return supported_types
+    return ctags_supported_types
 endfunction
 
 " Known files {{{1
@@ -1320,7 +1317,7 @@ function! s:ProcessFile(fname, ftype) abort
 
         let seen[line] = 1
 
-        let parts = split(line, ';"')
+        let parts = split(line, ';"\t')
         if len(parts) == 2 " Is a valid tag line
             call s:ParseTagline(parts[0], parts[1], typeinfo, fileinfo)
         endif
@@ -1419,6 +1416,14 @@ function! s:ExecuteCtagsOnFile(fname, realfname, typeinfo) abort
                 endif
             endfor
 
+            " Must define custom languages before --language-force
+            if has_key(a:typeinfo, 'deffile') && filereadable(expand(a:typeinfo.deffile))
+                " check if ftype is a custom language (unknown to ctags)
+                if has_key(a:typeinfo, 'ftype') && !has_key(s:supported_types, a:typeinfo.ftype)
+                    let ctags_args += ['--options=' . expand(a:typeinfo.deffile)]
+                endif
+            endif
+
             let ctags_args += ['--language-force=' . ctags_type]
             let ctags_args += ['--' . ctags_type . '-kinds=' . ctags_kinds]
         endif
@@ -1453,10 +1458,10 @@ function! s:ExecuteCtagsOnFile(fname, realfname, typeinfo) abort
 
     let ctags_output = s:ExecuteCtags(ctags_cmd)
 
-    if v:shell_error || ctags_output =~? 'Warning: cannot open \(source\|input\) file'
+    if s:shell_error || ctags_output =~? 'Warning: cannot open \(source\|input\) file'
         call tagbar#debug#log('Command output:')
         call tagbar#debug#log(ctags_output)
-        call tagbar#debug#log('Exit code: ' . v:shell_error)
+        call tagbar#debug#log('Exit code: ' . s:shell_error)
         " Only display an error message if the Tagbar window is open and we
         " haven't seen the error before.
         if bufwinnr(s:TagbarBufName()) != -1 &&
@@ -1470,7 +1475,7 @@ function! s:ExecuteCtagsOnFile(fname, realfname, typeinfo) abort
                     echomsg line
                 endfor
             endif
-            echomsg 'Exit code: ' . v:shell_error
+            echomsg 'Exit code: ' . s:shell_error
         endif
         return -1
     endif
@@ -1510,7 +1515,7 @@ function! s:ParseTagline(part1, part2, typeinfo, fileinfo) abort
 
     " When splitting fields make sure not to create empty keys or values in
     " case a value illegally contains tabs
-    let fields = split(a:part2, '^\t\|\t\ze\w\+:')
+    let fields = split(a:part2, '\t\ze\w\+:')
     let fielddict = {}
     if fields[0] !~# ':'
         let fielddict.kind = remove(fields, 0)
@@ -3158,8 +3163,9 @@ function! s:ExecuteCtags(ctags_cmd) abort
 
     if tagbar#debug#enabled()
         silent 5verbose let ctags_output = system(a:ctags_cmd)
+        let s:shell_error = v:shell_error
         call tagbar#debug#log(v:statusmsg)
-        call tagbar#debug#log('Exit code: ' . v:shell_error)
+        call tagbar#debug#log('Exit code: ' . s:shell_error)
         redraw!
     else
         let py_version = get(g:, 'tagbar_python', 1)
@@ -3518,7 +3524,15 @@ function! s:HandleOnlyWindow() abort
     let vim_quitting = s:vim_quitting
     let s:vim_quitting = 0
 
-    if vim_quitting && !s:HasOpenFileWindows()
+    let file_open = s:HasOpenFileWindows()
+
+    if vim_quitting && file_open == 2 && !g:tagbar_autoclose_netrw
+        call tagbar#debug#log('Closing Tagbar due to QuitPre - netrw only remaining window')
+        call s:CloseWindow()
+        return
+    endif
+
+    if vim_quitting && file_open != 1
         call tagbar#debug#log('Closing Tagbar window due to QuitPre event')
         if winnr('$') >= 1
             call s:goto_win(tagbarwinnr, 1)
@@ -3636,11 +3650,22 @@ endfunction
 
 " s:HasOpenFileWindows() {{{2
 function! s:HasOpenFileWindows() abort
+    let netrw = 0
+
     for i in range(1, winnr('$'))
         let buf = winbufnr(i)
 
-        " skip unlisted buffers, except for netrw
-        if !buflisted(buf) && getbufvar(buf, '&filetype') !=# 'netrw'
+        " If the buffer filetype is netrw (or nerdtree) then mark netrw
+        " for final return. If we don't find any other window, we want
+        " to leave the netrw window open and not close vim entirely when
+        " called from the HandleOnlyWindow() code path.
+        let buf_ft = getbufvar(buf, '&filetype')
+        if buf_ft ==# 'netrw' || buf_ft ==# 'nerdtree'
+            let netrw = 1
+        endif
+
+        " skip unlisted buffers
+        if !buflisted(buf)
             continue
         endif
 
@@ -3657,6 +3682,10 @@ function! s:HasOpenFileWindows() abort
         return 1
     endfor
 
+    if netrw
+        call tagbar#debug#log('netrw only window remaining')
+        return 2
+    endif
     return 0
 endfunction
 
@@ -3811,6 +3840,9 @@ endfunction
 " tagbar#Update() {{{2
 " Trigger an AutoUpdate() of the currently opened file
 function! tagbar#Update() abort
+    if s:init_done == 0
+        call s:Init(0)
+    endif
     call s:AutoUpdate(fnamemodify(expand('%'), ':p'), 0)
 endfunction
 
@@ -4073,6 +4105,9 @@ endfunction
 
 " tagbar#jump() {{{2
 function! tagbar#jump() abort
+    if s:init_done == 0
+        call tagbar#Update()
+    endif
     if &filetype !=# 'tagbar'
         " Not in tagbar window - ignore this function call
         return
@@ -4087,6 +4122,9 @@ endfun
 "   [flags] = list of flags (as a string) to control behavior
 "       's' - use the g:tagbar_scroll_offset setting when jumping
 function! tagbar#jumpToNearbyTag(direction, ...) abort
+    if s:init_done == 0
+        call tagbar#Update()
+    endif
     let search_method = a:0 >= 1 ? a:1 : 'nearest-stl'
     let flags = a:0 >= 2 ? a:2 : ''
 
