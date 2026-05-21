@@ -109,7 +109,7 @@ map <SPACE>p [n
 " " Do :help cope if you are unsure what cope is. It's super useful!
 nmap <leader>co :botright copen<cr>
 " spell check with aspell
-nmap <leader>fb :setlocal spell spelllang=en_us
+nmap <leader>fb :setlocal spell spelllang=en_us<CR>
 nmap <leader>fe ]s
 "Switch to current dir
 nmap <leader>cd :cd %:p:h<cr>
@@ -205,7 +205,7 @@ call matchadd('ColorColumn', '\%81v', 100)
 set wrap
 set linebreak
 nnoremap j gj
-nnoremap k gk"
+nnoremap k gk
 
 " Copy/Paste, can only handle lines
 " ',aa' => copy
@@ -235,10 +235,10 @@ elseif executable('pbcopy')
   nnoremap <leader>pp :silent :r!pbpaste<CR>
 endif
 
-let g:DiffModeSync = 1
-" should be placed at last
-syntax on " syntax highlight
+" toggle highlighted items
+nnoremap <expr> <SPACE>hl v:hlsearch ? ':nohlsearch<CR>' : ':set hlsearch<CR>'
 
+let g:DiffModeSync = 1
 " vertical diffsplit
 set diffopt+=vertical
 " better diff algorithm from xdiff
@@ -253,3 +253,6 @@ endif
 " {{ vim-expand-region
 vmap v <Plug>(expand_region_expand)
 " }}
+
+" should be placed at last
+syntax on " syntax highlight
