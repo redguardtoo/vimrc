@@ -111,8 +111,6 @@ let g:EasyMotion_use_smartsign_us = 1
 set showmatch
 " Show current mode
 set showmode
-" start wild expansion in the command line using <TAB>
-set wildchar=<TAB>
 " wild char completion menu
 set wildmenu
 
