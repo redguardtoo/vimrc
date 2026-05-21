@@ -305,6 +305,7 @@ set diffopt+=indent-heuristic
 vmap v <Plug>(expand_region_expand)
 " }}
 
+" {{ move between sub-window
 nnoremap <leader>1 :execute "1wincmd w"<CR>
 nnoremap <leader>2 :execute "2wincmd w"<CR>
 nnoremap <leader>3 :execute "3wincmd w"<CR>
@@ -314,6 +315,8 @@ nnoremap <leader>6 :execute "6wincmd w"<CR>
 nnoremap <leader>7 :execute "7wincmd w"<CR>
 nnoremap <leader>8 :execute "8wincmd w"<CR>
 nnoremap <leader>9 :execute "9wincmd w"<CR>
+nmap <leader>xo <Plug>(choosewin)
+" }}
 
 " should be placed at the very end
 syntax on " syntax highlight
