@@ -161,17 +161,10 @@ nnoremap <leader>fe ]s
 "Switch to current dir
 nnoremap <leader>cd :cd %:p:h<cr>
 
-" {{ --- Smart way to move window
-"  TIPS:
-"  C-W +/- increase/decrease window height
-"  C-W _ maxmize window height
-"  C-W = restore window size
-"  C-W | maxmize window width
 " set the min width of a window to 0 so we can maximize others
-set wmw=0
+set winminwidth=0
 " set the min height of a window to 0 so we can maximize others
-set wmh=0
-" }}
+set winminheight=0
 
 " new tab
 nnoremap <leader>tn :tabnew<CR>
@@ -225,10 +218,10 @@ nnoremap <leader>rr :FuzzyMru<CR>
 nnoremap <leader>yy :FuzzyRegisters<CR>
 
 " {{ move focus between sub-windows
-noremap <leader>wh <C-W>h
-noremap <leader>wj <C-W>j
-noremap <leader>wk <C-W>k
-noremap <leader>wl <C-W>l
+nnoremap <leader>wh <C-W>h
+nnoremap <leader>wj <C-W>j
+nnoremap <leader>wk <C-W>k
+nnoremap <leader>wl <C-W>l
 " }}
 
 " remove trailing spaces
