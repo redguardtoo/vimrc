@@ -54,12 +54,13 @@ if has("gui_running")
   set guioptions-=R
 endif
 
-" Force 256-color mode for legacy terminals
-set t_Co=256
 
 " Enable true-color (24-bit RGB) in terminal if supported (highly recommended)
 if has('termguicolors')
   set termguicolors
+else
+  " Force 256-color mode for legacy terminals
+  set t_Co=256
 endif
 
 " {{ RANDOM COLORCOLOUR VARIANT LOADER
@@ -97,7 +98,7 @@ let g:EasyMotion_do_mapping = 0 " Disable default mappings
 " Bi-directional find motion
 " Jump to anywhere you want with minimal keystrokes, with just one key binding.
 " `s{char}{label}`
-nmap ;; <Plug>(easymotion-s2)
+nnoremap ;; <Plug>(easymotion-s2)
 " Use uppercase target labels and type as a lower case
 let g:EasyMotion_use_upper = 1
 " type `l` and match `l`&`L`
@@ -140,25 +141,25 @@ augroup my_filetypes
 augroup END
 
 " {{ for merge tool
-map <silent> <SPACE>1 :diffget 1<CR>
-map <silent> <SPACE>2 :diffget 2<CR>
-map <silent> <SPACE>3 :diffget 3<CR>
+nnoremap <silent> <SPACE>1 :diffget 1<CR>
+nnoremap <silent> <SPACE>2 :diffget 2<CR>
+nnoremap <silent> <SPACE>3 :diffget 3<CR>
 " }}
 
 " {{ go to SCM conflict marker
-map <SPACE>n ]n
-map <SPACE>p [n
+nnoremap <SPACE>n ]n
+nnoremap <SPACE>p [n
 " }}
 
 " grep result window operation alias
 " " Do :help cope if you are unsure what cope is. It's super useful!
-nmap <leader>co :botright copen<cr>
+nnoremap <leader>co :botright copen<cr>
 
 " toggle spell check
-nmap <leader>fb :setlocal spell!<CR>
-nmap <leader>fe ]s
+nnoremap <leader>fb :setlocal spell!<CR>
+nnoremap <leader>fe ]s
 "Switch to current dir
-nmap <leader>cd :cd %:p:h<cr>
+nnoremap <leader>cd :cd %:p:h<cr>
 
 " {{ --- Smart way to move window
 "  TIPS:
@@ -173,21 +174,21 @@ set wmh=0
 " }}
 
 " new tab
-map <leader>tn :tabnew<CR>
+nnoremap <leader>tn :tabnew<CR>
 " close tab
-map <leader>tc :tabclose<CR>
+nnoremap <leader>tc :tabclose<CR>
 
 " toggles paste mode
-nmap <leader>tpp :set paste!<BAR>set paste?<CR>
+nnoremap <leader>tpp :set paste!<BAR>set paste?<CR>
 
 " vim-fugitive
-nmap <leader>vm :Git blame<cr>
-nmap <leader>va :Gwrite<cr>
+nnoremap <leader>vm :Git blame<cr>
+nnoremap <leader>va :Gwrite<cr>
 
 set encoding=utf-8
 
 " {{ tagbar
-map <leader>ii :TagbarToggle<CR>
+nnoremap <leader>ii :TagbarToggle<CR>
 let g:tagbar_position = 'left'
 " }}
 
@@ -196,32 +197,32 @@ let g:netrw_banner = 0
 let g:netrw_liststyle = 3
 let g:netrw_browse_split = 4
 let g:netrw_winsize = 25
-nmap <leader>nt :Lexplore<CR>
+nnoremap <leader>nt :Lexplore<CR>
 " }}
 
 " leader hotkeys
-nmap <leader>xs :write<CR>
-nmap <leader>s2 :sp<CR>
-nmap <leader>s3 :vs<CR>
-nmap <leader>s1 <C-W>o
-nmap <leader>s0 :close<CR>
-nmap <leader>x2 :sp<CR>
-nmap <leader>x3 :vs<CR>
-nmap <leader>x1 <C-W>o
-nmap <leader>x0 :close<CR>
+nnoremap <leader>xs :write<CR>
+nnoremap <leader>s2 :sp<CR>
+nnoremap <leader>s3 :vs<CR>
+nnoremap <leader>s1 <C-W>o
+nnoremap <leader>s0 :close<CR>
+nnoremap <leader>x2 :sp<CR>
+nnoremap <leader>x3 :vs<CR>
+nnoremap <leader>x1 <C-W>o
+nnoremap <leader>x0 :close<CR>
 
 " search files
-nmap <leader>xf :FuzzyFiles<CR>
+nnoremap <leader>xf :FuzzyFiles<CR>
 " search file from project root
-nmap <leader>kk :FuzzyFilesRoot<CR>
+nnoremap <leader>kk :FuzzyFilesRoot<CR>
 " switch buffer
-nmap <leader>xb :FuzzyBuffers<CR>
+nnoremap <leader>xb :FuzzyBuffers<CR>
 " search tag tags file of project root  (Universal Ctags needed)
-nmap <leader>ft :FuzzyTagsRoot<CR>
-nmap <leader>gf :FuzzyGitFiles<CR>
-nmap <leader>gg :FuzzyGitGrep<CR>
-nmap <leader>rr :FuzzyMru<CR>
-nmap <leader>yy :FuzzyRegisters<CR>
+nnoremap <leader>ft :FuzzyTagsRoot<CR>
+nnoremap <leader>gf :FuzzyGitFiles<CR>
+nnoremap <leader>gg :FuzzyGitGrep<CR>
+nnoremap <leader>rr :FuzzyMru<CR>
+nnoremap <leader>yy :FuzzyRegisters<CR>
 
 " {{ move focus between sub-windows
 noremap <leader>wh <C-W>h
@@ -231,13 +232,13 @@ noremap <leader>wl <C-W>l
 " }}
 
 " remove trailing spaces
-nmap <leader>tr :%s/ \+$//g<CR>
+nnoremap <leader>tr :%s/ \+$//g<CR>
 
 " suspend
-nmap <leader>xc :suspend<CR>
+nnoremap <leader>xc :suspend<CR>
 
 " save&quit
-nmap <SPACE>xc :xa<CR>
+nnoremap <SPACE>xc :xa<CR>
 
 if !hasmapto("<Plug>ZoomWin")
   nmap <unique> ,ff  <Plug>ZoomWin
@@ -319,7 +320,7 @@ nnoremap <leader>6 :execute "6wincmd w"<CR>
 nnoremap <leader>7 :execute "7wincmd w"<CR>
 nnoremap <leader>8 :execute "8wincmd w"<CR>
 nnoremap <leader>9 :execute "9wincmd w"<CR>
-nmap <leader>xo <Plug>(choosewin)
+nnoremap <leader>xo <Plug>(choosewin)
 " }}
 
 " should be placed at the very end
