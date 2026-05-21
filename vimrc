@@ -273,7 +273,6 @@ endif
 nnoremap <expr> <SPACE>hl v:hlsearch ? ':nohlsearch<CR>' : ':set hlsearch<CR>'
 
 " {{ADVANCED DIFF SETTINGS
-let g:DiffModeSync = 1
 " Force vertical layouts for diffsplit
 set diffopt+=vertical
 " Enable superior Xdiff algorithms (Native in Vim 8.1.0360+ & Neovim)
