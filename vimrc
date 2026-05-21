@@ -1,4 +1,4 @@
-" not compatible with the old-fashion vi mode
+"  not compatible with the old-fashion vi mode
 set nocompatible
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
@@ -138,12 +138,7 @@ nmap <leader>tpp :set paste!<BAR>set paste?<CR>
 nmap <leader>vm :Git blame<cr>
 nmap <leader>va :Gwrite<cr>
 
-" {{ ENCODING SETTINGS
 set encoding=utf-8
-set termencoding=utf-8
-set fileencoding=utf-8
-set fileencodings=ucs-bom,utf-8,big5,gb2312,latin1
-" }}
 
 " {{ tagbar
 map <leader>ii :TagbarToggle<CR>
@@ -200,15 +195,18 @@ if !hasmapto("<Plug>ZoomWin")
  nmap <unique> ,ff  <Plug>ZoomWin
 endif
 
-" MRU (recent files)
-let MRU_Max_Entries = 1024
-let MRU_Exclude_Files = '^/tmp/.*\|^/var/tmp/.*\|.*/.git/.*'
-map <leader>rr :MRU<CR>
+" press <SPACE> and number to select old files
+map <leader>rr :browse oldfiles<CR>
 
 " {{ set the 81st column of wide lines...
 highlight ColorColumn ctermbg=magenta
 call matchadd('ColorColumn', '\%81v', 100)
 " }}
+
+set wrap
+set linebreak
+nnoremap j gj
+nnoremap k gk"
 
 " Copy/Paste, can only handle lines
 " ',aa' => copy
