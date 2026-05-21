@@ -115,17 +115,23 @@ set wildchar=<TAB>
 " wild char completion menu
 set wildmenu
 
-" status line {
+" {{ status line
 set laststatus=2
-" W:window-number file-name encoding format
+" window-number file-name encoding format
 set statusline=W:%{winnr()}\ %t\ [%{&fenc!=''?&fenc:'none'},%{&ff}]
-set statusline+=%h "help file flag
-set statusline+=%m "modified flag
-set statusline+=%r "read only flag
-set statusline+=%y "filetype
-set statusline+=%= "left/right separator
-set statusline+=%c "cursor column
-"}
+" help file flag
+set statusline+=%h
+" modified flag
+set statusline+=%m
+" read only flag
+set statusline+=%r
+" filetype
+set statusline+=%y
+" left/right separator
+set statusline+=%=
+" cursor column
+set statusline+=%c
+" }}
 
 augroup my_filetypes
   autocmd!
