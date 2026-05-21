@@ -53,7 +53,6 @@ if has("gui_running")
   set guioptions-=L
   set guioptions-=r
   set guioptions-=R
-  colorscheme molokai
 endif
 
 " Force 256-color mode for legacy terminals
