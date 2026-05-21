@@ -46,10 +46,6 @@ if has("gui_running")
   colorscheme molokai
 endif
 
-" {{ vim-expand-region
-map <leader>xx <Plug>(expand_region_expand)
-" }}
-
 " enable vim9.1+ built in plugin, gcc or gc{motion}
 packadd comment
 
