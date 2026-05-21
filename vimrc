@@ -108,8 +108,9 @@ map <SPACE>p [n
 " grep result window operation alias
 " " Do :help cope if you are unsure what cope is. It's super useful!
 nmap <leader>co :botright copen<cr>
-" spell check with aspell
-nmap <leader>fb :setlocal spell spelllang=en_us<CR>
+
+" toggle spell check
+nmap <leader>fb :setlocal spell!<CR>
 nmap <leader>fe ]s
 "Switch to current dir
 nmap <leader>cd :cd %:p:h<cr>
