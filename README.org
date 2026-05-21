@@ -1,7 +1,7 @@
 * Chen Bin (redguardtoo)'s vimrc
-- Light weight
-- Works out of box
-- Vim 7+ required
+- Light weight 
+- Works out of box (need Find&Grep to process files; Git&Ctags for coding)
+- Vim 9.1 required
 
 * Install
 ** Linux
@@ -31,28 +31,13 @@ source $VIM/vimfiles/vimrc
 #+END_SRC
 
 * Plugins
-** [[https://github.com/tpope/vim-pathogen][Pathogen]]
-Pathogen let us install a plugin as a bundle in ~/.vim/bundle separately.
-
-** [[https://github.com/preservim/nerdtree][Nerd Tree]]
-A tree explorer plugin for navigating the filesystem. Press ",nt".
-
-** [[https://github.com/preservim/nerdcommenter][NERD commenter]]
-Press ",ci" or ",cc" to comment/uncomment lines.
-
-** [[http://www.vim.org/scripts/script.php?script_id=1849][AutoClose]] 
-Inserts matching bracket, paren, brace or quote.
-
 ** [[https://github.com/tpope/vim-surround][vim-surround]] 
 deal with pairs of surroundings.
 
 ** [[https://github.com/andymass/vim-matchup][vim-matchup]] 
 match-up is a plugin that lets you highlight, navigate, and operate on sets of matching text. It extends vim's % key to language-specific words instead of just single characters.
 
-** [[http://www.vim.org/scripts/script.php?script_id=1234][YankRing]] 
-Maintains a history of previous yanks, changes and deletes. Press ",yy"
-
-** [[https://github.com/ctrlpvim/ctrlp.vim][ctrlp.vim]]
+** [[https://github.com/vim-fuzzbox/fuzzbox.vim][fuzzbox.vim]]
 Press ",kk" to search files in project root. ",xf" to search files"
 
 ** [[https://github.com/preservim/tagbar][tagbar]]
@@ -70,8 +55,8 @@ Zoom in/out window. Press ",ff"
 ** [[https://github.com/rickhowe/diffchar.vim][diffchar.vim]]
 Highlight the exact differences, based on characters and words
 
-** [[https://github.com/mbbill/undotree][undotree]]
-Undo and redo in tree. Press ",ut" to show the ui
-
 ** [[https://github.com/terryma/vim-expand-region][vim-expand-region]]
 Keep pressing "v" to expand region
+
+** [[https://github.com/t9md/vim-choosewin][vim-choosewin]]
+Press ",xo" to focus on sub-window (Or just press ",[window-number]")
