@@ -52,6 +52,32 @@ if has("gui_running")
   colorscheme molokai
 endif
 
+" Force 256-color mode for legacy terminals
+set t_Co=256
+
+" Enable true-color (24-bit RGB) in terminal if supported (highly recommended)
+if has('termguicolors')
+  set termguicolors
+endif
+
+" Set background variant before loading the colorscheme
+set background=dark
+
+" Safely apply color scheme
+if !empty(globpath(&rtp, 'colors/molokai.vim'))
+  colorscheme molokai
+endif
+
+" GUI-Only Settings (Clean up menu, toolbar, and scrollbars in gVim)
+if has("gui_running")
+  set guioptions-=m  " Remove menu bar
+  set guioptions-=T  " Remove toolbar
+  set guioptions-=l  " Remove left scrollbar
+  set guioptions-=L  " Remove left scrollbar (with vertical split)
+  set guioptions-=r  " Remove right scrollbar
+  set guioptions-=R  " Remove right scrollbar (with vertical split)
+endif
+
 " enable vim9.1+ built in plugin, gcc or gc{motion}
 packadd comment
 
@@ -69,8 +95,6 @@ let g:EasyMotion_smartcase = 1
 let g:EasyMotion_use_smartsign_us = 1
 " }}
 
-" yank to the system register (*) by default
-set clipboard=unnamed
 " Cursor shows matching ) and }
 set showmatch
 " Show current mode
