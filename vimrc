@@ -1,3 +1,13 @@
+" VIM VERSION CHECK (Requires Vim 9.1+)
+if v:version < 901
+    echohl ErrorMsg
+    echom " Your Vim version (" . (v:version / 100) . "." . (v:version % 100) . ") is too old!"
+    echom " This vimrc requires Vim 9.1+ to run properly."
+    echom " Remaining configuration has been skipped to prevent errors."
+    echohl None
+    finish
+endif
+
 "  not compatible with the old-fashion vi mode
 set nocompatible
 " allow backspacing over everything in insert mode
@@ -249,21 +259,20 @@ endif
 " toggle highlighted items
 nnoremap <expr> <SPACE>hl v:hlsearch ? ':nohlsearch<CR>' : ':set hlsearch<CR>'
 
+" {{ADVANCED DIFF SETTINGS
 let g:DiffModeSync = 1
-" vertical diffsplit
+" Force vertical layouts for diffsplit
 set diffopt+=vertical
-" better diff algorithm from xdiff
-" code checked into vim repo in c93262b2e
-" @see https://vimways.org/2018/the-power-of-diff/
-" @see https://raw.githubusercontent.com/ashfinal/vimrc-config/master/.vimrc
-if has("nvim-0.3.5")
-  set diffopt+=algorithm:histogram
-  set diffopt+=indent-heuristic
-endif
+" Enable superior Xdiff algorithms (Native in Vim 8.1.0360+ & Neovim)
+" - algorithm:histogram  -> Smarter block matching (less chaotic alignment)
+" - indent-heuristic     -> Aligns diffs based on code indent structures
+set diffopt+=algorithm:histogram
+set diffopt+=indent-heuristic
+" }}
 
 " {{ vim-expand-region
 vmap v <Plug>(expand_region_expand)
 " }}
 
-" should be placed at last
+" should be placed at the very end
 syntax on " syntax highlight
