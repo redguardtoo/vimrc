@@ -244,10 +244,8 @@ if !hasmapto("<Plug>ZoomWin")
   nmap <unique> ,ff  <Plug>ZoomWin
 endif
 
-" {{ set the 81st column of wide lines...
-highlight ColorColumn ctermbg=magenta
-call matchadd('ColorColumn', '\%81v', 100)
-" }}
+" set the 81st column of wide lines...
+set colorcolumn=81
 
 set wrap
 set linebreak
