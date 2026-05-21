@@ -23,7 +23,7 @@ function! FugitiveGitDir(...) abort
       return g:fugitive_event
     endif
     let dir = get(b:, 'git_dir', '')
-    if empty(dir) && (empty(bufname('')) || &buftype =~# '^\%(nofile\|acwrite\|quickfix\|terminal\|prompt\)$')
+    if empty(dir) && (empty(bufname('')) && &filetype !=# 'netrw' || &buftype =~# '^\%(nofile\|acwrite\|quickfix\|terminal\|prompt\)$')
       return FugitiveExtractGitDir(getcwd())
     elseif (!exists('b:git_dir') || b:git_dir =~# s:bad_git_dir) && &buftype =~# '^\%(nowrite\)\=$'
       let b:git_dir = FugitiveExtractGitDir(bufnr(''))
@@ -140,7 +140,7 @@ function! FugitiveExecute(args, ...) abort
   return call('fugitive#Execute', [a:args] + a:000)
 endfunction
 
-" FugitiveShellCommand() turns an array of arugments into a Git command string
+" FugitiveShellCommand() turns an array of arguments into a Git command string
 " which can be executed with functions like system() and commands like :!.
 " Integer arguments will be treated as buffer numbers, and the appropriate
 " relative path inserted in their place.
@@ -168,7 +168,7 @@ endfunction
 " argument can be either the object returned by FugitiveConfig(), or a Git
 " dir or buffer number to be passed along to FugitiveConfig().
 function! FugitiveConfigGet(name, ...) abort
-  return get(call('FugitiveConfigGetAll', [a:name] + (a:0 ? [a:1] : [])), 0, get(a:, 2, ''))
+  return get(call('FugitiveConfigGetAll', [a:name] + (a:0 ? [a:1] : [])), -1, get(a:, 2, ''))
 endfunction
 
 " FugitiveConfigGetAll() is like FugitiveConfigGet() but returns a list of
@@ -425,6 +425,9 @@ function! FugitiveExtractGitDir(path) abort
     return get(a:path, 'fugitive_dir', get(a:path, 'git_dir', ''))
   elseif type(a:path) == type(0)
     let path = s:Slash(a:path > 0 ? bufname(a:path) : bufname(''))
+    if getbufvar(a:path, '&filetype') ==# 'netrw'
+      let path = s:Slash(getbufvar(a:path, 'netrw_curdir', path))
+    endif
   else
     let path = s:Slash(a:path)
   endif
@@ -607,7 +610,7 @@ if exists(':Gdelete') != 2 && get(g:, 'fugitive_legacy_commands', 0)
   exe 'command! -bar -bang -nargs=0 Gdelete exe fugitive#DeleteCommand(<line1>, <count>, +"<range>", <bang>0, "<mods>", <q-args>)'
         \ '|echohl WarningMSG|echomsg ":Gdelete is deprecated in favor of :GDelete"|echohl NONE'
 elseif exists(':Gdelete') != 2 && !exists('g:fugitive_legacy_commands')
-  exe 'command! -bar -bang -nargs=0 Gdelete echoerr ":Gremove has been removed in favor of :GRemove"'
+  exe 'command! -bar -bang -nargs=0 Gdelete echoerr ":Gdelete has been removed in favor of :GDelete"'
 endif
 if exists(':Gmove') != 2 && get(g:, 'fugitive_legacy_commands', 0)
   exe 'command! -bar -bang -nargs=1 -complete=customlist,fugitive#CompleteObject Gmove   exe fugitive#MoveCommand(  <line1>, <count>, +"<range>", <bang>0, "<mods>", <q-args>)'
@@ -689,6 +692,9 @@ augroup fugitive
         \ if FugitiveIsGitDir(expand('<amatch>:p:h')) |
         \   let b:git_dir = s:Slash(expand('<amatch>:p:h')) |
         \   exe fugitive#BufReadStatus(v:cmdbang) |
+        \   echohl WarningMSG |
+        \   echo "fugitive: Direct editing of .git/" . expand('%:t') . " is deprecated" |
+        \   echohl NONE |
         \ elseif filereadable(expand('<amatch>')) |
         \   silent doautocmd BufReadPre |
         \   keepalt noautocmd read <amatch> |
