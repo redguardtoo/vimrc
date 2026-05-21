@@ -1,11 +1,11 @@
 " VIM VERSION CHECK (Requires Vim 9.1+)
 if v:version < 901
-    echohl ErrorMsg
-    echom " Your Vim version (" . (v:version / 100) . "." . (v:version % 100) . ") is too old!"
-    echom " This vimrc requires Vim 9.1+ to run properly."
-    echom " Remaining configuration has been skipped to prevent errors."
-    echohl None
-    finish
+  echohl ErrorMsg
+  echom " Your Vim version (" . (v:version / 100) . "." . (v:version % 100) . ") is too old!"
+  echom " This vimrc requires Vim 9.1+ to run properly."
+  echom " Remaining configuration has been skipped to prevent errors."
+  echohl None
+  finish
 endif
 
 "  not compatible with the old-fashion vi mode
@@ -60,13 +60,22 @@ if has('termguicolors')
   set termguicolors
 endif
 
-" Set background variant before loading the colorscheme
+" {{ RANDOM COLORCOLOUR VARIANT LOADER
+" Define your pre-installed pool of colorschemes
+let s:my_themes = ['molokai', 'moria', 'peaksea', 'vgod', 'wombat256']
+let s:seconds = split(reltimestr(reltime()), '\.')[1]
+let s:rand_index = str2nr(s:seconds) % len(s:my_themes)
+let s:chosen_theme = s:my_themes[s:rand_index]
+" Ensure background flavor is established before the colorscheme kicks in
 set background=dark
-
-" Safely apply color scheme
-if !empty(globpath(&rtp, 'colors/molokai.vim'))
-  colorscheme molokai
+" Defensive execution: Only apply if the chosen theme file actually exists
+if !empty(globpath(&rtp, 'colors/' . s:chosen_theme . '.vim'))
+  execute 'colorscheme ' . s:chosen_theme
+else
+  " Emergency fallback if the directory layout is completely missing
+  colorscheme default
 endif
+" }}
 
 " GUI-Only Settings (Clean up menu, toolbar, and scrollbars in gVim)
 if has("gui_running")
@@ -122,6 +131,7 @@ set statusline+=\ %P    "percent through file
 augroup my_filetypes
   autocmd!
   autocmd FileType make setlocal noexpandtab
+  autocmd FileType vim setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
 augroup END
 
 " set leader to comma key
@@ -229,7 +239,7 @@ nmap <leader>xc :suspend<CR>
 nmap <leader>ut :UndotreeToggle<CR>
 
 if !hasmapto("<Plug>ZoomWin")
- nmap <unique> ,ff  <Plug>ZoomWin
+  nmap <unique> ,ff  <Plug>ZoomWin
 endif
 
 " {{ set the 81st column of wide lines...
@@ -246,37 +256,37 @@ nnoremap k gk
 " Fixes the old bug where only entire lines could be copied.
 " Supports precise character, visual block, and line selection.
 if has('win64')
-    " 1. Native Windows 64-bit environment (32-bit ignored)
-    set clipboard=unnamed,unnamedplus
-    vnoremap <leader>aa "+y:echo 'Selection => Windows Clipboard'<CR>
-    nnoremap <leader>aa "+yy:echo 'Line => Windows Clipboard'<CR>
-    nnoremap <leader>pp "+p
+  " 1. Native Windows 64-bit environment (32-bit ignored)
+  set clipboard=unnamed,unnamedplus
+  vnoremap <leader>aa "+y:echo 'Selection => Windows Clipboard'<CR>
+  nnoremap <leader>aa "+yy:echo 'Line => Windows Clipboard'<CR>
+  nnoremap <leader>pp "+p
 
 elseif executable('clip.exe')
-    " 2. WSL (Windows Subsystem for Linux) environment
-    " Copy: Yank to unnamed register first, then pipe exact selection to clip.exe
-    vnoremap <leader>aa y:call system('clip.exe', @")<CR>:echo 'Selection => Win Clipboard via WSL'<CR>
-    nnoremap <leader>aa yy:call system('clip.exe', @")<CR>:echo 'Line => Win Clipboard via WSL'<CR>
-    " Paste: Retrieve Windows clipboard via powershell safely to preserve indentation
-    nnoremap <leader>pp :set paste<CR>:let @" = system('powershell.exe -NoProfile -Command "Get-Clipboard"')<CR>p:set nopaste<CR>
+  " 2. WSL (Windows Subsystem for Linux) environment
+  " Copy: Yank to unnamed register first, then pipe exact selection to clip.exe
+  vnoremap <leader>aa y:call system('clip.exe', @")<CR>:echo 'Selection => Win Clipboard via WSL'<CR>
+  nnoremap <leader>aa yy:call system('clip.exe', @")<CR>:echo 'Line => Win Clipboard via WSL'<CR>
+  " Paste: Retrieve Windows clipboard via powershell safely to preserve indentation
+  nnoremap <leader>pp :set paste<CR>:let @" = system('powershell.exe -NoProfile -Command "Get-Clipboard"')<CR>p:set nopaste<CR>
 
 elseif has('clipboard')
-    " 3. Linux/macOS environments with native +clipboard support
-    vnoremap <leader>aa "+y:echo 'Selection => Clipboard'<CR>
-    nnoremap <leader>aa "+yy:echo 'Line => Clipboard'<CR>
-    nnoremap <leader>pp "+p
+  " 3. Linux/macOS environments with native +clipboard support
+  vnoremap <leader>aa "+y:echo 'Selection => Clipboard'<CR>
+  nnoremap <leader>aa "+yy:echo 'Line => Clipboard'<CR>
+  nnoremap <leader>pp "+p
 
 elseif executable('xclip')
-    " 4. Linux terminal fallback (No native +clipboard feature)
-    vnoremap <leader>aa y:call system('xclip -selection clipboard -in', @")<CR>:echo 'Selection => Clipboard'<CR>
-    nnoremap <leader>aa yy:call system('xclip -selection clipboard -in', @")<CR>:echo 'Line => Clipboard'<CR>
-    nnoremap <leader>pp :set paste<CR>:let @" = system('xclip -selection clipboard -out')<CR>p:set nopaste<CR>
+  " 4. Linux terminal fallback (No native +clipboard feature)
+  vnoremap <leader>aa y:call system('xclip -selection clipboard -in', @")<CR>:echo 'Selection => Clipboard'<CR>
+  nnoremap <leader>aa yy:call system('xclip -selection clipboard -in', @")<CR>:echo 'Line => Clipboard'<CR>
+  nnoremap <leader>pp :set paste<CR>:let @" = system('xclip -selection clipboard -out')<CR>p:set nopaste<CR>
 
 elseif executable('pbcopy')
-    " 5. macOS terminal fallback
-    vnoremap <leader>aa y:call system('pbcopy', @")<CR>:echo 'Selection => Clipboard'<CR>
-    nnoremap <leader>aa yy:call system('pbcopy', @")<CR>:echo 'Line => Clipboard'<CR>
-    nnoremap <leader>pp :set paste<CR>:let @" = system('pbpaste')<CR>p:set nopaste<CR>
+  " 5. macOS terminal fallback
+  vnoremap <leader>aa y:call system('pbcopy', @")<CR>:echo 'Selection => Clipboard'<CR>
+  nnoremap <leader>aa yy:call system('pbcopy', @")<CR>:echo 'Line => Clipboard'<CR>
+  nnoremap <leader>pp :set paste<CR>:let @" = system('pbpaste')<CR>p:set nopaste<CR>
 endif
 " }}
 
