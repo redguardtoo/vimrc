@@ -286,6 +286,10 @@ set diffopt+=indent-heuristic
 vmap v <Plug>(expand_region_expand)
 " }}
 
+set undofile
+set undodir=~/.vim/undodir
+set directory=~/.vim/swapdir
+
 " {{ move between sub-window
 nnoremap <leader>1 :execute "1wincmd w"<CR>
 nnoremap <leader>2 :execute "2wincmd w"<CR>
