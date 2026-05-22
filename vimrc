@@ -27,7 +27,7 @@ set number relativenumber
 " ignore case when searching
 set ignorecase
 " ignore directories
-set wildignore+=*/node_modules/*,*/tmp/*
+set wildignore+=*/node_modules/*,*/tmp/*,*.pyc,__pycache__/*,*.git/*,.DS_Store,vendor/*,dist/*,build/*
 " auto indentation
 set autoindent
 " copy the previous indentation
