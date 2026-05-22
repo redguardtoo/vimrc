@@ -54,7 +54,7 @@ endif
 
 " {{ RANDOM COLORCOLOUR VARIANT LOADER
 " Define your pre-installed pool of colorschemes
-let s:my_themes = ['molokai', 'moria', 'peaksea', 'vgod', 'wombat256']
+let s:my_themes = ['molokai', 'moria', 'peaksea', 'wombat256']
 let s:seconds = split(reltimestr(reltime()), '\.')[1]
 let s:rand_index = str2nr(s:seconds) % len(s:my_themes)
 let s:chosen_theme = s:my_themes[s:rand_index]
