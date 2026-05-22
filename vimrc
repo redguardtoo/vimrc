@@ -22,8 +22,8 @@ set history=1024
 set ruler
 " auto read when file is changed from outside
 set autoread
-" show line numbers
-set number
+" line numbers (press 5j to move 5 relative line number)
+set number relativenumber
 " ignore case when searching
 set ignorecase
 " ignore directories
