@@ -1,5 +1,5 @@
 * Chen Bin (redguardtoo)'s vimrc
-- Light weight 
+- Light weight
 - Works out of box (need Find&Grep to process files; Git&Ctags for coding)
 - Vim 9.1 required
 
@@ -31,10 +31,12 @@ source $VIM/vimfiles/vimrc
 #+END_SRC
 
 * Plugins
-** [[https://github.com/tpope/vim-surround][vim-surround]] 
+** [[https://github.com/tpope/vim-surround][vim-surround]]
 deal with pairs of surroundings.
 
-** [[https://github.com/andymass/vim-matchup][vim-matchup]] 
+** [[https://github.com/tpope/vim-repeat][vim-repeat]
+remaps . in a way that plugins can tap into it.
+** [[https://github.com/andymass/vim-matchup][vim-matchup]]
 match-up is a plugin that lets you highlight, navigate, and operate on sets of matching text. It extends vim's % key to language-specific words instead of just single characters.
 
 ** [[https://github.com/vim-fuzzbox/fuzzbox.vim][fuzzbox.vim]]
