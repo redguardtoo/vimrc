@@ -12,7 +12,7 @@ endif
 let mapleader = ","
 nnoremap <SPACE> <Nop>
 
-"  not compatible with the old-fashion vi mode
+" not compatible with the old-fashion vi mode
 set nocompatible
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
@@ -248,7 +248,13 @@ elseif executable('clip.exe')
   vnoremap <leader>aa y:call system('clip.exe', @")<CR>:echo 'Selection => Win Clipboard via WSL'<CR>
   nnoremap <leader>aa yy:call system('clip.exe', @")<CR>:echo 'Line => Win Clipboard via WSL'<CR>
   " Paste: Retrieve Windows clipboard via powershell safely to preserve indentation
-  nnoremap <leader>pp :set paste<CR>:let @" = system('powershell.exe -NoProfile -Command "Get-Clipboard"')<CR>p:set nopaste<CR>
+  function! WslPasteFixed()
+    let lines = systemlist('powershell.exe -NoProfile -Command "Get-Clipboard"')
+    call map(lines, {_, v -> substitute(v, '\r$', '', '')})
+    call setreg('"', lines, 'l')
+    normal! p
+  endfunction
+  nnoremap <leader>pp :set paste<CR>:call WslPasteFixed()<CR>:set nopaste<CR>
 
 elseif has('clipboard')
   " 3. Linux/macOS environments with native +clipboard support
