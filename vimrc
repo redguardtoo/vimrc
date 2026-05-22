@@ -42,6 +42,7 @@ set smartcase
 set smarttab
 
 filetype plugin indent on
+syntax on " syntax highlight, required by some color theme
 
 " Enable true-color (24-bit RGB) in terminal if supported (highly recommended)
 if has('termguicolors')
@@ -303,5 +304,3 @@ nnoremap <leader>9 :execute "9wincmd w"<CR>
 nnoremap <leader>xo <Plug>(choosewin)
 " }}
 
-" should be placed at the very end
-syntax on " syntax highlight
